@@ -1,0 +1,50 @@
+env:
+  node: true
+  browser: true
+  es6: true
+  mocha: true
+  jest: true
+extends: ['eslint:recommended', 'plugin:react/recommended']
+parser: 'babel-eslint'
+parserOptions:
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
+    jsx: true
+  sourceType: module
+plugins:
+  - react
+rules:
+  strict: 0
+  indent:
+    - error
+    - 2
+    - SwitchCase: 1
+      VariableDeclarator: 
+        var: 2
+        let: 2
+        const: 3
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  no-unused-vars:
+    - error
+    - args: after-used
+      vars: local
+  no-console:
+    - error
+  semi:
+    - error
+    - never
+
+  # rules for jsx
+  react/jsx-uses-vars:
+    - 2
+  react/jsx-indent: 
+    - 2
+    - 2
+  # these avoid React is defined but not used error, and is set in plugin:react/recommended
+  # react/jsx-uses-react: 2
+  # react/react-in-jsx-scope: 2
