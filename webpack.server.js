@@ -2,6 +2,18 @@ const webpack = require('webpack');
 const path = require('path');
 const devConfig = require('./webpack.dev.js');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+
+const extractCSS = new ExtractTextPlugin({
+  filename: '[contenthash]-[name].css',
+  allChunks: true,
+});
+
+const extractSCSS = new ExtractTextPlugin({
+  filename: '[contenthash]-[name].css',
+  allChunks: true,
+});
 
 module.exports = function(env) {
   let config = {
@@ -14,6 +26,11 @@ module.exports = function(env) {
       filename: '[name].js'
     },
 
+    plugins: [
+      extractCSS,
+      extractSCSS,
+    ],
+
     resolve: devConfig.resolve,
     module: devConfig.module,
     target: 'node',
@@ -21,7 +38,7 @@ module.exports = function(env) {
   };
 
   if (env === 'prod') {
-    config.plugins = [
+    config.plugins.push(
       new UglifyJsPlugin({
         uglifyOptions: {  
           ecma: 8
@@ -30,7 +47,7 @@ module.exports = function(env) {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': '"production"',
       })
-    ]
+    );
   }
   
   return config;

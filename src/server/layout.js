@@ -18,6 +18,8 @@ export default class Layout extends Component {
           <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+          <link href={`assets/${assetsJSON.client.css}`} rel="stylesheet" />
+
           <script type="text/javascript" charSet="utf-8" dangerouslySetInnerHTML={{__html: `
             window.__REDUX_STATE__ = ${reduxState}
             `}} />

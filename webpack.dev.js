@@ -1,5 +1,17 @@
 const path = require('path');
 const AssetPlugin = require('assets-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+
+const extractCSS = new ExtractTextPlugin({
+  filename: '[contenthash]-[name].css',
+  allChunks: true,
+});
+
+const extractSCSS = new ExtractTextPlugin({
+  filename: '[contenthash]-[name].css',
+  allChunks: true,
+});
 
 module.exports = {
   entry: { 
@@ -17,6 +29,8 @@ module.exports = {
   },
 
   plugins: [
+    extractCSS,
+    extractSCSS,
     // generate webpack asset json
     new AssetPlugin()
   ],
@@ -40,7 +54,31 @@ module.exports = {
             }
           }
         }]
-      }
+      },
+      {
+        test: /\.css$/,
+        use: extractCSS.extract({fallback: 'style-loader', use: ['css-loader']})
+      }, 
+      {
+        test: /\.scss$/,
+        use: extractSCSS.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader', 
+            {
+              loader: 'postcss-loader', 
+              options: {
+                plugins: [
+                  autoprefixer()
+                ]
+              }
+            },
+            {
+              loader: 'sass-loader'
+            }
+          ]
+        })
+      }   
     ]
   }
 };

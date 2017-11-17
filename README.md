@@ -10,7 +10,7 @@ Start 3 process to start developing your app:
 ## TODOS:
 1. ~hash key~
 2. ~production build~
-3. style loader
+3. ~style loader~
 4. font / img loader
 5. test on server
 6. test on react component

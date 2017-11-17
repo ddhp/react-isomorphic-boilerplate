@@ -7,6 +7,8 @@ import { accumulateCount, updateMeID, updateMe } from '../../actions';
 import stdout from '../../stdout';
 const debug = stdout('container/home/index');
 
+import './style.scss';
+
 export class Home extends Component {
   static propTypes = {
     count: PropTypes.number,
@@ -62,7 +64,7 @@ export class Home extends Component {
     debug('render method');
     const { name, sex } = this.props.me;
     return (
-      <div>
+      <div className="page--home">
         counter: {this.props.count}
         <div>name: {name}</div>
         <div>sex: {sex}</div>
