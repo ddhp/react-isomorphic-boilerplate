@@ -31,13 +31,13 @@ module.exports = {
           options: {
             presets: ['react', 'es2015', 'stage-2']
           }
-        }, {
+        }/*, {
           loader: 'remove-debug-loader',
           // options: {
           //   methodName: ['mylog'],
           //   moduleName: ['myModule']
           // }
-        }, {
+        }*/, {
           loader: 'eslint-loader',
           options: {
             rules: {

@@ -3,13 +3,18 @@ const path = require('path');
 const devConfig = require('./webpack.dev.js');
 
 module.exports = function(env) {
-  devConfig.entry = {
-    server: path.resolve(__dirname, 'src/server')
+  return {
+    entry: {
+      server: path.resolve(__dirname, 'src/server')
+    },
+
+    output: {
+      path: path.join(__dirname, '/dist'),
+      filename: '[name].js'
+    },
+
+    resolve: devConfig.resolve,
+    module: devConfig.module,
+    target: 'node'
   };
-  devConfig.output = {
-    path: path.join(__dirname, '/dist'),
-    filename: '[name].js'
-  };
-  devConfig.target = 'node';
-  return devConfig;
 };

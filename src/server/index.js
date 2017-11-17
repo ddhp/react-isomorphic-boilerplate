@@ -6,8 +6,8 @@ import Layout from './layout';
 import configureStore from 'Src/configureStore';
 import Home from 'Src/containers/home';
 import stdout from 'Src/stdout';
-const debug = stdout('server-app');
 
+const debug = stdout('server-app');
 const app = Express(),
       port = 3333;
 
