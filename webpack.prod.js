@@ -2,7 +2,19 @@ const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AssetPlugin = require('assets-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 const devConfig = require('./webpack.dev.js');
+
+const extractCSS = new ExtractTextPlugin({
+  filename: '[contenthash]-[name].css',
+  allChunks: true,
+});
+
+const extractSCSS = new ExtractTextPlugin({
+  filename: '[contenthash]-[name].css',
+  allChunks: true,
+});
 
 module.exports = {
   entry: devConfig.entry,
@@ -27,11 +39,37 @@ module.exports = {
         }, {
           loader: 'eslint-loader',
         }]
+      },
+      {
+        test: /\.css$/,
+        use: extractCSS.extract({fallback: 'style-loader', use: ['css-loader']})
+      }, 
+      {
+        test: /\.scss$/,
+        use: extractSCSS.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader', 
+            {
+              loader: 'postcss-loader', 
+              options: {
+                plugins: [
+                  autoprefixer()
+                ]
+              }
+            },
+            {
+              loader: 'sass-loader'
+            }
+          ]
+        })
       }
     ]
   },
 
   plugins: [
+    extractCSS,
+    extractSCSS,
     new UglifyJsPlugin(),
     // https://github.com/visionmedia/superagent/wiki/Superagent-for-Webpack
     new webpack.DefinePlugin({ 

@@ -7,6 +7,10 @@ Start 3 process to start developing your app:
 2. `npm run build:server:dev:w`: build server side conde and watch it's change
 3. `npm start`: nodemon executing dist/server.js, only watches on it's change
 
+### Production build
+1. `npm run build:client:prod`
+2. `npm run build:server:prod`
+
 ## TODOS:
 1. ~hash key~
 2. ~production build~
