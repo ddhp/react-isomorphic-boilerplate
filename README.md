@@ -13,6 +13,10 @@ Start 3 process to start developing your app:
 
 [extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract them (font, image) into static assets and handle url transform.
 
+
+### Style
+- [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss) imports [reset.css](https://www.npmjs.com/package/reset-css)
+
 ### Production build
 1. `npm run build:client:prod`
 2. `npm run build:server:prod`
