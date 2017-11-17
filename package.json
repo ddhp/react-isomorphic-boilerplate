@@ -12,11 +12,12 @@
     "build:client:prod": "webpack --env=prod --progress --profile --colors",
     "build:server:prod": "webpack --env=prod --config=webpack.server.js --progress --profile --colors",
     "eslint": "eslint src",
-    "test": "npm run eslint"
+    "test": "npm run eslint && ava --verbose"
   },
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",
     "autoprefixer": "^7.1.6",
+    "ava": "^0.23.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
@@ -31,6 +32,7 @@
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
+    "ignore-styles": "^5.0.1",
     "immutability-helper": "^2.4.0",
     "lodash": "^4.17.4",
     "node-sass": "^4.6.1",
@@ -45,6 +47,7 @@
     "reset.css": "^2.0.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
+    "supertest": "^3.0.0",
     "uglifyjs-webpack-plugin": "^1.0.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
@@ -70,5 +73,14 @@
   "bugs": {
     "url": "https://github.com/ddhp/react-isomorphic-boilerplate/issues"
   },
-  "homepage": "https://github.com/ddhp/react-isomorphic-boilerplate#readme"
+  "homepage": "https://github.com/ddhp/react-isomorphic-boilerplate#readme",
+  "ava": {
+    "files": [
+      "src/**/__tests__/**/*.js",
+      "!test/fixtures/**/*",
+      "!test/helpers/**/*"
+    ],
+    "require": "babel-register",
+    "babel": "inherit"
+  }
 }

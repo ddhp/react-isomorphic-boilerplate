@@ -8,7 +8,7 @@ import stdout from '../../stdout';
 const debug = stdout('container/home/index');
 
 import './style.scss';
-import logoImg from 'Src/assets/images/react-logo.png';
+import logoImg from '../../assets/images/react-logo.png';
 debug(logoImg);
 
 export class Home extends Component {

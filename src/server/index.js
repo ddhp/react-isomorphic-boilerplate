@@ -3,9 +3,9 @@ import ReactServer from 'react-dom/server';
 import Express from 'express';
 import { Provider } from 'react-redux';
 import Layout from './layout';
-import configureStore from 'Src/configureStore';
-import Home from 'Src/containers/home';
-import stdout from 'Src/stdout';
+import configureStore from '../configureStore';
+import Home from '../containers/home';
+import stdout from '../stdout';
 
 const debug = stdout('server-app');
 const app = Express(),
@@ -40,3 +40,5 @@ const server = app.listen(port, function () {
 
   debug('Express app listening at http://%s:%s', host, port);
 });
+
+export default app;
