@@ -9,3 +9,6 @@
 6. test on react component
 7. style loader
 8. font / img loader
+
+## LICENSE
+MIT
