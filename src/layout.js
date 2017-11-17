@@ -27,6 +27,6 @@ export default class Layout extends Component {
           <script src="assets/client.js" type="text/javascript" charSet="utf-8"></script>
         </body>
       </html>
-    )
+    );
   }
 }

@@ -37,7 +37,6 @@ rules:
     - error
   semi:
     - error
-    - never
 
   # rules for jsx
   react/jsx-uses-vars:
