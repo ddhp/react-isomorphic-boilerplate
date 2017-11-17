@@ -1,4 +1,5 @@
 # react-isomorphic-boilerplate
+This boilerplate would help you build a react/redux/react-router isomorphic/universal web app
 
 ## Concept
 ### development

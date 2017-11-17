@@ -1,6 +1,6 @@
 {
-  "name": "simpleReactRedux",
-  "version": "1.0.0",
+  "name": "react-isomorphic-boilerplate",
+  "version": "0.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -54,5 +54,21 @@
     "express": "^4.16.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1"
-  }
+  },
+  "description": "This boilerplate would help you build a react/redux/react-router isomorphic/universal web app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddhp/react-isomorphic-boilerplate.git"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "isomorphic",
+    "universal"
+  ],
+  "author": "ddhp",
+  "bugs": {
+    "url": "https://github.com/ddhp/react-isomorphic-boilerplate/issues"
+  },
+  "homepage": "https://github.com/ddhp/react-isomorphic-boilerplate#readme"
 }
