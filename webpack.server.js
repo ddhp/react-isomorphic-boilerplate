@@ -1,9 +1,10 @@
 const webpack = require('webpack');
 const path = require('path');
 const devConfig = require('./webpack.dev.js');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = function(env) {
-  return {
+  let config = {
     entry: {
       server: path.resolve(__dirname, 'src/server')
     },
@@ -17,4 +18,19 @@ module.exports = function(env) {
     module: devConfig.module,
     target: 'node'
   };
+
+  if (env === 'prod') {
+    config.plugins = [
+      new UglifyJsPlugin({
+        uglifyOptions: {  
+          ecma: 8
+        }
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"production"',
+      })
+    ]
+  }
+  
+  return config;
 };

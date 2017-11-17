@@ -9,13 +9,13 @@ Start 3 process to start developing your app:
 
 ## TODOS:
 1. ~hash key~
-2. production build
-3. apply react router
-4. apply logic base on path(seo optimized)
+2. ~production build~
+3. style loader
+4. font / img loader
 5. test on server
 6. test on react component
-7. style loader
-8. font / img loader
+7. apply react router
+8. apply logic base on path(seo optimized)
 
 ## LICENSE
 MIT
