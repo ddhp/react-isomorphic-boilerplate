@@ -1,12 +1,20 @@
-const path = require('path')
+const path = require('path');
+const AssetPlugin = require('assets-webpack-plugin');
+
 module.exports = {
   entry: { 
     client: path.resolve(__dirname, 'src/client')
   },
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: '[name].js'
+    filename: '[chunkhash]-[name].js'
   },
+
+  plugins: [
+    // generate webpack asset json
+    new AssetPlugin()
+  ],
+
   module: {
     rules: [
       {

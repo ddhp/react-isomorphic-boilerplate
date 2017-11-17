@@ -4,14 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "DEBUG=*,-nodemon*,-express*,-send ./node_modules/nodemon/bin/nodemon.js dist/server.js",
-    "build:client:dev": "./node_modules/webpack/bin/webpack.js --env=dev --progress --profile --colors",
-    "build:server:dev": "./node_modules/webpack/bin/webpack.js --env=dev --config=webpack.server.js --progress --profile --colors",
-    "build:client:dev:w": "./node_modules/webpack/bin/webpack.js -w --env=dev --progress --profile --colors",
-    "build:server:dev:w": "./node_modules/webpack/bin/webpack.js -w --env=dev --config=webpack.server.js --progress --profile --colors",
-    "eslint": "./node_modules/eslint/bin/eslint.js src"
+    "start": "DEBUG=*,-nodemon*,-express*,-send nodemon dist/server.js",
+    "build:client:dev": "webpack --env=dev --progress --profile --colors",
+    "build:server:dev": "webpack --env=dev --config=webpack.server.js --progress --profile --colors",
+    "build:client:dev:w": "webpack -w --env=dev --progress --profile --colors",
+    "build:server:dev:w": "webpack -w --env=dev --config=webpack.server.js --progress --profile --colors",
+    "eslint": "eslint src"
   },
   "devDependencies": {
+    "assets-webpack-plugin": "^3.5.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
@@ -38,8 +39,5 @@
     "express": "^4.16.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
-  },
-  "pre-commit": [
-    "eslint"
-  ]
+  }
 }
