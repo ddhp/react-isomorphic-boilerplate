@@ -16,7 +16,8 @@ module.exports = function(env) {
 
     resolve: devConfig.resolve,
     module: devConfig.module,
-    target: 'node'
+    target: 'node',
+    externals: [nodeExternals()] // in order to ignore all modules in node_modules folder
   };
 
   if (env === 'prod') {
