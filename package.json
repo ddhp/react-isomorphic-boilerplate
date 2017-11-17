@@ -9,7 +9,8 @@
     "build:server:dev": "webpack --env=dev --config=webpack.server.js --progress --profile --colors",
     "build:client:dev:w": "rm -f dist/*-client.js && webpack -w --env=dev --progress --profile --colors",
     "build:server:dev:w": "webpack -w --env=dev --config=webpack.server.js --progress --profile --colors",
-    "eslint": "eslint src"
+    "eslint": "eslint src",
+    "test": "npm run eslint"
   },
   "devDependencies": {
     "assets-webpack-plugin": "^3.5.1",
