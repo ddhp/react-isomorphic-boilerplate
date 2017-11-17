@@ -3,6 +3,7 @@ import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import Home from 'Src/containers/Home';
 import configureStore from 'Src/configureStore';
+import './global.scss';
 
 // Grab the state from a global variable injected into the server-generated HTML
 const reduxState = window.__REDUX_STATE__;

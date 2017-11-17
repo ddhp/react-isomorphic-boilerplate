@@ -15,7 +15,7 @@ const extractSCSS = new ExtractTextPlugin({
 
 module.exports = {
   entry: { 
-    client: path.resolve(__dirname, 'src/client')
+    client: path.resolve(__dirname, 'src/client/entry-main')
   },
   output: {
     path: path.join(__dirname, '/dist'),
@@ -78,7 +78,16 @@ module.exports = {
             }
           ]
         })
-      }   
+      },
+      {
+        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 8192
+          }
+        }]
+      }
     ]
   }
 };

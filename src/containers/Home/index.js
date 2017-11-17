@@ -65,6 +65,10 @@ export class Home extends Component {
     const { name, sex } = this.props.me;
     return (
       <div className="page--home">
+        <h1 className="title">
+          Title in Spectral SC
+          A red flair silhouetted the jagged edge of a wing
+        </h1>
         counter: {this.props.count}
         <div>name: {name}</div>
         <div>sex: {sex}</div>
