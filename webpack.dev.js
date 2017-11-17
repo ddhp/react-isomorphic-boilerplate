@@ -10,6 +10,12 @@ module.exports = {
     filename: '[chunkhash]-[name].js'
   },
 
+  resolve: {
+    alias: {
+      Src: path.resolve(__dirname, 'src')
+    }
+  },
+
   plugins: [
     // generate webpack asset json
     new AssetPlugin()

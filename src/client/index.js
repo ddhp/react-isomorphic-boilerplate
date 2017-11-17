@@ -1,8 +1,8 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
-import Home from './containers/Home';
-import configureStore from './configureStore';
+import Home from 'Src/containers/Home';
+import configureStore from 'Src/configureStore';
 
 // Grab the state from a global variable injected into the server-generated HTML
 const reduxState = window.__REDUX_STATE__;

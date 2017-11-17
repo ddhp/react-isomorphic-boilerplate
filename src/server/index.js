@@ -3,9 +3,9 @@ import ReactServer from 'react-dom/server';
 import Express from 'express';
 import { Provider } from 'react-redux';
 import Layout from './layout';
-import configureStore from './configureStore';
-import Home from './containers/home';
-import stdout from './stdout';
+import configureStore from 'Src/configureStore';
+import Home from 'Src/containers/home';
+import stdout from 'Src/stdout';
 const debug = stdout('server-app');
 
 const app = Express(),

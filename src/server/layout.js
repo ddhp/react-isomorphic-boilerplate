@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const assetsJSON = require('../webpack-assets.json');
+const assetsJSON = require('../../webpack-assets.json');
 
 export default class Layout extends Component {
   static propTypes = {
