@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "DEBUG=*,-nodemon*,-express*,-send nodemon dist/server.js",
-    "build:client:dev": "webpack --env=dev --progress --profile --colors",
+    "build:client:dev": "rm -f dist/*-client.js && webpack --env=dev --progress --profile --colors",
     "build:server:dev": "webpack --env=dev --config=webpack.server.js --progress --profile --colors",
-    "build:client:dev:w": "webpack -w --env=dev --progress --profile --colors",
+    "build:client:dev:w": "rm -f dist/*-client.js && webpack -w --env=dev --progress --profile --colors",
     "build:server:dev:w": "webpack -w --env=dev --config=webpack.server.js --progress --profile --colors",
     "eslint": "eslint src"
   },
