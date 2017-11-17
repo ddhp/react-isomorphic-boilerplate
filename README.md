@@ -18,6 +18,10 @@ Start 3 process to start developing your app:
 ### Style
 - [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss) imports [reset.css](https://www.npmjs.com/package/reset-css)
 
+### Test
+- [AVA](https://github.com/avajs/ava) as test runner.
+- Don't use [webpack alias](https://webpack.js.org/configuration/resolve/#resolve-alias) in code base
+
 ### Production build
 1. `npm run build:client:prod`
 2. `npm run build:server:prod`
