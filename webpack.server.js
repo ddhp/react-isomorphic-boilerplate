@@ -23,6 +23,7 @@ module.exports = function(env) {
 
     output: {
       path: path.join(__dirname, '/dist'),
+      publicPath: '/assets/',
       filename: '[name].js'
     },
 

@@ -9,6 +9,7 @@ const debug = stdout('container/home/index');
 
 import './style.scss';
 import logoImg from 'Src/assets/images/react-logo.png';
+debug(logoImg);
 
 export class Home extends Component {
   static propTypes = {
