@@ -8,6 +8,7 @@ import stdout from '../../stdout';
 const debug = stdout('container/home/index');
 
 import './style.scss';
+import logoImg from 'Src/assets/images/react-logo.png';
 
 export class Home extends Component {
   static propTypes = {
@@ -65,10 +66,13 @@ export class Home extends Component {
     const { name, sex } = this.props.me;
     return (
       <div className="page--home">
-        <h1 className="title">
+        <h1 className="demo--font">
           Title in Spectral SC
           A red flair silhouetted the jagged edge of a wing
         </h1>
+
+        <div className="demo--bg"></div>
+        <img className="demo--img-src" src={logoImg} />
         counter: {this.props.count}
         <div>name: {name}</div>
         <div>sex: {sex}</div>

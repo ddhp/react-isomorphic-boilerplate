@@ -1,7 +1,13 @@
 .page--home {
   background: #aaa;
 
-  .title {
+  .demo--font {
     font-family: 'Spectral SC', serif;
+  }
+
+  .demo--bg {
+    width: 400px;
+    height: 100px;
+    background: url('../../assets/images/bg.jpg');
   }
 }
