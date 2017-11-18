@@ -11,7 +11,7 @@
     "build:server:dev:w": "webpack -w --env=dev --config=webpack.server.js --progress --profile --colors",
     "build:client:prod": "webpack --env=prod --progress --profile --colors",
     "build:server:prod": "webpack --env=prod --config=webpack.server.js --progress --profile --colors",
-    "eslint": "eslint src",
+    "eslint": "eslint ./",
     "test": "npm run eslint && ava --verbose"
   },
   "devDependencies": {
