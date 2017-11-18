@@ -1,6 +1,5 @@
 import test from 'ava';
 import request from 'supertest';
-import 'ignore-styles'
 import server from '../';
 
 test.cb('request to / returns a html', t => {
@@ -10,5 +9,5 @@ test.cb('request to / returns a html', t => {
     .expect(200)
     .end(() => {
       t.end();
-    })
+    });
 });

@@ -80,7 +80,7 @@ export class Home extends Component {
         <form onSubmit={this.handleSubmit}>
           <label>
           ID:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
+            <input className="input--id" type="text" value={this.state.value} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Submit" />
         </form>

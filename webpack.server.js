@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const devConfig = require('./webpack.dev.js');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 

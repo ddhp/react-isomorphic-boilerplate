@@ -38,7 +38,7 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 4. ~font / img loader~
 5. ~test on server~
 6. ~source map~
-7. test on react component
+7. ~test on react component~
 7.1. coverage report
 8. apply react router
 9. apply logic base on path(seo optimized)
