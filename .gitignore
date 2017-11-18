@@ -1,3 +1,5 @@
 dist
 node_modules
 webpack-assets.json
+coverage
+.nyc_output

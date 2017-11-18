@@ -4,7 +4,7 @@ import Express from 'express';
 import { Provider } from 'react-redux';
 import Layout from './layout';
 import configureStore from '../configureStore';
-import Home from '../containers/home';
+import Home from '../containers/Home';
 import stdout from '../stdout';
 
 const debug = stdout('server-app');
