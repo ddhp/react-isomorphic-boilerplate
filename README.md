@@ -4,9 +4,13 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 ## Concept
 ### development
 Start 3 process to start developing your app:
-1. `npm run build:client:dev:w`: build client side code and watch it's change
-2. `npm run build:server:dev:w`: build server side conde and watch it's change
-3. `npm start`: nodemon executing dist/server.js, only watches on it's change
+1. `npm run build:client:dev:w`: build client side code and watch file change.
+2. `npm run build:server:dev:w`: build server side conde and watch file change.
+3. `npm start`: nodemon executing dist/server.js, only watches on `dist/server.js`'s change,
+   [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given,
+   you can debug nodejs server on chrome-devtools.
+
+All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
 
 ### Packing code
 - Fonts: font face are set in `src/client/global.scss`
@@ -32,9 +36,10 @@ Start 3 process to start developing your app:
 3. ~style loader~
 4. ~font / img loader~
 5. ~test on server~
-6. test on react component
-7. apply react router
-8. apply logic base on path(seo optimized)
+6. ~source map~
+7. test on react component
+8. apply react router
+9. apply logic base on path(seo optimized)
 
 ## LICENSE
 MIT

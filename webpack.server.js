@@ -49,6 +49,8 @@ module.exports = function(env) {
         'process.env.NODE_ENV': '"production"',
       })
     );
+  } else {
+    config.devtool = 'cheap-module-eval-source-map';
   }
   
   return config;
