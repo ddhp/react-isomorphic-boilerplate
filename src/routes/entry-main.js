@@ -6,7 +6,7 @@ import { Route, Redirect, Switch, matchPath } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import Home from '../containers/Home';
 import About from '../containers/About';
-import { fetchHomeData } from '../actions';
+import { fetchPosts } from '../actions';
 
 /**
  * loadData: related action(s) to loadData, possibly given react router match and req query
@@ -24,7 +24,7 @@ export const getRoutes = () => {
       loadData: (/*match, query*/) => {
         // return last action,
         // it would be a promise if it's an aync request
-        return fetchHomeData();
+        return fetchPosts();
       },
       // setHead: (/*match, query*/) => {
       //   // const channelId = query.id

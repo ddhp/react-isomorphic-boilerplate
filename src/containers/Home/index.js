@@ -108,9 +108,9 @@ function mapStateToProps(state) {
   const count = _get(state, 'pages.home.count', 0),
         entities = _get(state, 'entities'),
         me = _get(entities, 'me'),
-        homeData = _get(entities, 'homeData'),
-        posts = Object.keys(homeData.byId).map((k) => {
-          return homeData.byId[k];
+        post = _get(entities, 'post'),
+        posts = Object.keys(post.byId).map((k) => {
+          return post.byId[k];
         });
 
   return {

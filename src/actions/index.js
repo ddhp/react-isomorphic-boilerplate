@@ -25,10 +25,10 @@ export function updateMe(me) {
   };
 }
 
-export const FETCH_HOME_DATA = 'FETCH_HOME_DATA';
-export function fetchHomeData() {
+export const FETCH_POSTS = 'FETCH_POSTS';
+export function fetchPosts() {
   return {
-    type: FETCH_HOME_DATA,
+    type: FETCH_POSTS,
     payload: [
       {
         id: 1,

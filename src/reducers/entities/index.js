@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import meReducer from './me';
-import homeDataReducer from './homeData';
+import postReducer from './post';
 
 export default combineReducers({
   me: meReducer,
-  homeData: homeDataReducer
+  post: postReducer
 });

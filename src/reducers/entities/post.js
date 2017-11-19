@@ -3,10 +3,10 @@ const initialState = {
   allIds: []
 };
 
-export default function homeDataReducer(state = initialState, action) {
+export default function postReducer(state = initialState, action) {
   const payload = action.payload;
   switch (action.type) {
-    case 'FETCH_HOME_DATA': {
+    case 'FETCH_POSTS': {
       let byId = {},
           allIds = [];
       payload.map((d) => {
