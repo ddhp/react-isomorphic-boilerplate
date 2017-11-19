@@ -12,7 +12,7 @@ export default function homeReducer(state = initialState, action) {
       // state.count = payload
       // return state
     }
-    
+
     default:
       return state;
   }

@@ -6,9 +6,10 @@ import { Route, Redirect, Switch, matchPath } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import Home from '../containers/Home';
 import About from '../containers/About';
+import { fetchHomeData } from '../actions';
 
 /**
- * loadData: related action(s) to loadData
+ * loadData: related action(s) to loadData, possibly given react router match and req query
  * setHead: set head logic
  * redirect: redirect logic
  *
@@ -21,31 +22,18 @@ export const getRoutes = () => {
       exact: true,
       component: Home,
       loadData: (/*match, query*/) => {
-        // return (dispatch) => {
-        //   const channelId = query.id,
-        //         mode = 'yahoo'
-        //   // set channelid to pages.embed
-        //   dispatch(setEmbedChannelId(channelId))
-        //   if (query.availableDays) {
-        //     dispatch(setEmbedAvailableTime(query.availableDays, query.availableHours, query.availableTitleId))
-        //   }
-        //   if (query.hasOwnProperty('isMute') && (query.isMute === 'true' || query.isMute === 'false')) {
-        //     dispatch(setIsDefaultMute(JSON.parse(query.isMute)))
-        //   }
-        //   if (query.hasOwnProperty('isAutoplay') && (/^(true|false)$/.test(query.isAutoplay))) {
-        //     dispatch(setIsAutoplay(JSON.parse(query.isAutoplay)))
-        //   }
-        //   return dispatch(fetchChannel(channelId, mode))
-        // }
+        // return last action,
+        // it would be a promise if it's an aync request
+        return fetchHomeData();
       },
-      setHead: (/*match, query*/) => {
-        // const channelId = query.id
-        // return setHeadChannel({
-        //   params: {
-        //     channelId
-        //   }
-        // })
-      },
+      // setHead: (/*match, query*/) => {
+      //   // const channelId = query.id
+      //   // return setHeadChannel({
+      //   //   params: {
+      //   //     channelId
+      //   //   }
+      //   // })
+      // },
       redirect: () => {
         return false;
       }
@@ -69,6 +57,7 @@ export const getRoute = (path) => {
   }, {});
 };
 
+// TODO: handle 404 situation
 export class EntryMainRoute extends Component {
   static propTypes = {
     me: PropTypes.object,

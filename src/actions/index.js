@@ -27,3 +27,20 @@ export function updateMe(me) {
     payload: me
   };
 }
+
+export const FETCH_HOME_DATA = 'FETCH_HOME_DATA';
+export function fetchHomeData() {
+  return {
+    type: FETCH_HOME_DATA,
+    payload: [
+      {
+        id: 1,
+        text: 'content of 1'
+      },
+      {
+        id: 2,
+        text: 'content of 2'
+      }
+    ]
+  };
+}

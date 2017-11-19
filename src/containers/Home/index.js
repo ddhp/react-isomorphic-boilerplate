@@ -18,7 +18,8 @@ export class Home extends Component {
     accumulateCount: PropTypes.func,
     updateMeID: PropTypes.func,
     updateMe: PropTypes.func,
-    me: PropTypes.object
+    me: PropTypes.object,
+    posts: PropTypes.array
   }
 
   constructor(props) {
@@ -65,7 +66,8 @@ export class Home extends Component {
 
   render() {
     debug('render method');
-    const { name, sex } = this.props.me;
+    const { name, sex } = this.props.me,
+          { posts } = this.props;
     return (
       <div className="page--home">
         <h1 className="demo--font">
@@ -76,6 +78,16 @@ export class Home extends Component {
 
         <div className="demo--bg"></div>
         <img className="demo--img-src" src={logoImg} />
+
+        <ul className="posts">
+          {posts.map((p) => {
+            return (
+              <li key={p.id}>
+                {p.id}, {p.text}
+              </li>
+            );
+          })}
+        </ul>
         counter: {this.props.count}
         <div>name: {name}</div>
         <div>sex: {sex}</div>
@@ -94,11 +106,17 @@ export class Home extends Component {
 
 function mapStateToProps(state) {
   const count = _get(state, 'pages.home.count', 0),
-        me = _get(state, 'entities.me', {});
+        entities = _get(state, 'entities'),
+        me = _get(entities, 'me'),
+        homeData = _get(entities, 'homeData'),
+        posts = Object.keys(homeData.byId).map((k) => {
+          return homeData.byId[k];
+        });
 
   return {
     count,
-    me
+    me,
+    posts
   };
 }
 

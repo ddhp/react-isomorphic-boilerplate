@@ -2,7 +2,7 @@ import Express from 'express';
 import stdout from '../stdout';
 import pagesMiddleware from './pages';
 
-const debug = stdout('server-app');
+const debug = stdout('app-server');
 const app = Express(),
       port = 3333;
 

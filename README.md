@@ -26,6 +26,7 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 ### Test
 - [AVA](https://github.com/avajs/ava) as test runner.
 - Don't use [webpack alias](https://webpack.js.org/configuration/resolve/#resolve-alias) in code base
+- TODO: still don't know to mock dependency in AVA
 
 ### Production build
 1. `npm run build:client:prod`
@@ -39,9 +40,10 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 5. ~test on server~
 6. ~source map~
 7. ~test on react component~
-7.1. coverage report
+7-1. ~coverage report~
 8. ~apply react router~
-9. apply logic base on path(seo optimized)
+9. ~apply logic base on path(seo optimized)~
+10. set head info
 
 ## LICENSE
 MIT

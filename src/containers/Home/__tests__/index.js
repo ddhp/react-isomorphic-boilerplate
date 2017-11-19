@@ -12,7 +12,17 @@ let props = {
   },
   accumulateCount: () => {},
   updateMeID: () => {},
-  updateMe: () => {}
+  updateMe: () => {},
+  posts: [
+    {
+      id: 1,
+      text: 'content of 1'
+    },
+    {
+      id: 2,
+      text: 'content of 2'
+    }
+  ]
 };
 
 test('componentDidMount calls accumulateCount', t => {
