@@ -21,7 +21,7 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 
 
 ### Style
-- [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss) imports [reset.css](https://www.npmjs.com/package/reset-css)
+- [reset.css](https://www.npmjs.com/package/reset-css) reseting default style imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
 
 ### Test
 - [AVA](https://github.com/avajs/ava) as test runner.
