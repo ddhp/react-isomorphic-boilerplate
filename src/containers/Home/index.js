@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {  get as _get } from 'lodash';
 import { Link } from 'react-router-dom';
-import { accumulateCount, updateMeID, updateMe } from '../../actions';
+import { accumulateCount, updateMeID, updateMe, addPost } from '../../actions';
 import stdout from '../../stdout';
 const debug = stdout('container/home/index');
 
@@ -18,17 +18,23 @@ export class Home extends Component {
     accumulateCount: PropTypes.func,
     updateMeID: PropTypes.func,
     updateMe: PropTypes.func,
+    addPost: PropTypes.func,
     me: PropTypes.object,
     posts: PropTypes.array
   }
 
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {
+      value: '',
+      postText: ''
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onPostTextChanged = this.onPostTextChanged.bind(this);
+    this.onPostSubmit = this.onPostSubmit.bind(this);
   }
 
   handleChange(event) {
@@ -46,6 +52,19 @@ export class Home extends Component {
     this.props.updateMe({
       id: Math.random().toString()
     });
+  }
+
+  onPostTextChanged(e) {
+    this.setState({postText: e.target.value});
+  }
+
+  onPostSubmit(e) {
+    e.preventDefault();
+    const { postText } = this.state,
+          payload = {
+            text: postText
+          };
+    this.props.addPost(payload);
   }
 
   componentDidMount() {
@@ -88,6 +107,15 @@ export class Home extends Component {
             );
           })}
         </ul>
+
+        <form className="form--post" onSubmit={this.onPostSubmit}>
+          <label>
+          TEXT:
+            <input className="input--post-text" type="text" value={this.state.postText} onChange={this.onPostTextChanged} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+
         counter: {this.props.count}
         <div>name: {name}</div>
         <div>sex: {sex}</div>
@@ -130,6 +158,9 @@ function mapDispatchToProps(dispatch) {
     },
     updateMe: (me) => {
       return dispatch(updateMe(me));
+    },
+    addPost: (post) => {
+      return dispatch(addPost(post));
     }
   };
 }

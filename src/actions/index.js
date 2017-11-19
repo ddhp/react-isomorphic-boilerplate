@@ -1,4 +1,7 @@
 // import { get as _get } from 'lodash';
+import stdout from '../stdout';
+const debug = stdout('action');
+import request from 'superagent';
 
 export const ACCUMULATE_COUNT = 'ACCUMULATE_COUNT';
 export function accumulateCount() {
@@ -27,17 +30,35 @@ export function updateMe(me) {
 
 export const FETCH_POSTS = 'FETCH_POSTS';
 export function fetchPosts() {
-  return {
-    type: FETCH_POSTS,
-    payload: [
-      {
-        id: 1,
-        text: 'content of 1'
-      },
-      {
-        id: 2,
-        text: 'content of 2'
-      }
-    ]
+  return function (dispatch) {
+    return request
+      .get('http://localhost:3333/api/post')
+      .then((res) => {
+        dispatch({
+          type: FETCH_POSTS,
+          payload: JSON.parse(res.text)
+        });
+      }, (err) => {
+        debug(err);
+      });
+  };
+}
+
+export const ADD_POST = 'ADD_POST';
+export function addPost(post) {
+  return function (dispatch) {
+    return request
+      .post('/api/post')
+      .send(post)
+      .end((err, res) => {
+        if (err) {
+          debug(err);
+        } else {
+          dispatch({
+            type: ADD_POST,
+            payload: JSON.parse(res.text)
+          });
+        }
+      });
   };
 }

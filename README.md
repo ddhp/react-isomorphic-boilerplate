@@ -44,6 +44,7 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 8. ~apply react router~
 9. ~apply logic base on path(seo optimized)~
 10. set head info
+11. ~fetch data from and submit to local api~
 
 ## LICENSE
 MIT
