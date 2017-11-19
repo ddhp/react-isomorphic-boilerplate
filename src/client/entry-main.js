@@ -1,7 +1,8 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
-import Home from '../containers/Home';
+import { BrowserRouter as Router, browserHistory } from 'react-router-dom';
+import Routes from '../routes/entry-main';
 import configureStore from '../configureStore';
 import './global.scss';
 
@@ -19,7 +20,9 @@ localStorage.debug = '*';
 
 hydrate(
   <Provider store={store}>
-    <Home />
+    <Router history={browserHistory}>
+      <Routes />
+    </Router>
   </Provider>,
   document.getElementById('app-mount-point')
 );

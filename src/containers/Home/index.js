@@ -3,6 +3,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {  get as _get } from 'lodash';
+import { Link } from 'react-router-dom';
 import { accumulateCount, updateMeID, updateMe } from '../../actions';
 import stdout from '../../stdout';
 const debug = stdout('container/home/index');
@@ -71,6 +72,7 @@ export class Home extends Component {
           Title in Spectral SC
           A red flair silhouetted the jagged edge of a wing
         </h1>
+        <Link to="/about">To About</Link>
 
         <div className="demo--bg"></div>
         <img className="demo--img-src" src={logoImg} />

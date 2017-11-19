@@ -1,11 +1,6 @@
-import React from 'react';
-import ReactServer from 'react-dom/server';
 import Express from 'express';
-import { Provider } from 'react-redux';
-import Layout from './layout';
-import configureStore from '../configureStore';
-import Home from '../containers/Home';
 import stdout from '../stdout';
+import pagesMiddleware from './pages';
 
 const debug = stdout('server-app');
 const app = Express(),
@@ -14,25 +9,7 @@ const app = Express(),
 //Serve static files
 app.use('/assets', Express.static('dist'));
 
-app.use('/', (req, res) => {
-  const store = configureStore(),
-        reduxState = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
-
-  const content = (
-    <Provider store={store}>
-      <Home />
-    </Provider>
-  );
-
-  const htmlString = ReactServer.renderToString(
-    <Layout 
-      content={content}
-      reduxState={reduxState}
-    />
-  );
-
-  res.send(`<!DOCTYPE HTML>${htmlString}`);
-});
+pagesMiddleware(app);
 
 const server = app.listen(port, function () {
   const host = server.address().address,
