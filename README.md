@@ -5,9 +5,9 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 ### development
 0. `yarn`
 and run 3 process to start developing your app:
-1. `npm run build:client:dev:w`: build client side code and watch file change.
-2. `npm run build:server:dev:w`: build server side conde and watch file change.
-3. `npm start`: nodemon executing `dist/server.js`, and only watches on it's change,
+1. `yarn run build:client:dev:w`: build client side code and watch file change.
+2. `yarn run build:server:dev:w`: build server side conde and watch file change.
+3. `yarn start`: nodemon executing `dist/server.js`, and only watches on it's change,
    [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given,
    you can debug nodejs server on chrome-devtools.
 
@@ -29,8 +29,8 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 - TODO: still don't know to mock dependency in AVA
 
 ### Production build
-1. `npm run build:client:prod`
-2. `npm run build:server:prod`
+1. `yarn run build:client:prod`
+2. `yarn run build:server:prod`
 
 ## TODOS:
 1. ~hash key~
