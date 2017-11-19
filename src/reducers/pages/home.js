@@ -3,11 +3,11 @@ const initialState = {
 };
 
 export default function homeReducer(state = initialState, action) {
-  const payload = action.payload;
+  // const payload = action.payload;
   switch (action.type) {
     case 'ACCUMULATE_COUNT': {
       return Object.assign({}, state, {
-        count: payload
+        count: ++ state.count
       });
       // state.count = payload
       // return state

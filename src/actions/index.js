@@ -1,13 +1,10 @@
-import { get as _get } from 'lodash';
+// import { get as _get } from 'lodash';
 
 export const ACCUMULATE_COUNT = 'ACCUMULATE_COUNT';
 export function accumulateCount() {
-  return (dispatch, getState) => {
-    let count = _get(getState(), 'pages.home.count', 0);
-    count ++;
+  return (dispatch/*, getState*/) => {
     dispatch({
       type: ACCUMULATE_COUNT,
-      payload: count
     });
   };
 }

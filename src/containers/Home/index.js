@@ -52,17 +52,17 @@ export class Home extends Component {
     this.props.accumulateCount();
   }
   
-  shouldComponentUpdate(nextProps, nextState) {
-    const { name: thisName, sex: thisSex } = this.props.me,
-          { name: nextName, sex: nextSex } = nextProps.me;
-    if (thisName !== nextName || 
-        thisSex !== nextSex ||
-        this.state !== nextState) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   const { name: thisName, sex: thisSex } = this.props.me,
+  //         { name: nextName, sex: nextSex } = nextProps.me;
+  //   if (thisName !== nextName || 
+  //       thisSex !== nextSex ||
+  //       this.state !== nextState) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   render() {
     debug('render method');
