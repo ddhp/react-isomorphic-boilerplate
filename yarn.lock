@@ -1442,6 +1442,12 @@ call-signature@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/call-signature/-/call-signature-0.0.2.tgz#a84abc825a55ef4cb2b028bd74e205a65b9a4996"
 
+caller-id@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/caller-id/-/caller-id-0.1.0.tgz#59bdac0893d12c3871408279231f97458364f07b"
+  dependencies:
+    stack-trace "~0.0.7"
+
 caller-path@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/caller-path/-/caller-path-0.1.0.tgz#94085ef63581ecd3daa92444a8fe94e82577751f"
@@ -4385,6 +4391,12 @@ mkdirp@0.5.1, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkd
   dependencies:
     minimist "0.0.8"
 
+mock-require@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/mock-require/-/mock-require-2.0.2.tgz#1eaa71aad23013773d127dc7e91a3fbb4837d60d"
+  dependencies:
+    caller-id "^0.1.0"
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -6190,6 +6202,10 @@ ssri@^5.0.0:
   resolved "https://registry.yarnpkg.com/ssri/-/ssri-5.0.0.tgz#13c19390b606c821f2a10d02b351c1729b94d8cf"
   dependencies:
     safe-buffer "^5.1.0"
+
+stack-trace@~0.0.7:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
 
 stack-utils@^1.0.1:
   version "1.0.1"

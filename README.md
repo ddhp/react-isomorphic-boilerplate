@@ -9,8 +9,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 
 ## Concept
 ### Development
-0. `yarn`
-and run 3 process to start developing your app:
+0. `yarn` and run 3 processes to start developing your app:
 1. `yarn run build:client:dev:w`: build client side code and watch file change.
 2. `yarn run build:server:dev:w`: build server side conde and watch file change.
 3. `yarn start`: nodemon executing `dist/server.js`, and only watches on it's change,
@@ -35,16 +34,19 @@ import stdout and define namespace ([example](https://github.com/ddhp/react-isom
 - [reset.css](https://www.npmjs.com/package/reset-css) reseting default style imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
 
 ### SEO
-- define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js))
+- Define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js))
 - [react-helmet](https://github.com/nfl/react-helmet) help us set head (or specific property) in container and overwrites setting from parent, very handy.
-- define your basic helmet setting in each route file, see [src/routers/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js),
+- Define your basic helmet setting in each route file, see [src/routers/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js),
   my idea is - head can be different for different entry of app.
-- overwrites head info in containers. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/About/index.js))
+- Overwrites head info in containers. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/About/index.js))
 
 ### Test
 - [AVA](https://github.com/avajs/ava) as test runner.
 - Don't use [webpack alias](https://webpack.js.org/configuration/resolve/#resolve-alias) in code base
-- TODO: still don't know to mock dependency in AVA
+- We use [mock-require](https://github.com/boblauer/mock-require) to mock dependencies to make test as independent as possible.
+  As it's name says, it only support `require` not import, so if your importing module has some dependencies needs to be mocked,
+  remember to `require` instead of import them in your test code.
+  Also append `.default` to get the right reference if your module is defined in es6 way. (see [server test](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/__tests__/index.js) for example)
 
 ### Production build
 1. `yarn run build:client:prod`
