@@ -8,10 +8,10 @@
 This boilerplate would help you build a react/redux/react-router isomorphic/universal web app
 
 ## Feature
-- isomorphic: same code runs on server and browser
-- SEO: information benefits to search engine would be rendered on server side
-- easy to start
-- production ready
+- isomorphic: same code runs on server and browser.
+- SEO: information benefits to search engine would be rendered on server side.
+- easy to start.
+- production ready.
 
 ## Concept
 ### Development
@@ -26,12 +26,15 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 
 ### Log
 import stdout and define namespace ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/pages.js)), then turn on debug message depends on platform:
-- browser: allow debug log by type `localStorage.debug = '*'` in console
+- browser: allow debug log by type `localStorage.debug = '*'` in console.
 - server: run node with `DEBUG=*`, see `package.json.scripts.start`.
 
+In production build, server side log would stay untouched to easily debug by checking log file, but on browser side,
+all debug message would be removed by [remove-debug-loader](https://github.com/ddhp/remove-debug-loader).
+
 ### Packing code
-- Fonts: font face are set in `src/client/global.scss`
-- Images: set src relative to your js or scss file, 
+- Fonts: font face are set in `src/client/global.scss`.
+- Images: set src relative to your js or scss file.
 
 [extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract them (font, image) into static assets and handle url transform.
 
@@ -42,16 +45,17 @@ import stdout and define namespace ([example](https://github.com/ddhp/react-isom
 ### SEO
 - Define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js))
 - [react-helmet](https://github.com/nfl/react-helmet) help us set head (or specific property) in container and overwrites setting from parent, very handy.
-- Define your basic helmet setting in each route file, see [src/routers/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js),
-  my idea is - head can be different for different entry of app.
+- Define your basic helmet setting in each route file, see [src/routers/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js).
+  My idea is - head can be different for different entries of app.
 - Overwrites head info in containers. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/About/index.js))
 
 ### Test
 - [AVA](https://github.com/avajs/ava) as test runner.
-- Don't use [webpack alias](https://webpack.js.org/configuration/resolve/#resolve-alias) in code base
+- Don't use [webpack alias](https://webpack.js.org/configuration/resolve/#resolve-alias) in code base.
 - We use [mock-require](https://github.com/boblauer/mock-require) to mock dependencies to make test as independent as possible.
-  As it's name says, it only support `require` not import, so if your importing module has some dependencies needs to be mocked,
-  remember to `require` instead of import them in your test code.
+  
+  As it's name says, it only support `require` not import, so if your importing module has some dependencies needs to be mocked, remember to `require` instead of import them in your test code.
+  
   Also append `.default` to get the right reference if your module is defined in es6 way. (see [server test](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/__tests__/index.js) for example)
 
 ### Production build
