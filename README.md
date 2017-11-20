@@ -1,6 +1,12 @@
 # react-isomorphic-boilerplate
 This boilerplate would help you build a react/redux/react-router isomorphic/universal web app
 
+## Feature
+- isomorphic: same code runs on server and browser
+- SEO: information benefits to search engine would be render on server side
+- easy to start
+- production ready
+
 ## Concept
 ### development
 0. `yarn`
@@ -23,6 +29,13 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 ### Style
 - [reset.css](https://www.npmjs.com/package/reset-css) reseting default style imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
 
+### SEO
+- define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/entry-main.js))
+- [react-helmet](https://github.com/nfl/react-helmet) help us set head (or specific property) in container and overwrites setting from parent, very handy.
+- define your basic helmet setting in each route file, see [src/routers/entry-main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/entry-main.js),
+  my idea is - head can be different for different entry of app.
+- overwrites head info in containers. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/About/index.js))
+
 ### Test
 - [AVA](https://github.com/avajs/ava) as test runner.
 - Don't use [webpack alias](https://webpack.js.org/configuration/resolve/#resolve-alias) in code base
@@ -43,7 +56,7 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 7-1. ~coverage report~
 8. ~apply react router~
 9. ~apply logic base on path(seo optimized)~
-10. set head info
+10. ~set head info~
 11. ~fetch data from and submit to local api~
 
 ## LICENSE
