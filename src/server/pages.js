@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { /*get as _get,*/ isFunction as _isFunction } from 'lodash';
 import Layout from './layout';
 import configureStore from '../configureStore';
-import EntryMainRoute, { getRoute } from '../routes/entry-main';
+import MainRoute, { getRoute } from '../routes/main';
 import stdout from '../stdout';
 const debug = stdout('app-server');
 
@@ -56,7 +56,7 @@ module.exports = (app) => {
     const content = (
       <Provider store={store}>
         <Router location={url} context={routerContext}>
-          <EntryMainRoute />
+          <MainRoute />
         </Router>
       </Provider>
     );

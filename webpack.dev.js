@@ -15,7 +15,7 @@ const extractSCSS = new ExtractTextPlugin({
 
 module.exports = {
   entry: { 
-    client: path.resolve(__dirname, 'src/client/entry-main')
+    main: path.resolve(__dirname, 'src/entries/main')
   },
   output: {
     path: path.join(__dirname, '/dist'),

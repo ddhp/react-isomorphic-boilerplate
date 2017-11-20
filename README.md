@@ -8,7 +8,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 - production ready
 
 ## Concept
-### development
+### Development
 0. `yarn`
 and run 3 process to start developing your app:
 1. `yarn run build:client:dev:w`: build client side code and watch file change.
@@ -18,6 +18,11 @@ and run 3 process to start developing your app:
    you can debug nodejs server on chrome-devtools.
 
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
+
+### Log
+import stdout and define namespace. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/pages.js))
+- browser: allow debug log by type `localStorage.debug = '*'` in console
+- server: run node with `DEBUG=*`, see `package.json.scripts.start`.
 
 ### Packing code
 - Fonts: font face are set in `src/client/global.scss`
@@ -30,9 +35,9 @@ All development code are built with [source map](http://blog.teamtreehouse.com/i
 - [reset.css](https://www.npmjs.com/package/reset-css) reseting default style imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
 
 ### SEO
-- define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/entry-main.js))
+- define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js))
 - [react-helmet](https://github.com/nfl/react-helmet) help us set head (or specific property) in container and overwrites setting from parent, very handy.
-- define your basic helmet setting in each route file, see [src/routers/entry-main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/entry-main.js),
+- define your basic helmet setting in each route file, see [src/routers/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js),
   my idea is - head can be different for different entry of app.
 - overwrites head info in containers. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/About/index.js))
 
