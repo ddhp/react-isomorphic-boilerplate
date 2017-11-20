@@ -119,7 +119,7 @@ export class Home extends Component {
         counter: {this.props.count}
         <div>name: {name}</div>
         <div>sex: {sex}</div>
-        <form onSubmit={this.handleSubmit}>
+        <form className="form--me" onSubmit={this.handleSubmit}>
           <label>
           ID:
             <input className="input--id" type="text" value={this.state.value} onChange={this.handleChange} />

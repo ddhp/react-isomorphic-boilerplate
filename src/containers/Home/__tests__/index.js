@@ -59,7 +59,7 @@ test('handles when submit', t => {
       value: 'test-id'
     }
   });
-  wrapper.find('form').simulate('submit', {
+  wrapper.find('.form--me').simulate('submit', {
     preventDefault: preventDefaultSpy
   });
   t.true(handleSubmitSpy.calledOnce);
