@@ -10,3 +10,7 @@ install:
 cache:
   directories:
     - node_modules
+
+after_success:
+  - yarn run report
+  - ./node_modules/.bin/codecov --file=./coverage/lcov.info
