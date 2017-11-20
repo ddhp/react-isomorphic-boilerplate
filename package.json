@@ -67,7 +67,8 @@
   "dependencies": {
     "express": "^4.16.2",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "react-helmet": "^5.2.0"
   },
   "description": "This boilerplate would help you build a react/redux/react-router isomorphic/universal web app",
   "repository": {

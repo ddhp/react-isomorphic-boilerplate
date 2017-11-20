@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { get as _get, isFunction as _isFunction } from 'lodash';
 import { Route, Redirect, Switch, matchPath } from 'react-router';
 import { withRouter } from 'react-router-dom';
@@ -10,7 +11,6 @@ import { fetchPosts } from '../actions';
 
 /**
  * loadData: related action(s) to loadData, possibly given react router match and req query
- * setHead: set head logic
  * redirect: redirect logic
  *
  */
@@ -26,14 +26,6 @@ export const getRoutes = () => {
         // it would be a promise if it's an aync request
         return fetchPosts();
       },
-      // setHead: (/*match, query*/) => {
-      //   // const channelId = query.id
-      //   // return setHeadChannel({
-      //   //   params: {
-      //   //     channelId
-      //   //   }
-      //   // })
-      // },
       redirect: () => {
         return false;
       }
@@ -71,22 +63,29 @@ export class EntryMainRoute extends Component {
           redirect = currentRoute.redirect ? _isFunction(currentRoute.redirect) ? currentRoute.redirect() : currentRoute.redirect : false;
 
     return (
-      <Switch>
-        {redirect ? <Redirect to={redirect} /> : null}
-        {routes.map((route) => {
-          const { component: Component, key, ...rest } = route;
+      <div>
+        <Helmet titleTemplate="%s - by ddhp">
+          <title>title set in entry-main</title>
+          <meta name="description" content="react isomorphic boilerplate by ddhp" />
+          <meta name="og:title" content="title set in entry-main" />
+        </Helmet>
+        <Switch>
+          {redirect ? <Redirect to={redirect} /> : null}
+          {routes.map((route) => {
+            const { component: Component, key, ...rest } = route;
 
-          return (
-            <Route key={key} {...rest} render={props => {
-              return (
-                <div>
-                  <Component {...props} />
-                </div>
-              );
-            }} />
-          );
-        })}
-      </Switch>
+            return (
+              <Route key={key} {...rest} render={props => {
+                return (
+                  <div>
+                    <Component {...props} />
+                  </div>
+                );
+              }} />
+            );
+          })}
+        </Switch>
+      </div>
     );
   }
 }

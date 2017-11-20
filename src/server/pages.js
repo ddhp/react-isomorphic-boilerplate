@@ -2,6 +2,7 @@ import React from 'react';
 import ReactServer from 'react-dom/server';
 import { StaticRouter as Router, matchPath } from 'react-router';
 import { Provider } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import { /*get as _get,*/ isFunction as _isFunction } from 'lodash';
 import Layout from './layout';
 import configureStore from '../configureStore';
@@ -25,7 +26,7 @@ function applyRouteCheckResult(req, res, next) {
 
   const route = getRoute(path),
         match = matchPath(path, route),
-        { loadData, setHead } = route;
+        { loadData } = route;
 
   let loadDataPromise;
 
@@ -39,8 +40,6 @@ function applyRouteCheckResult(req, res, next) {
   // order: LOAD_DATA => SET_HEAD
   Promise.all(promises)
     .then(() => {
-      // possibly setHead not set
-      if (_isFunction(setHead)) store.dispatch(setHead(match, query));
       next();
     })
     .catch((err) => {
@@ -62,10 +61,14 @@ module.exports = (app) => {
       </Provider>
     );
 
+    ReactServer.renderToString(content); // render to sting to get helmet setting
+    const head = Helmet.renderStatic();
+
     const htmlString = ReactServer.renderToString(
       <Layout 
         content={content}
         reduxState={reduxState}
+        head={head}
       />
     );
 

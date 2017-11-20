@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import {  get as _get } from 'lodash';
 import { Link } from 'react-router-dom';
@@ -89,6 +90,11 @@ export class Home extends Component {
           { posts } = this.props;
     return (
       <div className="page--home">
+        <Helmet>
+          <title>Home</title>
+          <meta name="description" content="home page shows posts" />
+          <meta name="og:title" content="home page" />
+        </Helmet>
         <h1 className="demo--font">
           Title in Spectral SC
           A red flair silhouetted the jagged edge of a wing

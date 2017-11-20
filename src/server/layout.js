@@ -7,22 +7,28 @@ const assetsJSON = require('../../webpack-assets.json');
 export default class Layout extends Component {
   static propTypes = {
     content: PropTypes.object,
-    reduxState: PropTypes.string
+    reduxState: PropTypes.string,
+    head: PropTypes.object
   }
 
   render() {
-    const { content, reduxState } = this.props;
+    const { content, reduxState, head } = this.props;
     return (
       <html>
         <head>
           <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+          {head.title.toComponent()}
+          {head.meta.toComponent()}
+
+          <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+          <link rel="apple-touch-icon" href="/assets/images/icon.png" />
           <link href={assetsJSON.client.css} rel="stylesheet" />
 
           <script type="text/javascript" charSet="utf-8" dangerouslySetInnerHTML={{__html: `
             window.__REDUX_STATE__ = ${reduxState}
-            `}} />
+          `}} />
         </head>
         <body>
           <div id="app-mount-point">
