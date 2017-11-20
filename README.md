@@ -3,7 +3,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 
 ## Feature
 - isomorphic: same code runs on server and browser
-- SEO: information benefits to search engine would be render on server side
+- SEO: information benefits to search engine would be rendered on server side
 - easy to start
 - production ready
 
@@ -20,7 +20,7 @@ and run 3 process to start developing your app:
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
 
 ### Log
-import stdout and define namespace. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/pages.js))
+import stdout and define namespace ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/pages.js)), then turn on debug message depends on platform:
 - browser: allow debug log by type `localStorage.debug = '*'` in console
 - server: run node with `DEBUG=*`, see `package.json.scripts.start`.
 
