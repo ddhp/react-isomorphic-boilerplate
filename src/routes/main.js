@@ -7,6 +7,7 @@ import { Route, Redirect, Switch, matchPath } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import Home from '../containers/Home';
 import About from '../containers/About';
+import Demo from '../containers/Demo';
 import { fetchPosts } from '../actions';
 
 /**
@@ -34,6 +35,10 @@ export const getRoutes = () => {
       key: 'about',
       component: About,
       redirect: false
+    }, {
+      path: '/demo',
+      key: 'demo',
+      component: Demo
     }
   ];
 };

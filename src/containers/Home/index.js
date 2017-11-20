@@ -7,11 +7,9 @@ import {  get as _get } from 'lodash';
 import { Link } from 'react-router-dom';
 import { accumulateCount, updateMeID, updateMe, addPost } from '../../actions';
 import stdout from '../../stdout';
-const debug = stdout('container/home/index');
+const debug = stdout('container/Home');
 
 import './style.scss';
-import logoImg from '../../assets/images/react-logo.png';
-debug(logoImg);
 
 export class Home extends Component {
   static propTypes = {
@@ -95,14 +93,8 @@ export class Home extends Component {
           <meta name="description" content="home page shows posts" />
           <meta name="og:title" content="home page" />
         </Helmet>
-        <h1 className="demo--font">
-          Title in Spectral SC
-          A red flair silhouetted the jagged edge of a wing
-        </h1>
         <Link to="/about">To About</Link>
-
-        <div className="demo--bg"></div>
-        <img className="demo--img-src" src={logoImg} />
+        <Link to="/demo">To Demo</Link>
 
         <ul className="posts">
           {posts.map((p) => {
