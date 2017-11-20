@@ -1,4 +1,5 @@
 # react-isomorphic-boilerplate
+[![npm Version](https://img.shields.io/npm/v/react-isomorphic-boilerplate.svg?style=flat-square)](https://www.npmjs.org/package/react-isomorphic-boilerplate)
 [![Build Status](https://img.shields.io/travis/ddhp/react-isomorphic-boilerplate/master.svg?style=flat-square)](https://travis-ci.org/ddhp/react-isomorphic-boilerplate)
 [![Dependency Status](https://dependencyci.com/github/ddhp/react-isomorphic-boilerplate/badge)](https://dependencyci.com/github/ddhp/react-isomorphic-boilerplate)
 
