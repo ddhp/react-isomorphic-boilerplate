@@ -12,5 +12,5 @@ cache:
     - node_modules
 
 after_success:
-  - yarn run report
+  - yarn run coverage
   - ./node_modules/.bin/codecov --file=./coverage/lcov.info
