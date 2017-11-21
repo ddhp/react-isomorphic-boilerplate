@@ -14,7 +14,6 @@ import './style.scss';
 export class Home extends Component {
   static propTypes = {
     dummyAction: PropTypes.func,
-    me: PropTypes.object,
     posts: PropTypes.array
   }
 
@@ -24,8 +23,8 @@ export class Home extends Component {
 
   render() {
     debug('render method');
-    const { name } = this.props.me,
-          { posts } = this.props;
+    const { posts } = this.props;
+
     return (
       <div className="page--home">
         <Helmet>
@@ -45,8 +44,6 @@ export class Home extends Component {
             );
           })}
         </ul>
-
-        <div>name: {name}</div>
       </div>
     );
   }
@@ -54,14 +51,12 @@ export class Home extends Component {
 
 function mapStateToProps(state) {
   const entities = _get(state, 'entities'),
-        me = _get(entities, 'me'),
         post = _get(entities, 'post'),
         posts = Object.keys(post.byId).map((k) => {
           return post.byId[k];
         });
 
   return {
-    me,
     posts
   };
 }

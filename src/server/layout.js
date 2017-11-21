@@ -24,6 +24,8 @@ export default class Layout extends Component {
 
           <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
           <link rel="apple-touch-icon" href="/assets/images/icon.png" />
+
+          <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
           <link href={assetsJSON.main.css} rel="stylesheet" />
 
           <script type="text/javascript" charSet="utf-8" dangerouslySetInnerHTML={{__html: `

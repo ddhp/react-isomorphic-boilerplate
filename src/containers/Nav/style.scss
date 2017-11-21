@@ -1,16 +1,17 @@
 nav {
+  position: relative;
   text-align: center;
 
   a {
     display: inline-block;
     font-family: 'Spectral SC', serif;
     padding: 2rem 2rem;
-    text-decoration: none;
-    color: #2c2c2c;
-    transition: color 200ms ease-in-out;
+  }
 
-    &:hover {
-      color: #9a9a9a;
-    }
+  .user-info {
+    position: absolute;
+    top: 1.8rem;
+    right: 2rem;
+    color: #999;
   }
 }

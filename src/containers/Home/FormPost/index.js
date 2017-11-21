@@ -38,11 +38,13 @@ export class FormPost extends Component {
   render() {
     return (
       <form className="form--post" onSubmit={this.onPostSubmit}>
-        <label>
-        TEXT:
-          <input className="input--post-text" type="text" value={this.state.postText} onChange={this.onPostTextChanged} />
-        </label>
-        <input type="submit" value="Submit" />
+        <p className="form-group title">Anything to say?</p>
+        <div className="form-row">
+          <textarea className="input--post-text" value={this.state.postText} onChange={this.onPostTextChanged} />
+          <div className="btn-wrapper">
+            <button className="btn--post-submit" type="submit">Submit</button>
+          </div>
+        </div>
       </form>
     );
   }

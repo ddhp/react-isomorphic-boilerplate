@@ -9,6 +9,7 @@ import Nav from '../containers/Nav';
 import Home from '../containers/Home';
 import About from '../containers/About';
 import Demo from '../containers/Demo';
+import Footer from '../containers/Footer';
 import { fetchPosts } from '../actions';
 
 /**
@@ -92,6 +93,7 @@ export class EntryMainRoute extends Component {
             );
           })}
         </Switch>
+        <Footer />
       </div>
     );
   }
