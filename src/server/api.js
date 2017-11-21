@@ -16,7 +16,7 @@ const router = express.Router();
 // don't know why import doesn't work
 const schemas = require('../schemas');
 
-router.get('/post', (req, res) => {
+export const postcb = (req, res) => {
   const post = _get(store.getState(), 'entities.post');
   let posts = Object.keys(post).map((k) => {
     return post[k];
@@ -30,9 +30,11 @@ router.get('/post', (req, res) => {
   const response = normalize(posts, [schemas.post]);
   debug(response);
   res.send(response);
-});
+};
 
-router.post('/post/vote', bodyParser.json(), (req, res) => {
+router.get('/post', postcb);
+
+export const postvotecb = (req, res) => {
   const { id, isUp } = req.body;
   // get post from db
   const post = _get(store.getState(), `entities.post.${id}`, {});
@@ -63,7 +65,8 @@ router.post('/post/vote', bodyParser.json(), (req, res) => {
   });
 
   res.send(response);
-});
+};
+router.post('/post/vote', bodyParser.json(), postvotecb);
 
 router.post('/post', bodyParser.json(), (req, res) => {
   const { text, arthur } = req.body,
@@ -92,6 +95,6 @@ router.post('/post', bodyParser.json(), (req, res) => {
   res.send(normalized);
 });
 
-module.exports = (app) => {
+export default (app) => {
   app.use('/api', router);
 };
