@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import {  get as _get } from 'lodash';
-import { Link } from 'react-router-dom';
 import { accumulateCount, updateMeID, updateMe, addPost } from '../../actions';
 import stdout from '../../stdout';
 const debug = stdout('container/Home');
@@ -93,8 +92,6 @@ export class Home extends Component {
           <meta name="description" content="home page shows posts" />
           <meta name="og:title" content="home page" />
         </Helmet>
-        <Link to="/about">To About</Link>
-        <Link to="/demo">To Demo</Link>
 
         <ul className="posts">
           {posts.map((p) => {

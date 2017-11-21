@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { get as _get, isFunction as _isFunction } from 'lodash';
 import { Route, Redirect, Switch, matchPath } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import Nav from '../containers/Nav';
 import Home from '../containers/Home';
 import About from '../containers/About';
 import Demo from '../containers/Demo';
@@ -74,6 +75,7 @@ export class EntryMainRoute extends Component {
           <meta name="description" content="react isomorphic boilerplate by ddhp" />
           <meta name="og:title" content="title set in entry-main" />
         </Helmet>
+        <Nav />
         <Switch>
           {redirect ? <Redirect to={redirect} /> : null}
           {routes.map((route) => {

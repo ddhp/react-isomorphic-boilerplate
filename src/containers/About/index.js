@@ -1,7 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
 
 export default class About extends Component {
   render() {
@@ -14,7 +13,6 @@ export default class About extends Component {
         </Helmet>
       
         About page
-        <Link to="/">Home</Link>
       </div>
     );
   }
