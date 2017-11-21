@@ -9,7 +9,8 @@ const debug = stdout('reducer:post');
  *  - arthur
  *  - createdAt
  *  - text
- *  - vote
+ *  - upvote
+ *  - downvote
  *
  */
 const initialState = {};
@@ -49,7 +50,8 @@ export default function postReducer(state = initialState, action) {
         return update(state, {
           [payload.result]: {
             $merge: {
-              vote: response.vote
+              upvote: response.upvote,
+              downvote: response.downvote
             }
           }
         });

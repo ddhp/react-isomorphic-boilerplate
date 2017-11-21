@@ -36,15 +36,16 @@ export class Postlist extends Component {
   }
 
   render() {
-    const { post: p } = this.props;
+    const { post: p } = this.props,
+          { downvote, upvote } = p;
     return (
       <li className="postlist">
         <p className="text">{p.text}</p>
         <div>
           <span className="arthur">{p.arthur} </span>
           <span className="createdAt">{moment().from(p.createdAt)}</span>
-          <button onClick={this.onUpvote}> + </button>
-          <button onClick={this.onDownvote}> - </button>
+          <button onClick={this.onUpvote}> +{upvote} </button>
+          <button onClick={this.onDownvote}> -{downvote} </button>
         </div>
       </li>
     );

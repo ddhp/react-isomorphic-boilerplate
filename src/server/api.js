@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { get as _get, sortBy as _sortBy } from 'lodash';
+import { get as _get } from 'lodash';
 import configureStore from '../configureStore';
 import moment from 'moment';
 import { normalize } from 'normalizr';
@@ -21,7 +21,11 @@ router.get('/post', (req, res) => {
   let posts = Object.keys(post).map((k) => {
     return post[k];
   });
-  posts = _sortBy(posts, ['vote', 'createdAt']).reverse();
+  posts = posts.sort((a, b) => {
+    const scoreA = a.upvote - a.downvote;
+    const scoreB = b.upvote - b.downvote;
+    return scoreB - scoreA;
+  });
 
   const response = normalize(posts, [schemas.post]);
   debug(response);
@@ -32,23 +36,25 @@ router.post('/post/vote', bodyParser.json(), (req, res) => {
   const { id, isUp } = req.body;
   // get post from db
   const post = _get(store.getState(), `entities.post.${id}`, {});
+  debug('post', post);
 
-  let vote = post.vote || 0;
+  let upvote = post.upvote;
+  let downvote = post.downvote;
+  debug('updownvote before', upvote, downvote);
   if (isUp) {
-    vote ++;
+    upvote ++;
   } else {
-    if (vote > 0) {
-      vote --;
-    }  
+    downvote ++;
   }
+  debug('updownvote', upvote, downvote);
   let response = update(post, {
     $merge: {
-      vote
+      downvote,
+      upvote
     }
   });
   debug(response);
   response = normalize(response, schemas.post);
-  debug(response);
 
   // this is the time you notice db
   store.dispatch({
@@ -69,7 +75,8 @@ router.post('/post', bodyParser.json(), (req, res) => {
     text: text || '',
     arthur: arthur || 'anonymous',
     createdAt: moment().valueOf(),
-    vote: 0
+    upvote: 0,
+    downvote: 0
   };
 
   const normalized = normalize(response, schemas.post);
