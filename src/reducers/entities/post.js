@@ -43,22 +43,19 @@ export default function postReducer(state = initialState, action) {
     }
 
     case 'VOTE': {
-      const post = state[payload.id];
-      let vote = post.vote || 0;
-      if (payload.isUp) {
-        vote ++;
-      } else {
-        if (vote > 0) {
-          vote --;
-        }  
-      }
-      return update(state, {
-        [payload.id]: {
-          $merge: {
-            vote
+      const postEntities = _get(payload, 'entities.posts', {});
+      const response = postEntities[payload.result];
+      if (response) {
+        return update(state, {
+          [payload.result]: {
+            $merge: {
+              vote: response.vote
+            }
           }
-        }
-      });
+        });
+      } else {
+        return state;
+      }
     }
 
     default:

@@ -67,10 +67,10 @@ export function vote(info) {
     return request
       .post('/api/post/vote')
       .send(info)
-      .then(() => {
+      .then((res) => {
         dispatch({
           type: VOTE,
-          payload: info
+          payload: JSON.parse(res.text)
         });
       }, (err) => {
         debug(err);

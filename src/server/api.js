@@ -4,10 +4,12 @@ import { get as _get, sortBy as _sortBy } from 'lodash';
 import configureStore from '../configureStore';
 import moment from 'moment';
 import { normalize } from 'normalizr';
+import update from 'immutability-helper';
 
 import stdout from '../stdout';
 const debug = stdout('server/api');
 
+// store representing db
 const store = configureStore({});
 const router = express.Router();
 
@@ -27,16 +29,34 @@ router.get('/post', (req, res) => {
 });
 
 router.post('/post/vote', bodyParser.json(), (req, res) => {
-  const { id } = req.body;
-  store.dispatch({
-    type: 'VOTE',
-    payload: req.body
-  });
-  
+  const { id, isUp } = req.body;
+  // get post from db
   const post = _get(store.getState(), `entities.post.${id}`, {});
 
-  debug(post);
-  res.send(post);
+  let vote = post.vote || 0;
+  if (isUp) {
+    vote ++;
+  } else {
+    if (vote > 0) {
+      vote --;
+    }  
+  }
+  let response = update(post, {
+    $merge: {
+      vote
+    }
+  });
+  debug(response);
+  response = normalize(response, schemas.post);
+  debug(response);
+
+  // this is the time you notice db
+  store.dispatch({
+    type: 'VOTE',
+    payload: response
+  });
+
+  res.send(response);
 });
 
 router.post('/post', bodyParser.json(), (req, res) => {
