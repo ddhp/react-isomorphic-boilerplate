@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "express": "^4.16.2",
+    "moment": "^2.19.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-helmet": "^5.2.0"

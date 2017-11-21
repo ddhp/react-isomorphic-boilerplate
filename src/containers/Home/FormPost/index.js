@@ -10,6 +10,7 @@ import './style.scss';
 export class FormPost extends Component {
   static propTypes = {
     addPost: PropTypes.func,
+    name: PropTypes.string
   }
 
   constructor(props) {
@@ -29,8 +30,10 @@ export class FormPost extends Component {
   onPostSubmit(e) {
     e.preventDefault();
     const { postText } = this.state,
+          { name } = this.props,
           payload = {
-            text: postText
+            text: postText,
+            arthur: name
           };
     this.props.addPost(payload);
   }
@@ -52,10 +55,10 @@ export class FormPost extends Component {
 
 function mapStateToProps(state) {
   const entities = _get(state, 'entities'),
-        me = _get(entities, 'me');
+        name = _get(entities, 'me.name');
 
   return {
-    me
+    name
   };
 }
 

@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { get as _get } from 'lodash';
 import configureStore from '../configureStore';
+import moment from 'moment';
 import stdout from '../stdout';
 const debug = stdout('app-server');
 
@@ -15,18 +16,20 @@ router.get('/post', (req, res) => {
 });
 
 router.post('/post', bodyParser.json(), (req, res) => {
-  const { text } = req.body,
+  const { text, arthur } = req.body,
         allIds = _get(store.getState(), 'entities.post.allIds', []);
   let lastId = allIds[allIds.length -1] || 0;
   const response = {
     id: ++lastId,
-    text: text || ''
+    text: text || '',
+    arthur: arthur || 'anonymous',
+    createdAt: moment().valueOf()
   };
 
   store.dispatch({
     type: 'ADD_POST',
     payload: response
-  }); 
+  });
   debug(_get(store.getState(), 'entities.post', []));
   res.send(response);
 });

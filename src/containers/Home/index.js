@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import {  get as _get } from 'lodash';
+import moment from 'moment';
 import { dummyAction } from '../../actions';
 import FormPost from './FormPost';
 import stdout from '../../stdout';
@@ -35,11 +36,15 @@ export class Home extends Component {
 
         <FormPost />
 
-        <ul className="posts">
+        <ul className="list--posts">
           {posts.map((p) => {
             return (
-              <li key={p.id}>
-                {p.id}, {p.text}
+              <li className="post" key={p.id}>
+                <p className="text">{p.text}</p>
+                <div>
+                  <span className="arthur">{p.arthur} </span>
+                  <span className="createdAt">{moment().from(p.createdAt)}</span>
+                </div>
               </li>
             );
           })}
