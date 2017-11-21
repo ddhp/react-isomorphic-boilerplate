@@ -49,16 +49,14 @@ export function addPost(post) {
     return request
       .post('/api/post')
       .send(post)
-      .end((err, res) => {
-        if (err) {
-          debug(err);
-        } else {
-          debug(res.text);
-          dispatch({
-            type: ADD_POST,
-            payload: JSON.parse(res.text)
-          });
-        }
+      .then((res) => {
+        debug(res.text);
+        dispatch({
+          type: ADD_POST,
+          payload: JSON.parse(res.text)
+        });
+      }, (err) => {
+        debug(err);
       });
   };
 }

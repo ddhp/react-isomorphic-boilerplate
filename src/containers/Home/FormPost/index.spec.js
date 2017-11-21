@@ -6,7 +6,11 @@ import { FormPost } from './';
 
 let props = {
   name: 'test-name',
-  addPost: () => {},
+  addPost: () => {
+    return {
+      then: () => {}
+    };
+  },
 };
 
 test('call handleChange when text input changed', t => {

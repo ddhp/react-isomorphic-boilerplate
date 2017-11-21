@@ -30,12 +30,19 @@ export class FormPost extends Component {
   onPostSubmit(e) {
     e.preventDefault();
     const { postText } = this.state,
-          { name } = this.props,
+          { name, addPost } = this.props,
           payload = {
             text: postText,
             arthur: name
           };
-    this.props.addPost(payload);
+    if (postText.length) {
+      addPost(payload)
+        .then(() => {
+          this.setState({
+            postText: ''
+          });
+        });
+    }
   }
 
   render() {
