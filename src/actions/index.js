@@ -53,6 +53,7 @@ export function addPost(post) {
         if (err) {
           debug(err);
         } else {
+          debug(res.text);
           dispatch({
             type: ADD_POST,
             payload: JSON.parse(res.text)

@@ -1,6 +1,7 @@
 import update from 'immutability-helper';
-// import stdout from '../../stdout';
-// const debug = stdout('reducer:post');
+import { get as _get } from 'lodash';
+import stdout from '../../stdout';
+const debug = stdout('reducer:post');
 
 /**
  * keys:
@@ -17,15 +18,28 @@ export default function postReducer(state = initialState, action) {
   const payload = action.payload;
   switch (action.type) {
     case 'FETCH_POSTS': {
-      return Object.assign({}, state, payload);
+      if (payload.entities.posts) {
+        return update(state, {
+          $merge: payload.entities.posts
+        });
+      } else {
+        return state;
+      }
     }
 
     case 'ADD_POST': {
-      return update(state, {
-        $merge: {
-          [payload.id]: payload
-        }
-      });
+      const postEntities = _get(payload, 'entities.posts', {});
+      const response = postEntities[payload.result];
+      debug(response);
+      if (response) {
+        return update(state, {
+          $merge: {
+            [payload.result]: response
+          }
+        });
+      } else {
+        return state;
+      }
     }
 
     case 'VOTE': {

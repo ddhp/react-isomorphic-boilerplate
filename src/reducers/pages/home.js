@@ -1,10 +1,15 @@
+import update from 'immutability-helper';
+import { get as _get } from 'lodash';
+import stdout from '../../stdout';
+const debug = stdout('reducer:home');
+
 const initialState = {
   count: 0,
-  post: []
+  posts: []
 };
 
 export default function homeReducer(state = initialState, action) {
-  // const payload = action.payload;
+  const payload = action.payload;
   switch (action.type) {
     case 'ACCUMULATE_COUNT': {
       return Object.assign({}, state, {
@@ -15,7 +20,26 @@ export default function homeReducer(state = initialState, action) {
     }
 
     case 'FETCH_POSTS': {
-      return state;
+      const result = _get(payload, 'result', []);
+      return update(state, {
+        posts: {
+          $set: result
+        }
+      });
+    }
+
+    case 'ADD_POST': {
+      const result = _get(payload, 'result');
+      debug(result);
+      if (result) {
+        return update(state, {
+          posts: {
+            $unshift: [result]
+          }
+        });
+      } else {
+        return state;
+      }
     }
 
     default:
