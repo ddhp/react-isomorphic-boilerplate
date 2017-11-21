@@ -1,5 +1,6 @@
 const initialState = {
-  count: 0
+  count: 0,
+  post: []
 };
 
 export default function homeReducer(state = initialState, action) {
@@ -11,6 +12,10 @@ export default function homeReducer(state = initialState, action) {
       });
       // state.count = payload
       // return state
+    }
+
+    case 'FETCH_POSTS': {
+      return state;
     }
 
     default:

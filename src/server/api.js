@@ -22,8 +22,8 @@ router.post('/post/vote', bodyParser.json(), (req, res) => {
     payload: req.body
   });
   
-  const byId = _get(store.getState(), 'entities.post.byId', {}),
-        post = _get(byId, id, {});
+  const postEntities = _get(store.getState(), 'entities.post', {}),
+        post = _get(postEntities, id, {});
 
   debug(post);
   res.send(post);
@@ -31,7 +31,8 @@ router.post('/post/vote', bodyParser.json(), (req, res) => {
 
 router.post('/post', bodyParser.json(), (req, res) => {
   const { text, arthur } = req.body,
-        allIds = _get(store.getState(), 'entities.post.allIds', []);
+        postEntities = _get(store.getState(), 'entities.post', {}),
+        allIds = Object.keys(postEntities);
   let lastId = allIds[allIds.length -1] || 0;
   const response = {
     id: ++lastId,
@@ -45,7 +46,7 @@ router.post('/post', bodyParser.json(), (req, res) => {
     type: 'ADD_POST',
     payload: response
   });
-  debug(_get(store.getState(), 'entities.post', []));
+  debug(_get(store.getState(), 'entities.post', {}));
   res.send(response);
 });
 

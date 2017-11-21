@@ -49,8 +49,8 @@ export class Home extends Component {
 function mapStateToProps(state) {
   const entities = _get(state, 'entities'),
         post = _get(entities, 'post'),
-        posts = Object.keys(post.byId).map((k) => {
-          return post.byId[k];
+        posts = Object.keys(post).map((k) => {
+          return post[k];
         });
 
   return {

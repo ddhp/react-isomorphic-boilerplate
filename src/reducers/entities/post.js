@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
-import stdout from '../../stdout';
-const debug = stdout('reducer:post');
+// import stdout from '../../stdout';
+// const debug = stdout('reducer:post');
 
 /**
  * keys:
@@ -11,10 +11,7 @@ const debug = stdout('reducer:post');
  *  - vote
  *
  */
-const initialState = {
-  byId: {},
-  allIds: []
-};
+const initialState = {};
 
 export default function postReducer(state = initialState, action) {
   const payload = action.payload;
@@ -24,21 +21,15 @@ export default function postReducer(state = initialState, action) {
     }
 
     case 'ADD_POST': {
-      let allIds = Array.prototype.slice.call(state.allIds);
-      let byId = Object.assign({}, state.byId);
-
-      allIds.push(payload.id);
-      byId[payload.id] = payload;
-      debug(allIds, byId);
-
-      return Object.assign({}, state, {
-        byId,
-        allIds
+      return update(state, {
+        $merge: {
+          [payload.id]: payload
+        }
       });
     }
 
     case 'VOTE': {
-      const post = state.byId[payload.id];
+      const post = state[payload.id];
       let vote = post.vote || 0;
       if (payload.isUp) {
         vote ++;
@@ -48,11 +39,9 @@ export default function postReducer(state = initialState, action) {
         }  
       }
       return update(state, {
-        byId: {
-          [payload.id]: {
-            $merge: {
-              vote
-            }
+        [payload.id]: {
+          $merge: {
+            vote
           }
         }
       });
