@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import {  get as _get } from 'lodash';
-import { accumulateCount, updateMeID, updateMe, addPost } from '../../actions';
+import { dummyAction, updateMeID, updateMe, addPost } from '../../actions';
 import stdout from '../../stdout';
 const debug = stdout('container/Home');
 
@@ -12,10 +12,7 @@ import './style.scss';
 
 export class Home extends Component {
   static propTypes = {
-    count: PropTypes.number,
-    accumulateCount: PropTypes.func,
-    updateMeID: PropTypes.func,
-    updateMe: PropTypes.func,
+    dummyAction: PropTypes.func,
     addPost: PropTypes.func,
     me: PropTypes.object,
     posts: PropTypes.array
@@ -28,28 +25,8 @@ export class Home extends Component {
       postText: ''
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.onClick = this.onClick.bind(this);
     this.onPostTextChanged = this.onPostTextChanged.bind(this);
     this.onPostSubmit = this.onPostSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event) {
-    debug('A name was submitted: ' + this.state.value);
-    event.preventDefault();
-    this.props.updateMeID(this.state.value);
-  }
-
-  onClick() {
-    debug('onclick');
-    this.props.updateMe({
-      id: Math.random().toString()
-    });
   }
 
   onPostTextChanged(e) {
@@ -66,24 +43,12 @@ export class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.accumulateCount();
+    this.props.dummyAction();
   }
-  
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   const { name: thisName, sex: thisSex } = this.props.me,
-  //         { name: nextName, sex: nextSex } = nextProps.me;
-  //   if (thisName !== nextName || 
-  //       thisSex !== nextSex ||
-  //       this.state !== nextState) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   render() {
     debug('render method');
-    const { name, sex } = this.props.me,
+    const { name } = this.props.me,
           { posts } = this.props;
     return (
       <div className="page--home">
@@ -111,25 +76,14 @@ export class Home extends Component {
           <input type="submit" value="Submit" />
         </form>
 
-        counter: {this.props.count}
         <div>name: {name}</div>
-        <div>sex: {sex}</div>
-        <form className="form--me" onSubmit={this.handleSubmit}>
-          <label>
-          ID:
-            <input className="input--id" type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-        <p onClick={this.onClick}>Set random user id by update whole user object</p>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const count = _get(state, 'pages.home.count', 0),
-        entities = _get(state, 'entities'),
+  const entities = _get(state, 'entities'),
         me = _get(entities, 'me'),
         post = _get(entities, 'post'),
         posts = Object.keys(post.byId).map((k) => {
@@ -137,7 +91,6 @@ function mapStateToProps(state) {
         });
 
   return {
-    count,
     me,
     posts
   };
@@ -145,8 +98,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    accumulateCount: () => {
-      return dispatch(accumulateCount());
+    dummyAction: () => {
+      return dispatch(dummyAction());
     },
     updateMeID: (id) => {
       return dispatch(updateMeID(id));

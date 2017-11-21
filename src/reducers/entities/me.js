@@ -1,7 +1,6 @@
 const initialState = {
-  id: 'myid',
-  name: 'jesse',
-  sex: 'male'
+  id: 'anonymous',
+  name: 'anonymous'
 };
 
 export default function meReducer(state = initialState, action) {
@@ -15,11 +14,6 @@ export default function meReducer(state = initialState, action) {
     case 'UPDATE_ME_NAME':
       return Object.assign({}, state, {
         name: payload
-      });
-
-    case 'UPDATE_ME_SEX':
-      return Object.assign({}, state, {
-        sex: payload
       });
 
     case 'UPDATE_ME':

@@ -10,9 +10,8 @@ let props = {
     name: 'test-name',
     sex: 'test-sex'
   },
-  accumulateCount: () => {},
-  updateMeID: () => {},
-  updateMe: () => {},
+  dummyAction: () => {},
+  addPost: () => {},
   posts: [
     {
       id: 1,
@@ -25,10 +24,10 @@ let props = {
   ]
 };
 
-test('componentDidMount calls accumulateCount', t => {
-  const accumulateCountSpy = sinon.spy(props, 'accumulateCount');
+test('componentDidMount calls dummyAction', t => {
+  const dummyActionSpy = sinon.spy(props, 'dummyAction');
   shallow(<Home {...props} />);
-  t.true(accumulateCountSpy.calledOnce);
+  t.true(dummyActionSpy.calledOnce);
 });
 
 test('renders correctly', t => {
@@ -36,33 +35,35 @@ test('renders correctly', t => {
   t.true(wrapper.hasClass('page--home'));
 });
 
-test('call handleChange when input changed', t => {
-  const handleChangeSpy = sinon.spy(Home.prototype, 'handleChange'),
+test('call handleChange when text input changed', t => {
+  const onPostTextChangedSpy = sinon.spy(Home.prototype, 'onPostTextChanged'),
         setStateSpy = sinon.spy(Home.prototype, 'setState'),
         wrapper = shallow(<Home {...props} />);
-  wrapper.find('.input--id').simulate('change', {
+  wrapper.find('.input--post-text').simulate('change', {
     target: {
-      value: 'test-id'
+      value: 'test post text'
     }
   });
-  t.true(handleChangeSpy.calledOnce);
-  t.true(setStateSpy.calledWith({ value: 'test-id' }));
+  t.true(onPostTextChangedSpy.calledOnce);
+  t.true(setStateSpy.calledWith({ postText: 'test post text' }));
 });
 
 test('handles when submit', t => {
-  const handleSubmitSpy = sinon.spy(Home.prototype, 'handleSubmit'),
+  const onPostSubmitSpy = sinon.spy(Home.prototype, 'onPostSubmit'),
         preventDefaultSpy = sinon.spy(),
-        updateMeIDSpy = sinon.spy(props, 'updateMeID'),
+        addPostSpy = sinon.spy(props, 'addPost'),
         wrapper = shallow(<Home {...props} />);
-  wrapper.find('.input--id').simulate('change', {
+  wrapper.find('.input--post-text').simulate('change', {
     target: {
-      value: 'test-id'
+      value: 'test post text'
     }
   });
-  wrapper.find('.form--me').simulate('submit', {
+  wrapper.find('.form--post').simulate('submit', {
     preventDefault: preventDefaultSpy
   });
-  t.true(handleSubmitSpy.calledOnce);
+  t.true(onPostSubmitSpy.calledOnce);
   t.true(preventDefaultSpy.calledOnce);
-  t.true(updateMeIDSpy.calledWith('test-id'));
+  t.true(addPostSpy.calledWith({
+    text: 'test post text'
+  }));
 });

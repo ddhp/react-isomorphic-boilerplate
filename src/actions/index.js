@@ -12,11 +12,10 @@ export function accumulateCount() {
   };
 }
 
-export const UPDATE_ME_ID = 'UPDATE_ME_ID';
-export function updateMeID(id) {
+export const DUMMY_ACTION = 'DUMMY_ACTION';
+export function dummyAction() {
   return {
-    type: UPDATE_ME_ID,
-    payload: id
+    type: DUMMY_ACTION
   };
 }
 
