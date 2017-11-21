@@ -61,3 +61,21 @@ export function addPost(post) {
       });
   };
 }
+
+export const VOTE = 'VOTE';
+export function vote(info) {
+  return function (dispatch) {
+    return request
+      .post('/api/post/vote')
+      .send(info)
+      .then(() => {
+        dispatch({
+          type: VOTE,
+          payload: info
+        });
+      }, (err) => {
+        debug(err);
+      });
+  };
+}
+

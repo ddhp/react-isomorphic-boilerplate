@@ -15,6 +15,20 @@ router.get('/post', (req, res) => {
   res.send(post);
 });
 
+router.post('/post/vote', bodyParser.json(), (req, res) => {
+  const { id } = req.body;
+  store.dispatch({
+    type: 'VOTE',
+    payload: req.body
+  });
+  
+  const byId = _get(store.getState(), 'entities.post.byId', {}),
+        post = _get(byId, id, {});
+
+  debug(post);
+  res.send(post);
+});
+
 router.post('/post', bodyParser.json(), (req, res) => {
   const { text, arthur } = req.body,
         allIds = _get(store.getState(), 'entities.post.allIds', []);
@@ -23,7 +37,8 @@ router.post('/post', bodyParser.json(), (req, res) => {
     id: ++lastId,
     text: text || '',
     arthur: arthur || 'anonymous',
-    createdAt: moment().valueOf()
+    createdAt: moment().valueOf(),
+    vote: 0
   };
 
   store.dispatch({

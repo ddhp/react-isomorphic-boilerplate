@@ -3,10 +3,10 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import {  get as _get } from 'lodash';
-import moment from 'moment';
+import { get as _get } from 'lodash';
 import { dummyAction } from '../../actions';
 import FormPost from './FormPost';
+import Postlist from './Postlist';
 import stdout from '../../stdout';
 const debug = stdout('container/Home');
 
@@ -38,15 +38,7 @@ export class Home extends Component {
 
         <ul className="list--posts">
           {posts.map((p) => {
-            return (
-              <li className="post" key={p.id}>
-                <p className="text">{p.text}</p>
-                <div>
-                  <span className="arthur">{p.arthur} </span>
-                  <span className="createdAt">{moment().from(p.createdAt)}</span>
-                </div>
-              </li>
-            );
+            return <Postlist post={p} key={p.id} />;
           })}
         </ul>
       </div>

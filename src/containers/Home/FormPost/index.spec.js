@@ -5,10 +5,7 @@ import { shallow } from 'enzyme';
 import { FormPost } from './';
 
 let props = {
-  me: {
-    name: 'test-name',
-    sex: 'test-sex'
-  },
+  name: 'test-name',
   addPost: () => {},
 };
 
@@ -41,6 +38,7 @@ test('handles when submit', t => {
   t.true(onPostSubmitSpy.calledOnce);
   t.true(preventDefaultSpy.calledOnce);
   t.true(addPostSpy.calledWith({
-    text: 'test post text'
+    text: 'test post text',
+    arthur: 'test-name'
   }));
 });
