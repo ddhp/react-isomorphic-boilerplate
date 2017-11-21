@@ -49,9 +49,10 @@ export class Home extends Component {
 function mapStateToProps(state) {
   const postEntity = _get(state, 'entities.post'),
         postIds = _get(state, 'pages.home.posts');
-  const posts = postIds.map((id) => {
+  let posts = postIds.map((id) => {
     return postEntity[id] || {};
   });
+  posts = posts.slice(0, 20);
   debug(posts);
 
   return {
