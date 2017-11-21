@@ -1,7 +1,7 @@
 {
   "name": "react-isomorphic-boilerplate",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "src/server/index.js",
   "license": "MIT",
   "scripts": {
     "start": "DEBUG=*,-nodemon*,-express*,-send nodemon --inspect dist/server.js",

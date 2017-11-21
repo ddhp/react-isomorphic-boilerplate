@@ -11,10 +11,10 @@ mock('../../../webpack-assets.json', {
 });
 // WARNING: import server from '../' does not work
 // remove .default if module is defined as COMMONJS
-const server = require('../').default;
+const app = require('../app').default;
 
 test.cb('request to / returns a html', t => {
-  request(server)
+  request(app)
     .get('/')
     .expect('Content-Type', 'text/html; charset=utf-8')
     .expect(200)
