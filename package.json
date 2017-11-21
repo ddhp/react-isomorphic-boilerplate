@@ -92,6 +92,7 @@
   "ava": {
     "files": [
       "src/**/__tests__/**/*.js",
+      "src/**/*.spec.js",
       "!test/fixtures/**/*",
       "!test/helpers/**/*"
     ],
