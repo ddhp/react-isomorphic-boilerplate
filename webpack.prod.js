@@ -28,10 +28,10 @@ module.exports = {
           loader: 'babel-loader'
         }, {
           loader: 'remove-debug-loader',
-          // options: {
-          //   methodName: ['mylog'],
-          //   moduleName: ['myModule']
-          // }
+          options: {
+            // methodName: ['myLog'],
+            moduleName: ['stdout']
+          }
         }, {
           loader: 'eslint-loader',
         }]

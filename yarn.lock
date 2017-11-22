@@ -5770,8 +5770,8 @@ release-zalgo@^1.0.0:
     es6-error "^4.0.1"
 
 remove-debug-loader@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/remove-debug-loader/-/remove-debug-loader-0.2.2.tgz#da820a6a0ab02f345c7c9f8a85da0ea155adae56"
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/remove-debug-loader/-/remove-debug-loader-0.2.3.tgz#72b1c5b81e2093a989fac5022be0b6e0c691881d"
   dependencies:
     loader-utils "^1.1.0"
 
