@@ -23,7 +23,10 @@ test('call handleChange when text input changed', t => {
     }
   });
   t.true(onPostTextChangedSpy.calledOnce);
-  t.true(setStateSpy.calledWith({ postText: 'test post text' }));
+  t.true(setStateSpy.calledWith({ 
+    postText: 'test post text',
+    isShowInvalid: false
+  }));
 });
 
 test('handles when submit', t => {
