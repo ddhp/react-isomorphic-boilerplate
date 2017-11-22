@@ -24,7 +24,12 @@ export const postcb = (req, res) => {
   posts = posts.sort((a, b) => {
     const scoreA = a.upvote - a.downvote;
     const scoreB = b.upvote - b.downvote;
-    return scoreB - scoreA;
+    // if scroe the same, check createAt
+    if (scoreA === scoreB) {
+      return b.createdAt - a.createdAt;
+    } else {
+      return scoreB - scoreA;
+    }
   });
 
   const response = normalize(posts, [schemas.post]);

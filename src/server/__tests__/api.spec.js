@@ -10,13 +10,15 @@ const initState = {
       1: {
         id: 1,
         upvote: 0,
-        downvote: 0
+        downvote: 0,
+        createdAt: 0
       },
       2: {
         id: 2,
         upvote: 1,
-        downvote: 0
-      }
+        downvote: 0,
+        createdAt: 1
+      },
     }
   }
 };
@@ -24,7 +26,6 @@ const initState = {
 const dispatchSpy = sinon.spy();
 const mockConfigureStore = require('../../configureStore');
 
-mockConfigureStore.setMockState(initState);
 mockConfigureStore.setDispatchSpy(dispatchSpy);
 const api = require('../api');
 
@@ -34,22 +35,40 @@ test('get /post', t => {
   const res = {
     send: sendSpy
   };
+  mockConfigureStore.setMockState(initState);
   postcb(null, res);
   t.true(sendSpy.calledWith({
     result: [2, 1],
     entities: {
-      posts: {
-        1: {
-          id: 1,
-          upvote: 0,
-          downvote: 0
-        },
-        2: {
-          id: 2,
-          upvote: 1,
-          downvote: 0
-        }
-      }
+      posts: initState.entities.post
+    }
+  }));
+  sendSpy.reset();
+
+  const forCreatedAt = {
+    1: {
+      id: 1,
+      upvote: 0,
+      downvote: 0,
+      createdAt: 1
+    },
+    2: {
+      id: 2,
+      upvote: 0,
+      downvote: 0,
+      createdAt: 2
+    }
+  };
+  mockConfigureStore.setMockState({
+    entities: {
+      post: forCreatedAt
+    }
+  });
+  postcb(null, res);
+  t.true(sendSpy.calledWith({
+    result: [2, 1],
+    entities: {
+      posts: forCreatedAt
     }
   }));
 });
@@ -73,11 +92,13 @@ test('post /post/vote', t => {
         1: {
           id: 1,
           upvote: 1,
-          downvote: 0
-        },
+          downvote: 0,
+          createdAt: 0
+        }
       }
     }
   };
+  mockConfigureStore.setMockState(initState);
   postvotecb(req, res);
   t.true(sendSpy.calledWith(expectResponse));
   t.true(dispatchSpy.calledWith({
