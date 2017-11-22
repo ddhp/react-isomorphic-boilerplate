@@ -5,9 +5,10 @@
   "license": "MIT",
   "scripts": {
     "start": "DEBUG=*,-nodemon*,-express*,-send nodemon --inspect dist/server.js",
-    "build:client:dev": "rm -f dist/*-client.js && webpack --env=dev --progress --profile --colors",
+    "clean": "find dist -type f -not -name 'server.js' -delete",
+    "build:client:dev": "npm run clean && webpack --env=dev --progress --profile --colors",
     "build:server:dev": "webpack --env=dev --config=webpack.server.js --progress --profile --colors",
-    "build:client:dev:w": "rm -f dist/*-client.js && webpack -w --env=dev --progress --profile --colors",
+    "build:client:dev:w": "npm run clean && webpack -w --env=dev --progress --profile --colors",
     "build:server:dev:w": "webpack -w --env=dev --config=webpack.server.js --progress --profile --colors",
     "build:client:prod": "webpack --env=prod --progress --profile --colors",
     "build:server:prod": "webpack --env=prod --config=webpack.server.js --progress --profile --colors",
