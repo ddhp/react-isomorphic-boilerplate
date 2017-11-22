@@ -22,6 +22,10 @@
     border-color: #9d9d9d;
     padding: 1rem;
     font-size: 1.3rem;
+
+    &.is-error {
+      border-color: red;
+    }
   }
 
   .btn-wrapper {
@@ -37,5 +41,6 @@
     font-size: 1.3rem;
     border: 1px solid #aaa;
     border-radius: .4rem;
-    cursor: pointer;}
+    cursor: pointer;
+  }
 }

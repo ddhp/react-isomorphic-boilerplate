@@ -37,6 +37,10 @@
   box-sizing: border-box;
 }
 
+input, textarea, button {
+  outline: none;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
 }

@@ -69,6 +69,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "express": "^4.16.2",
     "moment": "^2.19.2",
     "normalizr": "^3.2.4",

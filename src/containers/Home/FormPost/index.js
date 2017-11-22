@@ -3,6 +3,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {  get as _get } from 'lodash';
+import classNames from 'classnames';
 import { addPost } from '../../../actions';
 
 import './style.scss';
@@ -16,15 +17,29 @@ export class FormPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      postText: ''
+      postText: '',
+      isShowInvalid: false
     };
 
     this.onPostTextChanged = this.onPostTextChanged.bind(this);
     this.onPostSubmit = this.onPostSubmit.bind(this);
   }
 
+  validateShowError(text) {
+    return text.length < 256;
+  }
+
+  validate(text) {
+    return text.length > 0 && text.length < 256;
+  }
+
   onPostTextChanged(e) {
-    this.setState({postText: e.target.value});
+    const postText = e.target.value;
+    const isShowInvalid = !this.validateShowError(postText);
+    this.setState({
+      postText,
+      isShowInvalid
+    });
   }
 
   onPostSubmit(e) {
@@ -35,7 +50,7 @@ export class FormPost extends Component {
             text: postText,
             arthur: name
           };
-    if (postText.length) {
+    if (this.validate(postText)) {
       addPost(payload)
         .then(() => {
           this.setState({
@@ -46,11 +61,19 @@ export class FormPost extends Component {
   }
 
   render() {
+    const { isShowInvalid } = this.state;
+
     return (
       <form className="form--post" onSubmit={this.onPostSubmit}>
         <p className="form-group title">Anything to say?</p>
         <div className="form-row">
-          <textarea className="input--post-text" value={this.state.postText} onChange={this.onPostTextChanged} />
+          <textarea 
+            className={classNames('input--post-text', {
+              'is-error': isShowInvalid
+            })}
+            value={this.state.postText} 
+            onChange={this.onPostTextChanged} 
+          />
           <div className="btn-wrapper">
             <button className="btn--post-submit" type="submit">Submit</button>
           </div>
