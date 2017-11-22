@@ -27,23 +27,26 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
 
 ### Log
-import `stdout.js` and define namespace ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/pages.js)), then turn on debug message depends on platform:
+Import `stdout.js` and define namespace ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/pages.js)), then turn on debug message depends on platform:
 - browser: allow debug log by type `localStorage.debug = '*'` in console.
 - nodejs: run node with `DEBUG=*`, see `package.json.scripts.start`.
 
-In production build, server side log would stay untouched to easily debug by checking log file, but on browser side,
-all debug message would be removed by [remove-debug-loader](https://github.com/ddhp/remove-debug-loader).
+In production build, server side log would stay untouched to easily debug by checking log file,
+and on browser side, **all debug message would be removed** by [remove-debug-loader](https://github.com/ddhp/remove-debug-loader).
 
-### Packing code
-- Fonts: font face are set in `src/client/global.scss`.
-- Images: set src relative to your js or scss file.
+### Static Files
+- Put your fonts, images, etc. in `src/assets`.
+- Fonts: set your font face in [src/entries/global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/global.scss) and set src points to the font in assets folder.
+- Images: set src relative to your js([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Demo/index.js)) or scss ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Demo/style.scss)) file.
 
-[extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract them (font, image) into static assets and handle url transform.
+[extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract them (font, image) into `/dist` with hash key and handle url transform. (so you don't have to worry about cache issue)
+
+On the other hand, node server **only** serves static files in `/dist` which means **/src/assets/ files not imported to your code base are not accessible from your web server.**
 
 
 ### Style
 - [reset.css](https://www.npmjs.com/package/reset-css) reseting default style imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
-- import `global.scss` in your entry component, or defined your own styles for specific entry.
+- import `global.scss` in your entry component, or define your own styles for specific entry then import them.
 - `style.scss` in containers folder only set styles for react component in the folder of same level, and starts with most root class name of that component. (see [src/containers/Home/style.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Home/style.scss))
 
 ### SEO
