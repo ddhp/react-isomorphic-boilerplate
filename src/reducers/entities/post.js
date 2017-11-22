@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { get as _get } from 'lodash';
+import { get as _get, isEqual as _isEqual } from 'lodash';
 import stdout from '../../stdout';
 const debug = stdout('reducer:post');
 
@@ -19,7 +19,10 @@ export default function postReducer(state = initialState, action) {
   const payload = action.payload;
   switch (action.type) {
     case 'FETCH_POSTS': {
-      if (payload.entities.posts) {
+      const postEntities = _get(payload, 'entities.posts', {});
+
+      // don't update if there are the same
+      if (!_isEqual(postEntities, state)) {
         return update(state, {
           $merge: payload.entities.posts
         });
