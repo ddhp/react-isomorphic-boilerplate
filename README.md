@@ -45,7 +45,7 @@ On the other hand, node server **only** serves static files in `/dist` which mea
 
 
 ### Style
-- [reset.css](https://www.npmjs.com/package/reset-css) reseting default style imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
+- [reset.css](https://www.npmjs.com/package/reset-css) resets default style and is imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
 - import `global.scss` in your entry component, or define your own styles for specific entry then import them.
 - `style.scss` in containers folder only set styles for react component in the folder of same level, and starts with most root class name of that component. (see [src/containers/Home/style.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Home/style.scss))
 
@@ -58,7 +58,7 @@ On the other hand, node server **only** serves static files in `/dist` which mea
 
 ### Test
 - [AVA](https://github.com/avajs/ava) as test runner.
-- **Don't use [webpack alias](https://webpack.js.org/configuration/resolve/#resolve-alias)** in code base.
+- **Don't use** [webpack alias](https://webpack.js.org/configuration/resolve/#resolve-alias) in code base.
 - [mock-require](https://github.com/boblauer/mock-require) mocks dependencies to make test as independent as possible.
   
   As it's name says, it only support `require`, so in your test file, remember you have to **require** the target testing module, `import` does not work.
@@ -66,8 +66,11 @@ On the other hand, node server **only** serves static files in `/dist` which mea
   Also if your testing module is defined in es6 way (`export default`), remember to append `.default` to get the default export. (see [server test](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/__tests__/index.spec.js) for example)
 
 ### Production build
+Build your code with:
 1. `yarn run build:client:prod`
 2. `yarn run build:server:prod`
+
+and your app is ready to go.
 
 ## LICENSE
 MIT
