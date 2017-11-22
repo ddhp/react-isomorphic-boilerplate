@@ -1,5 +1,4 @@
 import test from 'ava';
-import sinon from 'sinon';
 
 import reducer from './home';
 
@@ -23,6 +22,6 @@ test('ADD_POST', t => {
     payload: {
       result: undefined
     }
-  }
+  };
   t.is(reducer(initState, wrongAction), initState);
 });

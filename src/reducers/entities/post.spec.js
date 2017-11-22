@@ -1,5 +1,4 @@
 import test from 'ava';
-import sinon from 'sinon';
 
 import reducer from './post';
 
@@ -57,6 +56,6 @@ test('ADD_POST', t => {
         }
       }
     }
-  }
+  };
   t.is(reducer(initState, wrongAction), initState);
 });
