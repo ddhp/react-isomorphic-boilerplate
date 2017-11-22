@@ -16,13 +16,16 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 
 ## Concept
 ### Getting Started
-0. `yarn` and run 3 processes to start developing your app:
+Execute `yarn` to install.
+
+Run 3 processes to start developing your app:
 1. `yarn run build:client:dev:w`: build client side code and watch file change.
 2. `yarn run build:server:dev:w`: build server side conde and watch file change.
 3. `yarn start`: nodemon executing `dist/server.js`, and only watches on it's change,
    [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given,
    you can debug nodejs server on chrome-devtools.
-4. visit `localhost:3333` 
+
+then you can visit `localhost:3333`.
 
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
 
@@ -46,7 +49,7 @@ On the other hand, node server **only** serves static files in `/dist` which mea
 
 ### Style
 - [reset.css](https://www.npmjs.com/package/reset-css) resets default style and is imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
-- import `global.scss` in your entry component, or define your own styles for specific entry then import them.
+- Import `global.scss` in your entry component, or define your own styles for specific entry then import them.
 - `style.scss` in containers folder only set styles for react component in the folder of same level, and starts with most root class name of that component. (see [src/containers/Home/style.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Home/style.scss))
 
 ### SEO
