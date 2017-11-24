@@ -5,7 +5,7 @@ import apiMiddleware from './api';
 const app = Express();
 
 //Serve static files
-app.use('/assets', Express.static('dist'));
+app.use('/assets', Express.static('dist/client'));
 
 apiMiddleware(app);
 pagesMiddleware(app);

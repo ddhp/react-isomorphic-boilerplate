@@ -42,15 +42,15 @@ and on browser side, **all debug message would be removed** by [remove-debug-loa
 - Fonts: set your font face in [src/entries/global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/global.scss) and set src points to the font in assets folder.
 - Images: set src relative to your js([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Demo/index.js)) or scss ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Demo/style.scss)) file.
 
-[extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract them (font, image) into `/dist` with hash key and handle url transform. (so you don't have to worry about cache issue)
-
-On the other hand, node server **only** serves static files in `/dist` which means **/src/assets/ files not imported to your code base are not accessible from your web server.**
-
+On the other hand, node server **only** serves static files in `/dist/client` which means **/src/assets/ files not imported to your code base are not accessible from your web server.**
+[url-loader](https://github.com/webpack-contrib/url-loader) will exports them to static folder with hash key and handle url transform. (so you don't have to worry about cache issue)
 
 ### Style
 - [reset.css](https://www.npmjs.com/package/reset-css) resets default style and is imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
 - Import `global.scss` in your entry component, or define your own styles for specific entry then import them.
 - `style.scss` in containers folder only set styles for react component in the folder of same level, and starts with most root class name of that component. (see [src/containers/Home/style.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Home/style.scss))
+
+[extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract style sheet from built code into target dist folder.
 
 ### SEO
 - Define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js))
@@ -74,6 +74,16 @@ Build your code with:
 2. `yarn run build:server:prod`
 
 and your app is ready to go.
+
+### TODO
+- i18n, possibly don't need any library to do this, we only need some handy helpers for those topics:
+  - number: ?
+  - date: by [momentjs](https://momentjs.com/)
+  - money: ?
+
+basically we can approach by define our multi-lingual words in yaml(s) and get them by key and locale.
+- deprecate sass and use [styled-components](https://github.com/styled-components/styled-components) instead.
+- MODEL to handle api request and parse response.
 
 ## LICENSE
 MIT

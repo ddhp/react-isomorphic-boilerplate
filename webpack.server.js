@@ -22,9 +22,9 @@ module.exports = function(env) {
     },
 
     output: {
-      path: path.join(__dirname, '/dist'),
+      path: path.join(__dirname, '/dist/server'),
       publicPath: '/assets/',
-      filename: '[name].js'
+      filename: 'index.js'
     },
 
     plugins: [
