@@ -15,14 +15,11 @@ mock('../../assets/images/icon.png', '../../__mocks__/asset');
 
 const renderFullPage = require('../layout').default;
 
-// don't know why eslint complains
-/* eslint-disable react/display-name */
 const mockReactHelmet = (key) => {
   return {
     toString: () => { return `mock helmet of ${key}`; }
   };
 };
-/* eslint-enable react/display-name */
 
 let head = {
   title: mockReactHelmet('title'),
