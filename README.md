@@ -42,8 +42,8 @@ and on browser side, **all debug message would be removed** by [remove-debug-loa
 - Fonts: set your font face in [src/entries/global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/global.scss) and set src points to the font in assets folder.
 - Images: set src relative to your js([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Demo/index.js)) or scss ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Demo/style.scss)) file.
 
-On the other hand, node server **only** serves static files in `/dist/client` which means **/src/assets/ files not imported to your code base are not accessible from your web server.**
-[url-loader](https://github.com/webpack-contrib/url-loader) will exports them to static folder with hash key and handle url transform. (so you don't have to worry about cache issue)
+On the other hand, node server **only** serves static files in `/dist/assets` which means **/src/assets/ files not imported to your code base are not accessible from your web server.**
+[file-loader](https://github.com/webpack-contrib/file-loader) will exports them to static folder with hash key and handle url transform. (so you don't have to worry about cache issue)
 
 ### Style
 - [reset.css](https://www.npmjs.com/package/reset-css) resets default style and is imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).

@@ -14,11 +14,13 @@ const extractSCSS = new ExtractTextPlugin({
 });
 
 module.exports = {
+  context: path.resolve(__dirname),
+
   entry: { 
     main: path.resolve(__dirname, 'src/entries/main')
   },
   output: {
-    path: path.join(__dirname, '/dist/client'),
+    path: path.join(__dirname, '/dist/assets'),
     publicPath: '/assets/',
     filename: '[chunkhash]-[name].js'
   },
@@ -78,10 +80,21 @@ module.exports = {
         })
       },
       {
-        test: /\.(gif|jpg|png|woff|woff2|eot|ttf|svg)$/,
+        test: /\.(woff|woff2|eot|ttf)$/,
         use: [{
           loader: 'url-loader',
           options: {
+            outputPath: '../assets/',
+            limit: 8192 // 8kB
+          }
+        }]
+      },
+      {
+        test: /\.(gif|jpg|png|svg)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            outputPath: '../assets/',
             limit: 8192 // 8kB
           }
         }]
@@ -91,6 +104,9 @@ module.exports = {
         test: /.ico$/,
         use: [{
           loader: 'file-loader',
+          options: {
+            outputPath: '../assets/',
+          }
         }]
       }
     ]
