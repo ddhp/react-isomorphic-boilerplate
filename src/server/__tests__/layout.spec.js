@@ -1,6 +1,4 @@
 import test from 'ava';
-import React from 'react';
-import { shallow } from 'enzyme';
 import mock from 'mock-require';
 
 // set mock path and response then require related dependencies 
@@ -15,23 +13,24 @@ mock('../../../webpack-assets.json', {
 mock('../../assets/images/favicon.ico', '../../__mocks__/asset');
 mock('../../assets/images/icon.png', '../../__mocks__/asset');
 
-const Layout = require('../layout').default;
+const renderFullPage = require('../layout').default;
 
 // don't know why eslint complains
 /* eslint-disable react/display-name */
-const mockReactHelmet = {
-  toComponent: () => { return <div />; }
+const mockReactHelmet = (key) => {
+  return {
+    toString: () => { return `mock helmet of ${key}`; }
+  };
 };
 /* eslint-enable react/display-name */
 
-let props = {
-  head: {
-    title: mockReactHelmet,
-    meta: mockReactHelmet
-  }
+let head = {
+  title: mockReactHelmet('title'),
+  meta: mockReactHelmet('meta')
 };
 
 test('renders html', t => {
-  const wrapper = shallow(<Layout {...props} />);
-  t.truthy(wrapper.find('html'));
+  const html = renderFullPage('', '{}', head);
+  t.true(html.indexOf('mock helmet of title') > -1);
+  t.true(html.indexOf('mock helmet of meta') > -1);
 });

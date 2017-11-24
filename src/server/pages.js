@@ -4,7 +4,7 @@ import { StaticRouter as Router, matchPath } from 'react-router';
 import { Provider } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { /*get as _get,*/ isFunction as _isFunction } from 'lodash';
-import Layout from './layout';
+import renderFullPage from './layout';
 import configureStore from '../configureStore';
 import MainRoute, { getRoute } from '../routes/main';
 import stdout from '../stdout';
@@ -51,7 +51,7 @@ module.exports = (app) => {
   app.use('/', applyInitStore, applyRouteCheckResult, (req, res) => {
     const { url, reduxStore: store } = req,
           routerContext = {},
-          reduxState = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
+          reduxStateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
 
     const content = (
       <Provider store={store}>
@@ -61,17 +61,11 @@ module.exports = (app) => {
       </Provider>
     );
 
-    ReactServer.renderToString(content); // render to sting to get helmet setting
+    // render to sting to get helmet setting
+    const contentString = ReactServer.renderToString(content); 
     const head = Helmet.renderStatic();
+    const htmlString = renderFullPage(contentString, reduxStateString, head);
 
-    const htmlString = ReactServer.renderToString(
-      <Layout 
-        content={content}
-        reduxState={reduxState}
-        head={head}
-      />
-    );
-
-    res.send(`<!DOCTYPE HTML>${htmlString}`);
+    res.send(htmlString);
   });
 };
