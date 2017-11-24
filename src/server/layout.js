@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 
 const assetsJSON = require('../../webpack-assets.json');
 
+import favicon from '../assets/images/favicon.ico';
+import touchicon from '../assets/images/icon.png';
+
 export default class Layout extends Component {
   static propTypes = {
     content: PropTypes.object,
@@ -22,8 +25,8 @@ export default class Layout extends Component {
           {head.title.toComponent()}
           {head.meta.toComponent()}
 
-          <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
-          <link rel="apple-touch-icon" href="/assets/images/icon.png" />
+          <link rel="icon" type="image/x-icon" href={favicon} />
+          <link rel="apple-touch-icon" href={touchicon} />
 
           <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
           <link href={assetsJSON.main.css} rel="stylesheet" />

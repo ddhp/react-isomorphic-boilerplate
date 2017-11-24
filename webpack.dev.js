@@ -82,8 +82,15 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
-            limit: 8192
+            limit: 8192 // 8kB
           }
+        }]
+      },
+      {
+        // ico is lower than limit of url-loader, so we explictly use file-loader
+        test: /.ico$/,
+        use: [{
+          loader: 'file-loader',
         }]
       }
     ]
