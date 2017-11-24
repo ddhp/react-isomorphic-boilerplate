@@ -1,5 +1,4 @@
 import test from 'ava';
-import sinon from 'sinon';
 import React from 'react';
 import { shallow } from 'enzyme';
 import mock from 'mock-require';
@@ -18,9 +17,13 @@ mock('../../assets/images/icon.png', '../../__mocks__/asset');
 
 const Layout = require('../layout').default;
 
+// don't know why eslint complains
+/* eslint-disable react/display-name */
 const mockReactHelmet = {
-  toComponent: () => { return <div /> }
+  toComponent: () => { return <div />; }
 };
+/* eslint-enable react/display-name */
+
 let props = {
   head: {
     title: mockReactHelmet,

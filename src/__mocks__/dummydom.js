@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class MockDOM extends React.Component {
+export default class DummyDOM extends React.Component {
   render() {
     return (
       <div />
