@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { get as _get, isFunction as _isFunction } from 'lodash';
-import { Route, Redirect, Switch, matchPath } from 'react-router';
+import { get as _get } from 'lodash';
+import { matchPath } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import BaseRoute from './base';
 import Nav from '../containers/Nav';
 import Home from '../containers/Home';
 import About from '../containers/About';
@@ -57,7 +58,7 @@ export const getRoute = (path) => {
 };
 
 // TODO: handle 404 situation
-export class EntryMainRoute extends Component {
+export class EntryMainRoute extends BaseRoute {
   static propTypes = {
     me: PropTypes.object,
     location: PropTypes.object
@@ -66,8 +67,7 @@ export class EntryMainRoute extends Component {
   render() {
     const { location/*, me*/ } = this.props,
           routes = getRoutes(),
-          currentRoute = getRoute(location.pathname),
-          redirect = currentRoute.redirect ? _isFunction(currentRoute.redirect) ? currentRoute.redirect() : currentRoute.redirect : false;
+          currentRoute = getRoute(location.pathname);
 
     return (
       <div>
@@ -77,22 +77,7 @@ export class EntryMainRoute extends Component {
           <meta name="og:title" content="title set in entry-main" />
         </Helmet>
         <Nav />
-        <Switch>
-          {redirect ? <Redirect to={redirect} /> : null}
-          {routes.map((route) => {
-            const { component: Component, key, ...rest } = route;
-
-            return (
-              <Route key={key} {...rest} render={props => {
-                return (
-                  <div>
-                    <Component {...props} />
-                  </div>
-                );
-              }} />
-            );
-          })}
-        </Switch>
+        {this.renderRoutes(routes, currentRoute)}
         <Footer />
       </div>
     );
