@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { get as _get } from 'lodash';
+import { get as _get, isFunction as _isFunction } from 'lodash';
 import { matchPath } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import BaseRoute from './base';
@@ -68,9 +68,10 @@ export class EntryMainRoute extends BaseRoute {
   }
 
   render() {
-    const { location/*, me*/ } = this.props,
-          routes = getRoutes(),
-          currentRoute = getRoute(location.pathname);
+    const { location/*, me*/ } = this.props;
+    const routes = getRoutes();
+    const currentRoute = getRoute(location.pathname);
+    const redirect = currentRoute.redirect ? _isFunction(currentRoute.redirect) ? currentRoute.redirect() : currentRoute.redirect : false;
 
     return (
       <div>
@@ -80,7 +81,7 @@ export class EntryMainRoute extends BaseRoute {
           <meta name="og:title" content="title set in entry-main" />
         </Helmet>
         <Nav />
-        {this.renderRoutes(routes, currentRoute)}
+        {this.renderRoutes(routes, redirect)}
         <Footer />
       </div>
     );
