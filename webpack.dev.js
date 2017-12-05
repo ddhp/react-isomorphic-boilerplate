@@ -2,6 +2,7 @@ const path = require('path');
 const AssetPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const Visualizer = require('webpack-visualizer-plugin');
 
 const extractCSS = new ExtractTextPlugin({
   filename: '[contenthash]-[name].css',
@@ -34,6 +35,9 @@ module.exports = {
   plugins: [
     extractCSS,
     extractSCSS,
+    new Visualizer({
+      filename: '../stats-client.html'
+    }),
     // generate webpack asset json
     new AssetPlugin()
   ],
