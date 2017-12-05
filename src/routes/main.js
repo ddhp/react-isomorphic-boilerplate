@@ -11,6 +11,7 @@ import Home from '../containers/Home';
 import About from '../containers/About';
 import Demo from '../containers/Demo';
 import Footer from '../containers/Footer';
+import FourOFour from '../containers/404';
 import { fetchPosts } from '../actions';
 
 /**
@@ -42,6 +43,9 @@ export const getRoutes = () => {
       path: '/demo',
       key: 'demo',
       component: Demo
+    }, {
+      key: '404',
+      component: FourOFour
     }
   ];
 };
@@ -57,7 +61,6 @@ export const getRoute = (path) => {
   }, {});
 };
 
-// TODO: handle 404 situation
 export class EntryMainRoute extends BaseRoute {
   static propTypes = {
     me: PropTypes.object,
