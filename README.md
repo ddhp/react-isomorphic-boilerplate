@@ -19,7 +19,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 Execute `yarn` to install.
 
 Run 3 processes to start developing your app:
-1. `yarn run build:client:dev:w`: build client side code and watch file change.
+1. `yarn run build:browser:dev:w`: build browser side code and watch file change.
 2. `yarn run build:server:dev:w`: build server side conde and watch file change.
 3. `yarn start`: nodemon executing `dist/server.js`, and only watches on it's change,
    [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given,
@@ -70,7 +70,7 @@ On the other hand, node server **only** serves static files in `/dist/assets` wh
 
 ### Production build
 Build your code with:
-1. `yarn run build:client:prod`
+1. `yarn run build:browser:prod`
 2. `yarn run build:server:prod`
 
 and your app is ready to go.
