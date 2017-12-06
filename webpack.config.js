@@ -1,3 +1,8 @@
 module.exports = function(env) {
-  return require(`./webpack.${env}.js`);
+  const config = require(`./webpack.${env}.js`);
+  if (typeof config === 'function') {
+    return config();
+  } else {
+    return config;
+  }
 };

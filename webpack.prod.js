@@ -3,7 +3,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const AssetPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const devConfig = require('./webpack.dev.js');
+const devConfig = require('./webpack.dev.js')();
 
 const extractCSS = new ExtractTextPlugin({
   filename: '[contenthash]-[name].css',
