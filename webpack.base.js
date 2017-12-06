@@ -1,8 +1,11 @@
+/**
+ * define the most common webpack configs
+ * shared between browser/server
+ *
+ */
 const path = require('path');
-const AssetPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const Visualizer = require('webpack-visualizer-plugin');
 
 const extractCSS = new ExtractTextPlugin({
   filename: '[contenthash]-[name].css',
@@ -16,35 +19,15 @@ const extractSCSS = new ExtractTextPlugin({
 
 module.exports = function(platform) {
   if (!platform) {
-    platform = 'client';
+    platform = 'browser';
   }
 
   return {
     context: path.resolve(__dirname),
 
-    entry: { 
-      main: path.resolve(__dirname, 'src/entries/main')
-    },
-    output: {
-      path: path.join(__dirname, '/dist/assets'),
-      publicPath: '/assets/',
-      filename: '[chunkhash]-[name].js'
-    },
-
-    resolve: {
-      alias: {
-        Src: path.resolve(__dirname, 'src')
-      }
-    },
-
     plugins: [
       extractCSS,
-      extractSCSS,
-      new Visualizer({
-        filename: '../stats-client.html'
-      }),
-      // generate webpack asset json
-      new AssetPlugin()
+      extractSCSS
     ],
 
     module: {
@@ -55,13 +38,7 @@ module.exports = function(platform) {
           use: [{
             loader: 'babel-loader'
           }, {
-            loader: 'eslint-loader',
-            options: {
-              rules: {
-                'no-debugger': 0,
-                'no-console': 0
-              }
-            }
+            loader: 'eslint-loader'
           }]
         },
         {
@@ -93,9 +70,10 @@ module.exports = function(platform) {
           use: [{
             loader: 'url-loader',
             options: {
+              name: '[name]-[hash].[ext]',
               outputPath: '../assets/',
               limit: 8192, // 8kB
-              emitFile: platform === 'client'
+              emitFile: platform === 'browser'
             }
           }]
         },
@@ -104,9 +82,10 @@ module.exports = function(platform) {
           use: [{
             loader: 'url-loader',
             options: {
+              name: '[name]-[hash].[ext]',
               outputPath: '../assets/',
               limit: 8192, // 8kB
-              emitFile: platform === 'client'
+              emitFile: platform === 'browser'
             }
           }]
         },
@@ -116,13 +95,13 @@ module.exports = function(platform) {
           use: [{
             loader: 'file-loader',
             options: {
+              name: '[name]-[hash].[ext]',
               outputPath: '../assets/',
-              emitFile: platform === 'client'
+              emitFile: platform === 'browser'
             }
           }]
         }
       ]
-    },
-    devtool: 'cheap-module-eval-source-map'
+    }
   };
 };

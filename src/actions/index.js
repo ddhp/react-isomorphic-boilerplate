@@ -39,6 +39,7 @@ export function fetchPosts() {
         });
       }, (err) => {
         debug(err);
+        return err;
       });
   };
 }
@@ -57,6 +58,7 @@ export function addPost(post) {
         });
       }, (err) => {
         debug(err);
+        return err;
       });
   };
 }
@@ -74,6 +76,7 @@ export function vote(info) {
         });
       }, (err) => {
         debug(err);
+        return err;
       });
   };
 }
