@@ -6,9 +6,37 @@ import { Helmet } from 'react-helmet';
 import { /*get as _get,*/ isFunction as _isFunction } from 'lodash';
 import renderFullPage from './layout';
 import configureStore from '../configureStore';
-import MainRoute, { getRoute } from '../routes/main';
+import { getMatchedRoute } from '../routes/base';
+import MainRoute from '../routes/main';
+import { getRoutes as getMainRoutes } from '../routes/main';
 import stdout from '../stdout';
 const debug = stdout('app-server');
+
+// set all possible route in /routes when app starts
+// you have to exactly know and config manually here
+const entryRouteInfos = [
+  getMainRoutes(),
+  // other entry
+];
+
+function getEntryAndRoute(path, entryRouteInfos) {
+  // first element of infos as default result
+  let result = entryRouteInfos[0];
+
+  entryRouteInfos.some((info) => {
+    // 3rd param is isIgnore404
+    // ignore it to avoid matching 404
+    const matched = getMatchedRoute(path, info, true);
+    if (matched) {
+      result = {
+        entry: info.entry,
+        route: matched
+      };
+    }
+    return true;
+  });
+  return result;
+}
 
 function applyInitStore(req, res, next) {
   const store = configureStore({});
@@ -24,9 +52,16 @@ function applyRouteCheckResult(req, res, next) {
       promises = [];
 
 
-  const route = getRoute(path),
+  const entryRouteInfo = getEntryAndRoute(path, entryRouteInfos);
+  const currentEntry = entryRouteInfo.entry;
+  const route = entryRouteInfo.route,
         match = matchPath(path, route),
         { loadData } = route;
+
+  debug('route', route);
+
+  // set currentEntry to req
+  req.currentEntry = currentEntry;
 
   let loadDataPromise;
 
@@ -49,7 +84,7 @@ function applyRouteCheckResult(req, res, next) {
 
 module.exports = (app) => {
   app.use('/', applyInitStore, applyRouteCheckResult, (req, res) => {
-    const { url, reduxStore: store } = req,
+    const { url, reduxStore: store, currentEntry } = req,
           routerContext = {},
           reduxStateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
 
@@ -64,7 +99,7 @@ module.exports = (app) => {
     // render to sting to get helmet setting
     const contentString = ReactServer.renderToString(content); 
     const head = Helmet.renderStatic();
-    const htmlString = renderFullPage(contentString, reduxStateString, head);
+    const htmlString = renderFullPage(contentString, reduxStateString, head, currentEntry);
 
     res.send(htmlString);
   });
