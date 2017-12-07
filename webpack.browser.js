@@ -17,7 +17,9 @@ function findTargetRule(rules, targetTest) {
 
 module.exports = function (env) {
   baseConfig.entry = { 
-    main: path.resolve(__dirname, 'src/entries/main')
+    main: path.resolve(__dirname, 'src/entries/main'),
+    // add other entry here
+    // 'another-one': path.resolve(__dirname, 'src/entries/another-one')
   };
 
   baseConfig.output = {
@@ -25,6 +27,17 @@ module.exports = function (env) {
     publicPath: '/assets/',
     filename: '[chunkhash]-[name].js'
   };
+
+  baseConfig.plugins.push( 
+    // generate common chunk for spa entries
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'commons',
+      filename: '[chunkhash]-[name].js',
+      chunks: ['main'/*, 'another-one'*/], // add other entry here
+      minChunks: 3, //only put node modules in common bundle, which have been used more than twice
+      minSize: 100 // only create common chunk when it exceeds certain size(not sure what's the unit here)
+    })
+  );
 
   if (env === 'prod') {
     // apply remove debug loader

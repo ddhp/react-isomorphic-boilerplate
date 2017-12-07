@@ -9,6 +9,7 @@ import configureStore from '../configureStore';
 import { getMatchedRoute } from '../routes/base';
 import MainRoute from '../routes/main';
 import { getRoutes as getMainRoutes } from '../routes/main';
+
 import stdout from '../stdout';
 const debug = stdout('app-server');
 
@@ -18,6 +19,11 @@ const entryRouteInfos = [
   getMainRoutes(),
   // other entry
 ];
+
+const routeComponentMap = {
+  main: MainRoute,
+  // other component map
+};
 
 function getEntryAndRoute(path, entryRouteInfos) {
   // first element of infos as default result
@@ -88,10 +94,12 @@ module.exports = (app) => {
           routerContext = {},
           reduxStateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
 
+    const RouteComponent = routeComponentMap[currentEntry];
+
     const content = (
       <Provider store={store}>
         <Router location={url} context={routerContext}>
-          <MainRoute />
+          <RouteComponent />
         </Router>
       </Provider>
     );

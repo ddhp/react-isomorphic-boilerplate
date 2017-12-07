@@ -79,9 +79,10 @@ and your app is ready to go.
 This is less likely to use, but somehow handy when you want to seperate your app into individual entries.
 
 To add a new entry, do following:
-1. add a new file in `/src/routes`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js) as reference, define your routes for the new entry here.
-2. add a new file in `/src/entries`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/main.js) for example, simply replace `Routes` to the one you defined in previous step.
-3. we define server rendering page logic in `/src/server/pages`, so import new route and add it to `entryRouteInfos` variable.
+1. add a new entry to `webpack.browser.js`.
+2. add a new file in `/src/routes`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js) as reference, define your routes for the new entry here.
+3. add a new file in `/src/entries`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/main.js) for example, simply replace `Routes` to the one you defined in previous step.
+4. we define server rendering page logic in `/src/server/pages`, so import new route and add it to `entryRouteInfos` variable.
 
 Multiple entry gives a huge benefit to bundle size, but you **will lose SPA between different entries**(which means you can't <Link> to each other). Make sure you know why you define different entries.
 

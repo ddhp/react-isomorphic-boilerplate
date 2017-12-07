@@ -64,7 +64,7 @@ export const getRoutes = () => {
   };
 };
 
-export class EntryMainRoute extends BaseRoute {
+export class MainRoute extends BaseRoute {
   static propTypes = {
     me: PropTypes.object,
     location: PropTypes.object
@@ -98,4 +98,4 @@ function mapStateToProps(state) {
 }
 
 // withRouter exposes history, match, location to props
-export default withRouter(connect(mapStateToProps, null)(EntryMainRoute));
+export default withRouter(connect(mapStateToProps, null)(MainRoute));
