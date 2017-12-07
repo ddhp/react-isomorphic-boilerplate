@@ -8,7 +8,9 @@ import renderFullPage from './layout';
 import configureStore from '../configureStore';
 import { getMatchedRoute } from '../routes/base';
 import MainRoute from '../routes/main';
+import AnotherEntryRoute from '../routes/anotherEntry';
 import { getRoutes as getMainRoutes } from '../routes/main';
+import { getRoutes as getAnotherEntryRoutes } from '../routes/anotherEntry';
 
 import stdout from '../stdout';
 const debug = stdout('app-server');
@@ -18,16 +20,19 @@ const debug = stdout('app-server');
 const entryRouteInfos = [
   getMainRoutes(),
   // other entry
+  getAnotherEntryRoutes()
 ];
 
 const routeComponentMap = {
   main: MainRoute,
   // other component map
+  'another-entry': AnotherEntryRoute
 };
 
 function getEntryAndRoute(path, entryRouteInfos) {
   // first element of infos as default result
   let result = entryRouteInfos[0];
+  let hasMatched = false;
 
   entryRouteInfos.some((info) => {
     // 3rd param is isIgnore404
@@ -36,11 +41,18 @@ function getEntryAndRoute(path, entryRouteInfos) {
     if (matched) {
       result = {
         entry: info.entry,
+        routes: info.routes,
         route: matched
       };
+      hasMatched = true;
     }
-    return true;
+    return matched;
   });
+
+  // if not matched set route with not ignoring matching 404
+  if (!hasMatched) {
+    result.route = getMatchedRoute(path, result);
+  }
   return result;
 }
 

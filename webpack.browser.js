@@ -19,7 +19,7 @@ module.exports = function (env) {
   baseConfig.entry = { 
     main: path.resolve(__dirname, 'src/entries/main'),
     // add other entry here
-    // 'another-one': path.resolve(__dirname, 'src/entries/another-one')
+    'another-entry': path.resolve(__dirname, 'src/entries/anotherEntry')
   };
 
   baseConfig.output = {
@@ -33,8 +33,8 @@ module.exports = function (env) {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
       filename: '[chunkhash]-[name].js',
-      chunks: ['main'/*, 'another-one'*/], // add other entry here
-      minChunks: 3, //only put node modules in common bundle, which have been used more than twice
+      chunks: ['main', 'another-entry'], // add other entry here
+      minChunks: 2, //only put node modules in common bundle, which have been used more than once
       minSize: 100 // only create common chunk when it exceeds certain size(not sure what's the unit here)
     })
   );
