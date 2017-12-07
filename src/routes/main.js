@@ -52,13 +52,16 @@ export const getRoutes = () => {
 
 export const getRoute = (path) => {
   const routes = getRoutes();
-  return routes.reduce((prev, cur) => {
-    if (matchPath(path, cur)) {
-      return cur;
-    } else {
-      return prev;
+  let matched = false;
+
+  routes.some((r) => {
+    if (matchPath(path, r)) {
+      matched = r;
+      return true;
     }
-  }, {});
+  });
+
+  return matched;
 };
 
 export class EntryMainRoute extends BaseRoute {
