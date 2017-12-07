@@ -72,8 +72,7 @@ module.exports = function(platform) {
             options: {
               name: '[name]-[hash].[ext]',
               outputPath: '../assets/',
-              limit: 8192, // 8kB
-              emitFile: platform === 'browser'
+              limit: 8192 // 8kB
             }
           }]
         },
@@ -84,8 +83,7 @@ module.exports = function(platform) {
             options: {
               name: '[name]-[hash].[ext]',
               outputPath: '../assets/',
-              limit: 8192, // 8kB
-              emitFile: platform === 'browser'
+              limit: 8192 // 8kB
             }
           }]
         },
@@ -96,8 +94,7 @@ module.exports = function(platform) {
             loader: 'file-loader',
             options: {
               name: '[name]-[hash].[ext]',
-              outputPath: '../assets/',
-              emitFile: platform === 'browser'
+              outputPath: '../assets/'
             }
           }]
         }

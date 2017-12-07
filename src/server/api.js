@@ -5,6 +5,7 @@ import configureStore from '../configureStore';
 import moment from 'moment';
 import { normalize } from 'normalizr';
 import update from 'immutability-helper';
+import schemas from '../schemas';
 
 import stdout from '../stdout';
 const debug = stdout('server/api');
@@ -12,9 +13,6 @@ const debug = stdout('server/api');
 // store representing db
 const store = configureStore({});
 const router = express.Router();
-
-// don't know why import doesn't work
-const schemas = require('../schemas');
 
 export const postcb = (req, res) => {
   const post = _get(store.getState(), 'entities.post');

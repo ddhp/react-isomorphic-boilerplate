@@ -40,11 +40,11 @@ export class Postlist extends Component {
           { downvote, upvote } = p;
     return (
       <li className="postlist">
-        <p className="text">
+        <div className="text">
           {p.text.split('\n').map((p, i) => {
             return <p key={i}>{p}</p>;
           })}
-        </p>
+        </div>
         <div>
           <span className="arthur">{p.arthur} </span>
           <span className="createdAt">{moment().from(p.createdAt)}</span>
