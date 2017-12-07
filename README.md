@@ -54,7 +54,7 @@ On the other hand, node server **only** serves static files in `/dist/assets` wh
 
 ### SEO
 - Define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js))
-- [react-helmet](https://github.com/nfl/react-helmet) help us set head (or specific property) in container and overwrites setting from parent, very handy.
+- [react-helmet](https://github.com/nfl/react-helmet) help us set head (or specific property) in container and overwrites setting of parents, very handy.
 - Define your basic helmet setting in each route file, see [src/routers/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js).
   My idea is - basic head meta can be different for different entries of app.
 - Overwrites head info in containers. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/About/index.js))
@@ -83,10 +83,10 @@ To add a new entry, do following:
 2. push that entry into `CommonsChunkPlugin.chunks`.
 3. add a new file in `/src/routes`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js) as reference, define your routes for the new entry here.
 4. add a new file in `/src/entries`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/main.js) for example, simply replace `Routes` to the one you defined in previous step.
-5. we define server rendering page logic in `/src/server/pages`, so modify `entryRouteInfos` and `routeComponentMap` variables.
+5. In `/src/server/pages.js`, modify `entryRouteInfos` and `routeComponentMap` variables.
 6. if still don't get it, check how `anotherEntry` is added from steps above.
 
-Multiple entry gives a huge benefit to bundle size, but you **will lose SPA between different entries**(which means you can't <Link> to each other). Make sure you know why you define different entries, visit `http://localhost:3333/another-entry` to see it's in life.
+Multiple entry gives a huge benefit to bundle size, but you **will lose SPA between different entries** (which means you can't \<Link \/> to each other). Make sure you know why you define different entries, visit `http://localhost:3333/another-entry` to see it's in life.
 
 ### TODO
 - i18n, possibly don't need any library to do this, we only need some handy helpers for those topics:
