@@ -29,8 +29,11 @@ module.exports = function (env) {
         if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
           return false;
         }
-        // only put module in node_modules and used by more than one time
-        return module.context && module.context.indexOf('node_modules') !== -1 && count > 1;
+        // check if module used enough time
+        // if there are more than 1 entries it has to be used by more than one time
+        const enoughCount = Object.keys(baseConfig.entry).length === 1 ? true : count > 1;
+        // only put module from node_modules
+        return module.context && module.context.indexOf('node_modules') !== -1 && enoughCount;
       }
     }),
     // seperate manifest is a must
