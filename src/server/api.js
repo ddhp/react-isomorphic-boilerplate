@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { get as _get } from 'lodash';
 import configureStore from '../configureStore';
+import rootReducer from '../reducers/main';
 import moment from 'moment';
 import { normalize } from 'normalizr';
 import update from 'immutability-helper';
@@ -11,7 +12,7 @@ import stdout from '../stdout';
 const debug = stdout('server/api');
 
 // store representing db
-const store = configureStore({});
+const store = configureStore({}, rootReducer);
 const router = express.Router();
 
 export const postcb = (req, res) => {

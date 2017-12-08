@@ -8,6 +8,8 @@ import MainRoute from '../routes/main';
 import AnotherEntryRoute from '../routes/anotherEntry';
 import { getRoutes as getMainRoutes } from '../routes/main';
 import { getRoutes as getAnotherEntryRoutes } from '../routes/anotherEntry';
+import mainReducer from '../reducers/main';
+import anotherEntryReducer from '../reducers/anotherEntry';
 
 // you have to exactly know and config this manually here
 // to set all possible routes from src/routes
@@ -18,10 +20,15 @@ export const entryRouteInfos = [
 ];
 
 // telling which Route Component for which entry name
-export const routeComponentMap = {
+export const entryRouteComponentMap = {
   main: MainRoute,
   // other component map
   'another-entry': AnotherEntryRoute
+};
+
+export const entryReducerMap = {
+  main: mainReducer,
+  'another-entry': anotherEntryReducer
 };
 
 /**
