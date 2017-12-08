@@ -8,12 +8,12 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const extractCSS = new ExtractTextPlugin({
-  filename: '[contenthash]-[name].css',
+  filename: '[name].[contenthash].css',
   allChunks: true,
 });
 
 const extractSCSS = new ExtractTextPlugin({
-  filename: '[contenthash]-[name].css',
+  filename: '[name].[contenthash].css',
   allChunks: true,
 });
 

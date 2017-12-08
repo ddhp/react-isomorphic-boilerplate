@@ -16,17 +16,22 @@ module.exports = function (env) {
   baseConfig.output = {
     path: path.join(__dirname, '/dist/assets'),
     publicPath: '/assets/',
-    filename: '[chunkhash]-[name].js'
+    filename: '[name].[chunkhash].js'
   };
 
   baseConfig.plugins.push( 
-    // generate common chunk for spa entries
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'commons',
-      filename: '[chunkhash]-[name].js',
-      chunks: ['main', 'another-entry'], // add other entry here
-      minChunks: 2, //only put node modules in common bundle, which have been used more than once
-      minSize: 100 // only create common chunk when it exceeds certain size(not sure what's the unit here)
+      name: 'vendor',
+      filename: '[name].[chunkhash].js',
+      minChunks: function (module) {
+        // This prevents stylesheet resources with the .css or .scss extension
+        // from being moved from their original chunk to the vendor chunk
+        if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
+          return false;
+        }
+        const venderReg = /[node_modules]/;
+        return module.context && venderReg.test(module.context);
+      }
     })
   );
 
