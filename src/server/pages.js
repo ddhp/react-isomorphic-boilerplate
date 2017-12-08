@@ -6,55 +6,10 @@ import { Helmet } from 'react-helmet';
 import { /*get as _get,*/ isFunction as _isFunction } from 'lodash';
 import renderFullPage from './layout';
 import configureStore from '../configureStore';
-import { getMatchedRoute } from '../routes/base';
-import MainRoute from '../routes/main';
-import AnotherEntryRoute from '../routes/anotherEntry';
-import { getRoutes as getMainRoutes } from '../routes/main';
-import { getRoutes as getAnotherEntryRoutes } from '../routes/anotherEntry';
+import { routeComponentMap, getEntryAndRoute } from './entryAndRoute';
 
 import stdout from '../stdout';
 const debug = stdout('app-server');
-
-// set all possible route in /routes when app starts
-// you have to exactly know and config manually here
-const entryRouteInfos = [
-  getMainRoutes(),
-  // other entry
-  getAnotherEntryRoutes()
-];
-
-const routeComponentMap = {
-  main: MainRoute,
-  // other component map
-  'another-entry': AnotherEntryRoute
-};
-
-function getEntryAndRoute(path, entryRouteInfos) {
-  // first element of infos as default result
-  let result = entryRouteInfos[0];
-  let hasMatched = false;
-
-  entryRouteInfos.some((info) => {
-    // 3rd param is isIgnore404
-    // ignore it to avoid matching 404
-    const matched = getMatchedRoute(path, info, true);
-    if (matched) {
-      result = {
-        entry: info.entry,
-        routes: info.routes,
-        route: matched
-      };
-      hasMatched = true;
-    }
-    return matched;
-  });
-
-  // if not matched set route with not ignoring matching 404
-  if (!hasMatched) {
-    result.route = getMatchedRoute(path, result);
-  }
-  return result;
-}
 
 function applyInitStore(req, res, next) {
   const store = configureStore({});
@@ -70,7 +25,7 @@ function applyRouteCheckResult(req, res, next) {
       promises = [];
 
 
-  const entryRouteInfo = getEntryAndRoute(path, entryRouteInfos);
+  const entryRouteInfo = getEntryAndRoute(path);
   const currentEntry = entryRouteInfo.entry;
   const route = entryRouteInfo.route,
         match = matchPath(path, route),

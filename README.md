@@ -83,7 +83,7 @@ To add a new entry, do following:
 2. push that entry into `CommonsChunkPlugin.chunks`.
 3. add a new file in `/src/routes`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js) as reference, define your routes for the new entry here.
 4. add a new file in `/src/entries`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/main.js) for example, simply replace `Routes` to the one you defined in previous step.
-5. In `/src/server/pages.js`, modify `entryRouteInfos` and `routeComponentMap` variables.
+5. in `/src/server/entryAndRoute.js`, modify `entryRouteInfos` and `routeComponentMap` variables.
 6. if still don't get it, check how `anotherEntry` is added from steps above.
 
 Multiple entry gives a huge benefit to bundle size, but you **will lose SPA between different entries** (which means you can't \<Link \/> to each other). Make sure you know why you define different entries, visit `http://localhost:3333/another-entry` to see it's in life.
