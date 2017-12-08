@@ -9,7 +9,6 @@ export default class AnotherEntry extends Component {
   render() {
     return (
       <div className="page--another-entry">
-        <h1><a href="/">Rib.</a></h1>
         <h2> this is another entry</h2>
         <p>
           <Link to="/">use {'<Link />'}</Link> to home would not work

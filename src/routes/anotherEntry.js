@@ -43,6 +43,11 @@ export class AnotherOneRoute extends BaseRoute {
           <meta name="description" content="react isomorphic boilerplate by ddhp" />
           <meta name="og:title" content="Another One Route" />
         </Helmet>
+        <h1 style={{
+          fontFamily: 'Spectral SC, serif',
+          margin: '2rem',
+          textAlign: 'center'
+        }}><a href="/">Rib.</a></h1>
         {this.renderRoutes(routesInfo.routes, redirect)}
         <Footer />
       </div>
