@@ -6,26 +6,30 @@ import { Helmet } from 'react-helmet';
 import { /*get as _get,*/ isFunction as _isFunction } from 'lodash';
 import renderFullPage from './layout';
 import configureStore from '../configureStore';
-import { routeComponentMap, getEntryAndRoute } from './entryAndRoute';
+import { entryRouteComponentMap, getEntryAndRoute, entryReducerMap } from './entryAndRoute';
 
 import stdout from '../stdout';
 const debug = stdout('app-server');
 
 function applyInitStore(req, res, next) {
-  const store = configureStore({});
+  const entryRouteInfo = getEntryAndRoute(req.path);
+  const currentEntry = entryRouteInfo.entry;
+  const rootReducer = entryReducerMap[currentEntry];
+  debug(rootReducer);
+  const store = configureStore({}, rootReducer);
   req.reduxStore = store;
+  req.entryRouteInfo = entryRouteInfo;
   next();
 }
 
 function applyRouteCheckResult(req, res, next) {
-  let { path, reduxStore: store, query } = req,
+  let { path, reduxStore: store, query, entryRouteInfo } = req,
       // // get whatever info you want from store
       // storeState = store.getState(),
       // me = _get(storeState, 'entities.me', {}),
       promises = [];
 
 
-  const entryRouteInfo = getEntryAndRoute(path);
   const currentEntry = entryRouteInfo.entry;
   const route = entryRouteInfo.route,
         match = matchPath(path, route),
@@ -61,7 +65,7 @@ module.exports = (app) => {
           routerContext = {},
           reduxStateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
 
-    const RouteComponent = routeComponentMap[currentEntry];
+    const RouteComponent = entryRouteComponentMap[currentEntry];
 
     const content = (
       <Provider store={store}>

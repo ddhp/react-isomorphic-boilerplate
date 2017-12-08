@@ -8,16 +8,16 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 const extractCSS = new ExtractTextPlugin({
-  filename: '[contenthash]-[name].css',
+  filename: '[name].[contenthash].css',
   allChunks: true,
 });
 
 const extractSCSS = new ExtractTextPlugin({
-  filename: '[contenthash]-[name].css',
+  filename: '[name].[contenthash].css',
   allChunks: true,
 });
 
-module.exports = function(platform) {
+module.exports = exports = function(platform) {
   if (!platform) {
     platform = 'browser';
   }
@@ -101,4 +101,14 @@ module.exports = function(platform) {
       ]
     }
   };
+};
+
+exports.findTargetRule = function findTargetRule(rules, targetTest) {
+  let targetRule = {};
+  rules.map((r) => {
+    if (r.test.toString() === targetTest.toString()) {
+      targetRule = r;
+    }
+  });
+  return targetRule;
 };

@@ -4,16 +4,7 @@ const AssetPlugin = require('assets-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const baseConfig = require('./webpack.base.js')('browser');
-
-function findTargetRule(rules, targetTest) {
-  let targetRule = {};
-  rules.map((r) => {
-    if (r.test.toString() === targetTest.toString()) {
-      targetRule = r;
-    }
-  });
-  return targetRule;
-}
+const findTargetRule = require('./webpack.base.js').findTargetRule;
 
 module.exports = function (env) {
   baseConfig.entry = { 
@@ -25,17 +16,27 @@ module.exports = function (env) {
   baseConfig.output = {
     path: path.join(__dirname, '/dist/assets'),
     publicPath: '/assets/',
-    filename: '[chunkhash]-[name].js'
+    filename: '[name].[chunkhash].js'
   };
 
   baseConfig.plugins.push( 
-    // generate common chunk for spa entries
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'commons',
-      filename: '[chunkhash]-[name].js',
-      chunks: ['main', 'another-entry'], // add other entry here
-      minChunks: 2, //only put node modules in common bundle, which have been used more than once
-      minSize: 100 // only create common chunk when it exceeds certain size(not sure what's the unit here)
+      name: 'vendor',
+      filename: '[name].[chunkhash].js',
+      minChunks: function (module, count) {
+        // This prevents stylesheet resources with the .css or .scss extension
+        // from being moved from their original chunk to the vendor chunk
+        if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
+          return false;
+        }
+        // only put module in node_modules and used by more than one time
+        return module.context && module.context.indexOf('node_modules') !== -1 && count > 1;
+      }
+    }),
+    // seperate manifest is a must
+    // or every time vendor chunk hash would change
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest'
     })
   );
 
