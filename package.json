@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-boilerplate",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "src/server/index.js",
   "license": "MIT",
   "scripts": {
