@@ -17,6 +17,7 @@ export class Nav extends Component {
         <Link to="/">Rib.</Link>
         <Link to="/about">About</Link>
         <Link to="/demo">Demo</Link>
+        <a href="another-entry">Another</a>
 
         <div className="user-info">
           your are {this.props.name}

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { get as _get, isFunction as _isFunction } from 'lodash';
-import { matchPath } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import BaseRoute from './base';
+import { getMatchedRoute } from './base';
 import Nav from '../containers/Nav';
 import Home from '../containers/Home';
 import About from '../containers/About';
@@ -15,56 +15,56 @@ import FourOFour from '../containers/404';
 import { fetchPosts } from '../actions';
 
 /**
- * loadData: related action(s) to loadData, possibly given react router match and req query
- * redirect: redirect logic
+ * put 404 route to the last
+ * since it's the last to match
+ *
+ * @returns {object} routesInfo - detail of routes
+ * @property {string} routesInfo.entry - entry name of routes
+ * @property {object[]} routesInfo.routes
+ * @property {React Component} routesInfo.routes[].component - component to use
+ * @property {string} routesInfo.routes[].path - path to match
+ * @property {string} routesInfo.routes[].key - unique key for Route to use
+ * @property {boolean} routesInfo.routes[].exact - is exact match
+ * @property {boolean} routesInfo.routes[].strict - is strict match
+ * @property {function} routesInfo.routes[].loadData - related action(s) to loadData, possibly given react router match and req query
+ * @property {(function|boolean|string)} routesInfo.routes[].redirect - redirect logic
  *
  */
 export const getRoutes = () => {
-  return [
-    {
-      path: '/',
-      key: 'home',
-      exact: true,
-      component: Home,
-      loadData: (/*match, query*/) => {
-        // return last action,
-        // it would be a promise if it's an aync request
-        return fetchPosts();
-      },
-      redirect: () => {
-        return false;
+  return {
+    entry: 'main',
+    routes: [
+      {
+        path: '/',
+        key: 'home',
+        exact: true,
+        component: Home,
+        loadData: (/*match, query*/) => {
+          // return last action,
+          // it would be a promise if it's an aync request
+          return fetchPosts();
+        },
+        redirect: () => {
+          return false;
+        }
+      }, {
+        path: '/about',
+        key: 'about',
+        component: About,
+        redirect: false
+      }, {
+        path: '/demo',
+        key: 'demo',
+        component: Demo
+      }, {
+        key: '404',
+        component: FourOFour
       }
-    }, {
-      path: '/about',
-      key: 'about',
-      component: About,
-      redirect: false
-    }, {
-      path: '/demo',
-      key: 'demo',
-      component: Demo
-    }, {
-      key: '404',
-      component: FourOFour
-    }
-  ];
+    ]
+  };
 };
 
-export const getRoute = (path) => {
-  const routes = getRoutes();
-  let matched = false;
-
-  routes.some((r) => {
-    if (matchPath(path, r)) {
-      matched = r;
-      return true;
-    }
-  });
-
-  return matched;
-};
-
-export class EntryMainRoute extends BaseRoute {
+export class MainRoute extends BaseRoute {
   static propTypes = {
     me: PropTypes.object,
     location: PropTypes.object
@@ -72,8 +72,8 @@ export class EntryMainRoute extends BaseRoute {
 
   render() {
     const { location/*, me*/ } = this.props;
-    const routes = getRoutes();
-    const currentRoute = getRoute(location.pathname);
+    const routesInfo = getRoutes();
+    const currentRoute = getMatchedRoute(location.pathname, routesInfo);
     const redirect = currentRoute.redirect ? _isFunction(currentRoute.redirect) ? currentRoute.redirect() : currentRoute.redirect : false;
 
     return (
@@ -84,7 +84,7 @@ export class EntryMainRoute extends BaseRoute {
           <meta name="og:title" content="title set in entry-main" />
         </Helmet>
         <Nav />
-        {this.renderRoutes(routes, redirect)}
+        {this.renderRoutes(routesInfo.routes, redirect)}
         <Footer />
       </div>
     );
@@ -98,4 +98,4 @@ function mapStateToProps(state) {
 }
 
 // withRouter exposes history, match, location to props
-export default withRouter(connect(mapStateToProps, null)(EntryMainRoute));
+export default withRouter(connect(mapStateToProps, null)(MainRoute));
