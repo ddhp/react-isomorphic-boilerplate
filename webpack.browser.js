@@ -30,7 +30,7 @@ module.exports = function (env) {
           return false;
         }
         // only put module in node_modules and used by more than one time
-        return module.context && module.context.indexOf("node_modules") !== -1 && count > 1;
+        return module.context && module.context.indexOf('node_modules') !== -1 && count > 1;
       }
     }),
     // seperate manifest is a must

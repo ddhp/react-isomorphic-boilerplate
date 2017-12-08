@@ -111,4 +111,4 @@ exports.findTargetRule = function findTargetRule(rules, targetTest) {
     }
   });
   return targetRule;
-}
+};
