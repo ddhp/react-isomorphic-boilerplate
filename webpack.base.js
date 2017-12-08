@@ -17,6 +17,16 @@ const extractSCSS = new ExtractTextPlugin({
   allChunks: true,
 });
 
+exports.findTargetRule = function findTargetRule(rules, targetTest) {
+  let targetRule = {};
+  rules.map((r) => {
+    if (r.test.toString() === targetTest.toString()) {
+      targetRule = r;
+    }
+  });
+  return targetRule;
+}
+
 module.exports = function(platform) {
   if (!platform) {
     platform = 'browser';

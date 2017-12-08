@@ -4,16 +4,7 @@ const AssetPlugin = require('assets-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const baseConfig = require('./webpack.base.js')('browser');
-
-function findTargetRule(rules, targetTest) {
-  let targetRule = {};
-  rules.map((r) => {
-    if (r.test.toString() === targetTest.toString()) {
-      targetRule = r;
-    }
-  });
-  return targetRule;
-}
+const findTargetRule = require('./webpack.base.js').findTargetRule;
 
 module.exports = function (env) {
   baseConfig.entry = { 
