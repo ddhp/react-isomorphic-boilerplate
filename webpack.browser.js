@@ -23,15 +23,20 @@ module.exports = function (env) {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       filename: '[name].[chunkhash].js',
-      minChunks: function (module) {
+      minChunks: function (module, count) {
         // This prevents stylesheet resources with the .css or .scss extension
         // from being moved from their original chunk to the vendor chunk
         if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
           return false;
         }
-        const venderReg = /[node_modules]/;
-        return module.context && venderReg.test(module.context);
+        // only put module in node_modules and used by more than one time
+        return module.context && module.context.indexOf("node_modules") !== -1 && count > 1;
       }
+    }),
+    // seperate manifest is a must
+    // or every time vendor chunk hash would change
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest'
     })
   );
 
