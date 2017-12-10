@@ -5,14 +5,17 @@ const nodeExternals = require('webpack-node-externals');
 const baseConfig = require('./webpack.base.js')('server');
 
 module.exports = function(env) {
+  baseConfig.name = 'server';
+
   baseConfig.entry = {
-    server: path.resolve(__dirname, 'src/server')
+    server: path.resolve(__dirname, 'src/server/renderer')
   };
 
   baseConfig.output = {
     path: path.join(__dirname, '/dist/server'),
     publicPath: '/assets/',
-    filename: 'index.js'
+    filename: 'index.js',
+    libraryTarget: 'commonjs2'
   };
 
   baseConfig.target = 'node';

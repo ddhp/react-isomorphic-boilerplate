@@ -7,6 +7,8 @@ const baseConfig = require('./webpack.base.js')('browser');
 const findTargetRule = require('./webpack.base.js').findTargetRule;
 
 module.exports = function (env) {
+  baseConfig.name = 'browser';
+
   baseConfig.entry = { 
     main: path.resolve(__dirname, 'src/entries/main'),
     // add other entry here
