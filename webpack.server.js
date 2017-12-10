@@ -7,10 +7,6 @@ const baseConfig = require('./webpack.base.js')('server');
 module.exports = function(env) {
   baseConfig.name = 'server';
 
-  baseConfig.entry = {
-    server: path.resolve(__dirname, 'src/server/renderer')
-  };
-
   baseConfig.output = {
     path: path.join(__dirname, '/dist/server'),
     publicPath: '/assets/',
@@ -22,6 +18,10 @@ module.exports = function(env) {
   baseConfig.externals = [nodeExternals()]; // in order to ignore all modules in node_modules folder
 
   if (env === 'prod') {
+    baseConfig.entry = {
+      server: path.resolve(__dirname, 'src/server')
+    };
+
     baseConfig.plugins.push(
       new UglifyJsPlugin({
         uglifyOptions: {  
@@ -33,6 +33,10 @@ module.exports = function(env) {
       })
     );
   } else {
+    baseConfig.entry = {
+      server: path.resolve(__dirname, 'src/server/renderer')
+    };
+
     baseConfig.devtool = 'cheap-module-eval-source-map';
   }
   

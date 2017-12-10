@@ -4,7 +4,7 @@
   "main": "src/server/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "DEBUG=*,-nodemon*,-express*,-send nodemon --inspect dist/server/index.js",
+    "start": "DEBUG=*,-nodemon*,-express*,-send,-babel*,-eslint*,-css-modules* babel-node --inspect src/server/index.js",
     "clean": "find dist/assets/ -regex '.*[css|js]$' -delete",
     "build:browser:dev": "npm run clean && webpack --env=dev --config=webpack.browser.js --progress --profile --colors",
     "build:server:dev": "webpack --env=dev --config=webpack.server.js --progress --profile --colors",
