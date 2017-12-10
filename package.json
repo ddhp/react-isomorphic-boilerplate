@@ -6,7 +6,7 @@
   "scripts": {
     "start": "DEBUG=*,-nodemon*,-express*,-send,-babel*,-eslint*,-css-modules* babel-node --inspect src/server/index.js",
     "clean": "find dist/assets/ -regex '.*[css|js]$' -delete",
-    "build:browser:prod": "webpack --env=prod --config=webpack.browser.js --progress --profile --colors",
+    "build:browser:prod": "webpack --env=prod --config=webpack.browser.js --progress --profile --colors --json > dist/compilation-stats.json",
     "build:server:prod": "webpack --env=prod --config=webpack.server.js --progress --profile --colors",
     "eslint": "eslint ./",
     "test": "npm run eslint && cross-env NODE_ENV=test nyc ava --verbose",

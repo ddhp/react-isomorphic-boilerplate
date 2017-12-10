@@ -10,8 +10,7 @@ module.exports = function(env) {
   baseConfig.output = {
     path: path.join(__dirname, '/dist/server'),
     publicPath: '/assets/',
-    filename: 'index.js',
-    libraryTarget: 'commonjs2'
+    filename: 'index.js'
   };
 
   baseConfig.target = 'node';
@@ -36,6 +35,9 @@ module.exports = function(env) {
     baseConfig.entry = {
       server: path.resolve(__dirname, 'src/server/renderer')
     };
+
+    // webpack-hot-server-middleware needs this setting
+    baseConfig.output.libraryTarget = 'commonjs2';
 
     baseConfig.devtool = 'cheap-module-eval-source-map';
   }

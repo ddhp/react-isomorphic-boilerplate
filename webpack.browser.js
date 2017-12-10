@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const AssetPlugin = require('assets-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const baseConfig = require('./webpack.base.js')('browser');
@@ -17,14 +16,15 @@ module.exports = function (env) {
 
   baseConfig.output = {
     path: path.join(__dirname, '/dist/assets'),
-    publicPath: '/assets/',
-    filename: '[name].[chunkhash].js'
+    publicPath: env === 'prod' ? '/assets/' : '/', // no tailing with '/' to avoid hot reload issue
+    // set fixed filename for hot reload
+    filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js'
   };
 
   baseConfig.plugins.push( 
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: '[name].[chunkhash].js',
+      filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js',
       minChunks: function (module, count) {
         // This prevents stylesheet resources with the .css or .scss extension
         // from being moved from their original chunk to the vendor chunk
@@ -60,17 +60,15 @@ module.exports = function (env) {
       new UglifyJsPlugin(),
       new webpack.DefinePlugin({ 
         'process.env.NODE_ENV': '"production"'
-      }),
-      // generate webpack asset json
-      new AssetPlugin()
+      })
     );
   } else {
+    // set fixed filename for hot reload
+    baseConfig.output.filename = '[name].js';
     baseConfig.plugins.push(
       new Visualizer({
         filename: '../stats-browser.html'
-      }),
-      // generate webpack asset json
-      new AssetPlugin()
+      })
     );
     
     // enable source map

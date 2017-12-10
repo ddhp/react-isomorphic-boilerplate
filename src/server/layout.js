@@ -1,4 +1,6 @@
-import assetsJSON from '../../webpack-assets.json';
+import path from 'path';
+const debug = require('../stdout').default('server:layout');
+
 import favicon from '../assets/images/favicon.ico';
 import touchicon from '../assets/images/icon.png';
 
@@ -10,10 +12,40 @@ function genCSSTag(path) {
   return path ? `<link href=${path} rel="stylesheet" />` : '';
 }
 
-function renderFullPage(content, reduxState, head, currentEntry) {
-  const manifestAssets = assetsJSON.manifest || {};
-  const targetAssets = assetsJSON[currentEntry] || {};
-  const vendorAssets = assetsJSON.vendor || {}; 
+function getAssetInfo(asset, publicPath) {
+  let js, css;
+  debug(asset);
+  if (Array.isArray(asset)) {
+    js = path.join(publicPath, asset.find(a => /\.js$/.test(a)));
+    css = path.join(publicPath, asset.find(a => /\.css$/.test(a)));
+  } else {
+    js = path.join(publicPath, asset);
+  }
+  return {js, css};
+}
+
+function parseStats(clientStats, currentEntry) {
+  const assetsByChunkName = clientStats.assetsByChunkName;
+  const publicPath = clientStats.publicPath;
+  debug(clientStats);
+  debug(currentEntry);
+  debug(assetsByChunkName);
+  const currentEntryAsset = assetsByChunkName[currentEntry] || '';
+  const mainfestAsset = assetsByChunkName.manifest || '';
+  const vendorAsset = assetsByChunkName.vendor || '';
+  return {
+    main: getAssetInfo(currentEntryAsset, publicPath),
+    manifest: getAssetInfo(mainfestAsset, publicPath),
+    vendor: getAssetInfo(vendorAsset, publicPath)
+  };
+}
+
+function renderFullPage(content, reduxState, head, currentEntry, clientStats) {
+  const { manifest: manifestAssets, main: targetAssets, vendor: vendorAssets } = parseStats(clientStats, currentEntry);
+  debug(manifestAssets, targetAssets, vendorAssets);
+  // const manifestAssets = assetsJSON.manifest || {};
+  // const targetAssets = assetsJSON[currentEntry] || {};
+  // const vendorAssets = assetsJSON.vendor || {}; 
   const manifestJS = genJSTag(manifestAssets.js);
   const targetJS = genJSTag(targetAssets.js);
   const targetCSS = genCSSTag(targetAssets.css);

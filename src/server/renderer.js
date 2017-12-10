@@ -59,7 +59,7 @@ function applyRouteCheckResult(req) {
   // });
 }
 
-function responsePage(req, res/*, clientStats*/) {
+function responsePage(req, res, clientStats) {
   const { url, reduxStore: store, currentEntry } = req,
         routerContext = {},
         reduxStateString = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
@@ -77,16 +77,16 @@ function responsePage(req, res/*, clientStats*/) {
   // render to sting to get helmet setting
   const contentString = ReactServer.renderToString(content); 
   const head = Helmet.renderStatic();
-  const htmlString = renderFullPage(contentString, reduxStateString, head, currentEntry);
+  const htmlString = renderFullPage(contentString, reduxStateString, head, currentEntry, clientStats);
 
   res.send(htmlString);
 }
 
-export default function renderer(/*{ clientStats, serverStats }*/) {
+export default function renderer({ clientStats }) {
   return (req, res) => {
     applyInitStore(req);
     applyRouteCheckResult(req).then(() => {
-      responsePage(req, res);
+      responsePage(req, res, clientStats);
     });
   };
 }
