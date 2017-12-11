@@ -9,6 +9,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 
 ## Feature
 - isomorphic: same code runs on server and browser.
+- 🔥 browser and server side hot reload.
 - SEO: information benefits to search engine would be rendered on server side.
 - fully testable - shows how to test react containers / redux actions and reducers / also your server app.
 - easy to start.
@@ -16,16 +17,22 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 
 ## Concept
 ### Getting Started
-Execute `yarn` to install.
+```
+# we need babel-node to execute es6 server scripts
+npm install -g babel-cli
 
-Run 3 processes to start developing your app:
-1. `yarn run build:browser:dev:w`: build browser side code and watch file change.
-2. `yarn run build:server:dev:w`: build server side conde and watch file change.
-3. `yarn start`: nodemon executing `dist/server.js`, and only watches on it's change,
-   [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given,
-   you can debug nodejs server on chrome-devtools.
+# install dependencies
+yarn
 
-then you can visit `localhost:3333`.
+# start dev env
+yarn start
+
+# it runs with
+# [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector)
+# you can debug nodejs server on chrome-devtools.
+```
+
+then visit `localhost:3333` to see result.
 
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
 
@@ -72,6 +79,7 @@ On the other hand, node server **only** serves static files in `/dist/assets` wh
 Build your code with:
 1. `yarn run build:browser:prod`
 2. `yarn run build:server:prod`
+3. `node dist/server/index.js`
 
 and your app is ready to go.
 
@@ -89,6 +97,26 @@ To add a new entry, do following:
 Multiple entry gives a huge benefit to bundle size, but you **will lose SPA between different entries** (which means you can't \<Link \/> to each other). 
 
 Make sure you know why seperating to different entries, visit `http://localhost:3333/another-entry` to see it's in life.
+
+### Hot reload
+In this boilerplate, we build our own server app, which means we have to implement hot reload by ourself. 
+
+In order to do this, we use 4 libraries listed below:
+1. [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) - given webpack compiler(s), create bundle(s) to memory, watch changes for rebuild.
+2. [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware) - whenever given compiler rebuilt, send events with built [stats](https://webpack.js.org/api/stats/) to client listener.
+3. [react-hot-loader](https://github.com/gaearon/react-hot-loader) - listen to events from dev server and update layout when built bundle has changed.
+
+then here is the tricky part, the 4th one makes server side hot reload work:
+
+4. [webpack-hot-server-middleware](https://github.com/60frames/webpack-hot-server-middleware) - this middleware takes both server and client webpack compiler, 
+and **register built server bundle as middleware**. Then if any rebuild occurs, replace that middleware with the new one.
+
+webpack-hot-server-middleware has a very important convention - **server bundle needs to be a function returns a middleware function** (see `/src/server/renderer.js`),
+so in `webpack.server.js`, you can see dev and prod build has different entry (renderer.js and index.js), and in 
+`/src/server/index.js`, you will see how server runs on different environment.
+
+On the other hand, webpack-hot-server-middleware only watch changes on `/src/server/renderer.js` and its children, so hot reload doesn't work outside that scope, e.g `/src/server/api.js`,
+you have to rerun `yarn start` to see it take place.
 
 ### TODO
 - i18n, possibly don't need any library to do this, we only need some handy helpers for those topics:

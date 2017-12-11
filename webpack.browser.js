@@ -1,28 +1,32 @@
 const webpack = require('webpack');
 const path = require('path');
-const AssetPlugin = require('assets-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const baseConfig = require('./webpack.base.js')('browser');
-const findTargetRule = require('./webpack.base.js').findTargetRule;
+const baseConfig = require('./webpack.base.js');
+const findTargetRule = baseConfig.findTargetRule;
 
 module.exports = function (env) {
-  baseConfig.entry = { 
+  let config = baseConfig('browser', env);
+
+  config.name = 'browser';
+
+  const entry = { 
     main: path.resolve(__dirname, 'src/entries/main'),
     // add other entry here
     'another-entry': path.resolve(__dirname, 'src/entries/anotherEntry')
   };
 
-  baseConfig.output = {
+  config.output = {
     path: path.join(__dirname, '/dist/assets'),
-    publicPath: '/assets/',
-    filename: '[name].[chunkhash].js'
+    publicPath: env === 'prod' ? '/assets/' : '/', // no tailing with '/' to avoid hot reload issue
+    // set fixed filename for hot reload
+    filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js'
   };
 
-  baseConfig.plugins.push( 
+  config.plugins.push( 
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: '[name].[chunkhash].js',
+      filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js',
       minChunks: function (module, count) {
         // This prevents stylesheet resources with the .css or .scss extension
         // from being moved from their original chunk to the vendor chunk
@@ -31,7 +35,7 @@ module.exports = function (env) {
         }
         // check if module used enough time
         // if there are more than 1 entries it has to be used by more than one time
-        const enoughCount = Object.keys(baseConfig.entry).length === 1 ? true : count > 1;
+        const enoughCount = Object.keys(config.entry).length === 1 ? true : count > 1;
         // only put module from node_modules
         return module.context && module.context.indexOf('node_modules') !== -1 && enoughCount;
       }
@@ -44,8 +48,10 @@ module.exports = function (env) {
   );
 
   if (env === 'prod') {
+    config.entry = entry;
+
     // apply remove debug loader
-    const jsRule = findTargetRule(baseConfig.module.rules, /\.js$/);
+    const jsRule = findTargetRule(config.module.rules, /\.js$/);
     jsRule.use.push({
       loader: 'remove-debug-loader',
       options: {
@@ -54,26 +60,32 @@ module.exports = function (env) {
       }
     });
 
-    baseConfig.plugins.push(
+    config.plugins.push(
       new UglifyJsPlugin(),
       new webpack.DefinePlugin({ 
         'process.env.NODE_ENV': '"production"'
-      }),
-      // generate webpack asset json
-      new AssetPlugin()
+      })
     );
   } else {
-    baseConfig.plugins.push(
+    const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+    // push hotreload to entry
+    let devEntry = {};
+    Object.keys(entry).forEach((key) => {
+      devEntry[key] = [];
+      devEntry[key].push('react-hot-loader/patch', entry[key], hotMiddlewareScript);
+    });
+    config.entry = devEntry;
+
+    config.plugins.push(
       new Visualizer({
         filename: '../stats-browser.html'
       }),
-      // generate webpack asset json
-      new AssetPlugin()
+      new webpack.HotModuleReplacementPlugin()
     );
     
     // enable source map
-    baseConfig.devtool = 'cheap-module-eval-source-map';
+    config.devtool = 'cheap-module-eval-source-map';
   }
 
-  return baseConfig;
+  return config;
 };
