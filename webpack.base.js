@@ -7,20 +7,20 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-const extractCSS = new ExtractTextPlugin({
-  filename: '[name].[contenthash].css',
-  allChunks: true,
-});
-
-const extractSCSS = new ExtractTextPlugin({
-  filename: '[name].[contenthash].css',
-  allChunks: true,
-});
-
-module.exports = exports = function(platform) {
+module.exports = exports = function(platform, env) {
   if (!platform) {
     platform = 'browser';
   }
+
+  const extractCSS = new ExtractTextPlugin({
+    filename: env === 'prod' ? '[name].[contenthash].css' : '[name].css',
+    allChunks: true,
+  });
+
+  const extractSCSS = new ExtractTextPlugin({
+    filename: env === 'prod' ? '[name].[contenthash].css' : '[name].css',
+    allChunks: true,
+  });
 
   return {
     context: path.resolve(__dirname),
@@ -70,8 +70,8 @@ module.exports = exports = function(platform) {
           use: [{
             loader: 'url-loader',
             options: {
-              name: '[name]-[hash].[ext]',
-              outputPath: '../assets/',
+              name: env === 'prod' ? '[name]-[hash].[ext]' : '[name].[ext]',
+              outputPath: env === 'prod' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
               limit: 8192 // 8kB
             }
           }]
@@ -81,8 +81,8 @@ module.exports = exports = function(platform) {
           use: [{
             loader: 'url-loader',
             options: {
-              name: '[name]-[hash].[ext]',
-              outputPath: '../assets/',
+              name: env === 'prod' ? '[name]-[hash].[ext]' : '[name].[ext]',
+              outputPath: env === 'prod' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
               limit: 8192 // 8kB
             }
           }]
@@ -93,8 +93,8 @@ module.exports = exports = function(platform) {
           use: [{
             loader: 'file-loader',
             options: {
-              name: '[name]-[hash].[ext]',
-              outputPath: '../assets/'
+              name: env === 'prod' ? '[name]-[hash].[ext]' : '[name].[ext]',
+              outputPath: env === 'prod' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
             }
           }]
         }

@@ -2,26 +2,28 @@ const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const baseConfig = require('./webpack.base.js')('server');
+const baseConfig = require('./webpack.base.js');
 
 module.exports = function(env) {
-  baseConfig.name = 'server';
+  let config = baseConfig('server', env);
 
-  baseConfig.output = {
+  config.name = 'server';
+
+  config.output = {
     path: path.join(__dirname, '/dist/server'),
-    publicPath: '/assets/',
+    publicPath: env === 'prod' ? '/assets/' : '/', // no tailing with '/' to avoid hot reload issue
     filename: 'index.js'
   };
 
-  baseConfig.target = 'node';
-  baseConfig.externals = [nodeExternals()]; // in order to ignore all modules in node_modules folder
+  config.target = 'node';
+  config.externals = [nodeExternals()]; // in order to ignore all modules in node_modules folder
 
   if (env === 'prod') {
-    baseConfig.entry = {
+    config.entry = {
       server: path.resolve(__dirname, 'src/server')
     };
 
-    baseConfig.plugins.push(
+    config.plugins.push(
       new UglifyJsPlugin({
         uglifyOptions: {  
           ecma: 8
@@ -32,15 +34,15 @@ module.exports = function(env) {
       })
     );
   } else {
-    baseConfig.entry = {
+    config.entry = {
       server: path.resolve(__dirname, 'src/server/renderer')
     };
 
     // webpack-hot-server-middleware needs this setting
-    baseConfig.output.libraryTarget = 'commonjs2';
+    config.output.libraryTarget = 'commonjs2';
 
-    baseConfig.devtool = 'cheap-module-eval-source-map';
+    config.devtool = 'cheap-module-eval-source-map';
   }
   
-  return baseConfig;
+  return config;
 };
