@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // import app from './app';
-const port = 3333;
+const port = process.env.PORT || 3333;
 
 const server = app.listen(port, function () {
   const host = server.address().address,

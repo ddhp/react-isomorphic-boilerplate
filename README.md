@@ -25,11 +25,10 @@ npm install -g babel-cli
 yarn
 
 # start dev env
-yarn start
-
 # it runs with
 # [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector)
 # you can debug nodejs server on chrome-devtools.
+yarn start
 ```
 
 then visit `localhost:3333` to see result.
@@ -79,9 +78,8 @@ On the other hand, node server **only** serves static files in `/dist/assets` wh
 Build your code with:
 1. `yarn run build:browser:prod`
 2. `yarn run build:server:prod`
-3. `node dist/server/index.js`
 
-and your app is ready to go.
+and `PORT={your_port} node dist/server/index.js` then your app runs on `localhost:{your_port}`.
 
 ### Multiple Entries
 This is less likely to use, but somehow handy when you want to seperate your app into individual entries.
