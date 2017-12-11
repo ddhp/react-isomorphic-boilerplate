@@ -46,7 +46,7 @@ export class Home extends Component {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   const postEntity = _get(state, 'entities.post'),
         postIds = _get(state, 'pages.home.posts');
   let posts = postIds.map((id) => {
@@ -60,7 +60,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
     dummyAction: () => {
       return dispatch(dummyAction());
