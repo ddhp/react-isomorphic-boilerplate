@@ -12,12 +12,30 @@ function genCSSTag(path) {
   return path ? `<link href=${path} rel="stylesheet" />` : '';
 }
 
+function genTag(path, type) {
+  let method = () => {};
+  if (type === 'CSS') method = genCSSTag;  
+  if (type === 'JS') method = genJSTag;  
+  if (!Array.isArray(path)) {
+    path = [path];
+  }
+  const res = path.reduce((accu, p) => {
+    return `${accu}\n${method(p)}`;
+  }, '');
+  debug(path, type, res);
+  return res;
+}
+
 function getAssetInfo(asset, publicPath) {
   let js, css;
   debug(asset);
   if (Array.isArray(asset)) {
-    js = path.join(publicPath, asset.find(a => /\.js$/.test(a)));
-    css = path.join(publicPath, asset.find(a => /\.css$/.test(a)));
+    js = [];
+    css = [];
+    asset.forEach((a) => {
+      if (/\.js$/.test(a)) js.push(path.join(publicPath, a));
+      if (/\.css/.test(a)) css.push(path.join(publicPath, a));
+    });
   } else {
     js = path.join(publicPath, asset);
   }
@@ -30,6 +48,7 @@ function parseStats(clientStats, currentEntry) {
   debug(clientStats);
   debug(currentEntry);
   debug(assetsByChunkName);
+  debug('public path', publicPath);
   const currentEntryAsset = assetsByChunkName[currentEntry] || '';
   const mainfestAsset = assetsByChunkName.manifest || '';
   const vendorAsset = assetsByChunkName.vendor || '';
@@ -42,15 +61,17 @@ function parseStats(clientStats, currentEntry) {
 
 function renderFullPage(content, reduxState, head, currentEntry, clientStats) {
   const { manifest: manifestAssets, main: targetAssets, vendor: vendorAssets } = parseStats(clientStats, currentEntry);
-  debug(manifestAssets, targetAssets, vendorAssets);
+  debug('manifestAssets', manifestAssets);
+  debug('targetAssets', targetAssets);
+  debug('vendorAssets', vendorAssets);
   // const manifestAssets = assetsJSON.manifest || {};
   // const targetAssets = assetsJSON[currentEntry] || {};
   // const vendorAssets = assetsJSON.vendor || {}; 
-  const manifestJS = genJSTag(manifestAssets.js);
-  const targetJS = genJSTag(targetAssets.js);
-  const targetCSS = genCSSTag(targetAssets.css);
-  const vendorJS = genJSTag(vendorAssets.js);
-  const vendorCSS = genCSSTag(vendorAssets.css);
+  const manifestJS = genTag(manifestAssets.js, 'JS');
+  const targetJS = genTag(targetAssets.js, 'JS');
+  const targetCSS = genTag(targetAssets.css, 'CSS');
+  const vendorJS = genTag(vendorAssets.js, 'JS');
+  const vendorCSS = genTag(vendorAssets.css, 'CSS');
 
   return `
     <!doctype html>

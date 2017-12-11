@@ -4,5 +4,6 @@
     "test": {
       "plugins": ["istanbul"]
     }
-  }
+  },
+  "plugins": ["react-hot-loader/babel"]
 }

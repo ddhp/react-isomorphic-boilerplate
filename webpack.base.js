@@ -15,11 +15,13 @@ module.exports = exports = function(platform, env) {
   const extractCSS = new ExtractTextPlugin({
     filename: env === 'prod' ? '[name].[contenthash].css' : '[name].css',
     allChunks: true,
+    disable: env !== 'prod' && platform === 'browser'
   });
 
   const extractSCSS = new ExtractTextPlugin({
     filename: env === 'prod' ? '[name].[contenthash].css' : '[name].css',
     allChunks: true,
+    disable: env !== 'prod' && platform === 'browser'
   });
 
   return {
@@ -43,24 +45,40 @@ module.exports = exports = function(platform, env) {
         },
         {
           test: /\.css$/,
-          use: extractCSS.extract({fallback: 'style-loader', use: ['css-loader']})
+          use: extractCSS.extract({fallback: 'style-loader', use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: env !== 'prod'
+              }
+            }
+          ]})
         }, 
         {
           test: /\.scss$/,
           use: extractSCSS.extract({
             fallback: 'style-loader',
             use: [
-              'css-loader', 
+              { 
+                loader: 'css-loader', 
+                options: {
+                  sourceMap: env !== 'prod'
+                }
+              },
               {
                 loader: 'postcss-loader', 
                 options: {
+                  sourceMap: env !== 'prod',
                   plugins: [
                     autoprefixer()
                   ]
                 }
               },
               {
-                loader: 'sass-loader'
+                loader: 'sass-loader',
+                options: {
+                  sourceMap: env !== 'prod'
+                }
               }
             ]
           })

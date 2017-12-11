@@ -10,7 +10,7 @@ module.exports = function (env) {
 
   config.name = 'browser';
 
-  config.entry = { 
+  const entry = { 
     main: path.resolve(__dirname, 'src/entries/main'),
     // add other entry here
     'another-entry': path.resolve(__dirname, 'src/entries/anotherEntry')
@@ -48,6 +48,8 @@ module.exports = function (env) {
   );
 
   if (env === 'prod') {
+    config.entry = entry;
+
     // apply remove debug loader
     const jsRule = findTargetRule(config.module.rules, /\.js$/);
     jsRule.use.push({
@@ -65,10 +67,20 @@ module.exports = function (env) {
       })
     );
   } else {
+    const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+    // push hotreload to entry
+    let devEntry = {};
+    Object.keys(entry).forEach((key) => {
+      devEntry[key] = [];
+      devEntry[key].push('react-hot-loader/patch', entry[key], hotMiddlewareScript);
+    });
+    config.entry = devEntry;
+
     config.plugins.push(
       new Visualizer({
         filename: '../stats-browser.html'
-      })
+      }),
+      new webpack.HotModuleReplacementPlugin()
     );
     
     // enable source map
