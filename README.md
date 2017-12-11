@@ -107,10 +107,11 @@ In order to do this, we use 4 libraries listed below:
 3. [react-hot-loader](https://github.com/gaearon/react-hot-loader) - listen to events from dev server and update layout when built bundle has changed.
 
 then here is the tricky part, the 4th one makes server side hot reload work:
+
 4. [webpack-hot-server-middleware](https://github.com/60frames/webpack-hot-server-middleware) - this middleware takes both server and client webpack compiler, 
 and **register built server bundle as middleware**. Then if any rebuild occurs, replace that middleware with the new one.
 
-webpack-hot-server-middleware has a very important convention, which is - **server bundle needs to be a function returns a middleware function** (see `/src/server/renderer.js`),
+webpack-hot-server-middleware has a very important convention - **server bundle needs to be a function returns a middleware function** (see `/src/server/renderer.js`),
 so in `webpack.server.js`, you can see dev and prod build has different entry (renderer.js and index.js), and in 
 `/src/server/index.js`, you will see how server runs on different environment.
 
