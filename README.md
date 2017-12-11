@@ -27,7 +27,8 @@ yarn
 # start dev env
 yarn start
 
-# [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given
+# it runs with
+# [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector)
 # you can debug nodejs server on chrome-devtools.
 ```
 
