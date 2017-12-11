@@ -98,6 +98,25 @@ Multiple entry gives a huge benefit to bundle size, but you **will lose SPA betw
 
 Make sure you know why seperating to different entries, visit `http://localhost:3333/another-entry` to see it's in life.
 
+### Hot reload
+In this boilerplate, we build our own server app, which means we have to implement hot reload by ourself. 
+
+In order to do this, we use 4 libraries listed below:
+1. [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) - given webpack compiler(s), create bundle(s) to memory, watch changes for rebuild.
+2. [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware) - whenever given compiler rebuilt, send events with built [stats](https://webpack.js.org/api/stats/) to client listener.
+3. [react-hot-loader](https://github.com/gaearon/react-hot-loader) - listen to events from dev server and update layout when built bundle has changed.
+
+then here is the tricky part, the 4th one makes server side hot reload work:
+4. [webpack-hot-server-middleware](https://github.com/60frames/webpack-hot-server-middleware) - this middleware takes both server and client webpack compiler, 
+and **register built server bundle as middleware**. Then if any rebuild occurs, replace that middleware with the new one.
+
+webpack-hot-server-middleware has a very important convention, which is - **server bundle needs to be a function returns a middleware function** (see `/src/server/renderer.js`),
+so in `webpack.server.js`, you can see dev and prod build has different entry (renderer.js and index.js), and in 
+`/src/server/index.js`, you will see how server runs on different environment.
+
+On the other hand, webpack-hot-server-middleware only watch changes on `/src/server/renderer.js` and its children, so hot reload doesn't work outside that scope, e.g `/src/server/api.js`,
+you have to rerun `yarn start` to see it take place.
+
 ### TODO
 - i18n, possibly don't need any library to do this, we only need some handy helpers for those topics:
   - number: ?
