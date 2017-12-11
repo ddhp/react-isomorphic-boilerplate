@@ -9,6 +9,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 
 ## Feature
 - isomorphic: same code runs on server and browser.
+- 🔥 browser and server side hot reload.
 - SEO: information benefits to search engine would be rendered on server side.
 - fully testable - shows how to test react containers / redux actions and reducers / also your server app.
 - easy to start.
@@ -16,16 +17,11 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 
 ## Concept
 ### Getting Started
-Execute `yarn` to install.
+`yarn` to install, and `npm install -g babel-cli`, we need `babel-node` to execute es6 server scripts.
 
-Run 3 processes to start developing your app:
-1. `yarn run build:browser:dev:w`: build browser side code and watch file change.
-2. `yarn run build:server:dev:w`: build server side conde and watch file change.
-3. `yarn start`: nodemon executing `dist/server.js`, and only watches on it's change,
-   [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given,
-   you can debug nodejs server on chrome-devtools.
+`yarn start` to start developing your app, [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given, you can debug nodejs server on chrome-devtools.
 
-then you can visit `localhost:3333`.
+visit `localhost:3333` to see result.
 
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
 
@@ -72,6 +68,7 @@ On the other hand, node server **only** serves static files in `/dist/assets` wh
 Build your code with:
 1. `yarn run build:browser:prod`
 2. `yarn run build:server:prod`
+3. `node dist/server/index.js`
 
 and your app is ready to go.
 
