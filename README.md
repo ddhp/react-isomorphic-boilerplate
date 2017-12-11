@@ -17,11 +17,21 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 
 ## Concept
 ### Getting Started
-`yarn` to install, and `npm install -g babel-cli`, we need `babel-node` to execute es6 server scripts.
+```
+# we need babel-node to execute es6 server scripts
+npm install -g babel-cli
 
-`yarn start` to start developing your app, [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given, you can debug nodejs server on chrome-devtools.
+# install dependencies
+yarn
 
-visit `localhost:3333` to see result.
+# start dev env
+yarn start
+
+# [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector) param is given
+# you can debug nodejs server on chrome-devtools.
+```
+
+then visit `localhost:3333` to see result.
 
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
 
