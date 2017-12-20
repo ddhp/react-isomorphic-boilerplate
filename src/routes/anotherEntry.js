@@ -1,10 +1,10 @@
 import React from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { isFunction as _isFunction } from 'lodash';
 import { withRouter } from 'react-router-dom';
-import BaseRoute from './base';
-import { getMatchedRoute } from './base';
+import { getMatchedRoute, renderRoutes } from './utils';
 import Footer from '../containers/Footer';
 import AnotherEntry from '../containers/AnotherEntry';
 import FourOFour from '../containers/404';
@@ -25,7 +25,7 @@ export const getRoutes = () => {
   };
 };
 
-export class AnotherOneRoute extends BaseRoute {
+export class AnotherOneRoute extends Component {
   static propTypes = {
     location: PropTypes.object
   }
@@ -48,7 +48,7 @@ export class AnotherOneRoute extends BaseRoute {
           margin: '2rem',
           textAlign: 'center'
         }}><a href="/">Rib.</a></h1>
-        {this.renderRoutes(routesInfo.routes, redirect)}
+        {renderRoutes(routesInfo.routes, redirect)}
         <Footer />
       </div>
     );
