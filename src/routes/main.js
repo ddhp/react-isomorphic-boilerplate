@@ -1,11 +1,11 @@
 import React from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { get as _get, isFunction as _isFunction } from 'lodash';
 import { withRouter } from 'react-router-dom';
-import BaseRoute from './base';
-import { getMatchedRoute } from './base';
+import { getMatchedRoute, renderRoutes } from './utils';
 import Nav from '../containers/Nav';
 import Home from '../containers/Home';
 import About from '../containers/About';
@@ -64,7 +64,7 @@ export const getRoutes = () => {
   };
 };
 
-export class MainRoute extends BaseRoute {
+export class MainRoute extends Component {
   static propTypes = {
     me: PropTypes.object,
     location: PropTypes.object
@@ -84,7 +84,7 @@ export class MainRoute extends BaseRoute {
           <meta name="og:title" content="title set in entry-main" />
         </Helmet>
         <Nav />
-        {this.renderRoutes(routesInfo.routes, redirect)}
+        {renderRoutes(routesInfo.routes, redirect)}
         <Footer />
       </div>
     );
@@ -98,4 +98,6 @@ function mapStateToProps(state) {
 }
 
 // withRouter exposes history, match, location to props
+// see HOC(higher order component)
+// https://reactjs.org/docs/higher-order-components.html
 export default withRouter(connect(mapStateToProps, null)(MainRoute));

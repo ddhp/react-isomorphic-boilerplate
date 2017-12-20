@@ -1,9 +1,9 @@
 /**
- * the module defines all entry and route mapping
+ * this module defines all entry and route mapping
  * when server app starts
  *
  */
-import { getMatchedRoute } from '../routes/base';
+import { getMatchedRoute } from '../routes/utils';
 import MainRoute from '../routes/main';
 import AnotherEntryRoute from '../routes/anotherEntry';
 import { getRoutes as getMainRoutes } from '../routes/main';
@@ -26,6 +26,7 @@ export const entryRouteComponentMap = {
   'another-entry': AnotherEntryRoute
 };
 
+// set up reducer for entry
 export const entryReducerMap = {
   main: mainReducer,
   'another-entry': anotherEntryReducer
@@ -45,14 +46,14 @@ export function getEntryAndRoute(path) {
   let result = entryRouteInfos[0];
   let hasMatched = false;
 
-  entryRouteInfos.some((info) => {
+  entryRouteInfos.some((routeInfo) => {
     // 3rd param is isIgnore404
     // ignore it to avoid matching 404
-    const matched = getMatchedRoute(path, info, true);
+    const matched = getMatchedRoute(path, routeInfo, true);
     if (matched) {
       result = {
-        entry: info.entry,
-        routes: info.routes,
+        entry: routeInfo.entry,
+        routes: routeInfo.routes,
         route: matched
       };
       hasMatched = true;
