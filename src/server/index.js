@@ -3,15 +3,15 @@ import stdout from '../stdout';
 const debug = stdout('server:index');
 
 import apiMiddleware from './api';
-import renderer from './renderer';
 
 const app = express();
 apiMiddleware(app);
 
 if (process.env.NODE_ENV === 'hot') {
-  const hot = require('./hot');
+  const hot = require('./hot').default;
   hot(app);
 } else {
+  const renderer = require('./renderer').default;
   const stats = require('../../dist/compilation-stats.json');
   // Serve static files
   app.use('/assets', express.static('dist/assets'));
