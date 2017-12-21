@@ -11,18 +11,27 @@ module.exports = function(env) {
 
   config.output = {
     path: path.join(__dirname, '/dist/server'),
-    publicPath: env === 'prod' ? '/assets/' : '/', // no tailing with '/' to avoid hot reload issue
+    publicPath: env === 'hot' ? '/' : '/assets/',
     filename: 'index.js'
   };
 
   config.target = 'node';
   config.externals = [nodeExternals()]; // in order to ignore all modules in node_modules folder
 
-  if (env === 'prod') {
+  if (env === 'hot') {
+    config.entry = {
+      server: path.resolve(__dirname, 'src/server/renderer')
+    };
+
+    // webpack-hot-server-middleware needs this setting
+    config.output.libraryTarget = 'commonjs2';
+  } else {
     config.entry = {
       server: path.resolve(__dirname, 'src/server')
     };
+  }
 
+  if (env === 'prod') {
     config.plugins.push(
       new UglifyJsPlugin({
         uglifyOptions: {  
@@ -34,13 +43,6 @@ module.exports = function(env) {
       })
     );
   } else {
-    config.entry = {
-      server: path.resolve(__dirname, 'src/server/renderer')
-    };
-
-    // webpack-hot-server-middleware needs this setting
-    config.output.libraryTarget = 'commonjs2';
-
     config.devtool = 'cheap-module-eval-source-map';
   }
   

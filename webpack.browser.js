@@ -5,6 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const baseConfig = require('./webpack.base.js');
 const findTargetRule = baseConfig.findTargetRule;
 
+// env can be e.g 'prod', 'dev', 'hot'
 module.exports = function (env) {
   let config = baseConfig('browser', env);
 
@@ -18,15 +19,15 @@ module.exports = function (env) {
 
   config.output = {
     path: path.join(__dirname, '/dist/assets'),
-    publicPath: env === 'prod' ? '/assets/' : '/', // no tailing with '/' to avoid hot reload issue
+    publicPath: env === 'hot' ? '/' : '/assets/',
     // set fixed filename for hot reload
-    filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js'
+    filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js'
   };
 
   config.plugins.push( 
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js',
+      filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js',
       minChunks: function (module, count) {
         // This prevents stylesheet resources with the .css or .scss extension
         // from being moved from their original chunk to the vendor chunk
@@ -47,9 +48,25 @@ module.exports = function (env) {
     })
   );
 
-  if (env === 'prod') {
-    config.entry = entry;
+  // modify config for hot env 
+  if (env === 'hot') {
+    const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+    // push hotreload to entry
+    let devEntry = {};
+    Object.keys(entry).forEach((key) => {
+      devEntry[key] = [];
+      devEntry[key].push('react-hot-loader/patch', entry[key], hotMiddlewareScript);
+    });
+    config.entry = devEntry;
 
+    config.plugins.push(
+      new webpack.HotModuleReplacementPlugin()
+    );
+  } else {
+    config.entry = entry;
+  }
+
+  if (env === 'prod') {
     // apply remove debug loader
     const jsRule = findTargetRule(config.module.rules, /\.js$/);
     jsRule.use.push({
@@ -67,20 +84,10 @@ module.exports = function (env) {
       })
     );
   } else {
-    const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
-    // push hotreload to entry
-    let devEntry = {};
-    Object.keys(entry).forEach((key) => {
-      devEntry[key] = [];
-      devEntry[key].push('react-hot-loader/patch', entry[key], hotMiddlewareScript);
-    });
-    config.entry = devEntry;
-
     config.plugins.push(
       new Visualizer({
         filename: '../stats-browser.html'
-      }),
-      new webpack.HotModuleReplacementPlugin()
+      })
     );
     
     // enable source map

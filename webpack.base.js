@@ -13,15 +13,15 @@ module.exports = exports = function(platform, env) {
   }
 
   const extractCSS = new ExtractTextPlugin({
-    filename: env === 'prod' ? '[name].[contenthash].css' : '[name].css',
+    filename: env !== 'hot' ? '[name].[contenthash].css' : '[name].css',
     allChunks: true,
-    disable: env !== 'prod' && platform === 'browser'
+    disable: env === 'hot' && platform === 'browser'
   });
 
   const extractSCSS = new ExtractTextPlugin({
-    filename: env === 'prod' ? '[name].[contenthash].css' : '[name].css',
+    filename: env !== 'hot' ? '[name].[contenthash].css' : '[name].css',
     allChunks: true,
-    disable: env !== 'prod' && platform === 'browser'
+    disable: env === 'hot' && platform === 'browser'
   });
 
   return {
@@ -88,8 +88,8 @@ module.exports = exports = function(platform, env) {
           use: [{
             loader: 'url-loader',
             options: {
-              name: env === 'prod' ? '[name]-[hash].[ext]' : '[name].[ext]',
-              outputPath: env === 'prod' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
+              name: env !== 'hot' ? '[name]-[hash].[ext]' : '[name].[ext]',
+              outputPath: env !== 'hot' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
               limit: 8192 // 8kB
             }
           }]
@@ -99,8 +99,8 @@ module.exports = exports = function(platform, env) {
           use: [{
             loader: 'url-loader',
             options: {
-              name: env === 'prod' ? '[name]-[hash].[ext]' : '[name].[ext]',
-              outputPath: env === 'prod' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
+              name: env !== 'hot' ? '[name]-[hash].[ext]' : '[name].[ext]',
+              outputPath: env !== 'hot' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
               limit: 8192 // 8kB
             }
           }]
@@ -111,8 +111,8 @@ module.exports = exports = function(platform, env) {
           use: [{
             loader: 'file-loader',
             options: {
-              name: env === 'prod' ? '[name]-[hash].[ext]' : '[name].[ext]',
-              outputPath: env === 'prod' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
+              name: env !== 'hot' ? '[name]-[hash].[ext]' : '[name].[ext]',
+              outputPath: env !== 'hot' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
             }
           }]
         }

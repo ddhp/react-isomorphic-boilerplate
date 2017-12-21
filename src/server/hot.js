@@ -13,9 +13,9 @@ require('asset-require-hook')({
   extensions: ['jpg', 'png', 'ico', 'svg', 'woff', 'etf']
 });
 
-let browserConfig = require('../../webpack.browser')('dev');
+let browserConfig = require('../../webpack.browser')('hot');
 browserConfig.name = 'client';
-const serverConfig = require('../../webpack.server')('dev');
+const serverConfig = require('../../webpack.server')('hot');
 
 // const browserCompiler = webpack(browserConfig);
 // const serverCompiler = webpack(serverConfig);
@@ -25,7 +25,6 @@ export default function hot(app) {
   // Serve hot-reloading bundle to client
   app.use(webpackDevMiddleware(hotServerCompiler, {
     publicPath: '/',
-    // noInfo: true,
   }));
 
   app.use(webpackHotMiddleware(hotServerCompiler.compilers.find(compiler => compiler.name === 'client')));
