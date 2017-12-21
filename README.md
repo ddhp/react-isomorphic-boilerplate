@@ -24,7 +24,7 @@ npm install -g babel-cli
 # install dependencies
 yarn
 
-# start dev env
+# start dev env with hot reload
 # it runs with
 # [--inspect](https://nodejs.org/en/docs/guides/debugging-getting-started/#enable-inspector)
 # you can debug nodejs server on chrome-devtools.
@@ -34,6 +34,12 @@ yarn start
 then visit `localhost:3333` to see result.
 
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
+
+Since styles are hotload with `yarn start`, so you might see [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content). You can do a dev build to see how it would actually work:
+```
+yarn build:browser:dev && yarn build:server:dev
+node dist/server/index.js
+```
 
 ### Log
 Import `stdout.js` and define namespace ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/pages.js)), then turn on debug message depends on platform:

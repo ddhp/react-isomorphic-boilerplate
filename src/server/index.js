@@ -9,7 +9,7 @@ import renderer from './renderer';
 const app = express();
 apiMiddleware(app);
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'hot') {
   hot(app);
 } else {
   const stats = require('../../dist/compilation-stats.json');
