@@ -3,13 +3,13 @@ import stdout from '../stdout';
 const debug = stdout('server:index');
 
 import apiMiddleware from './api';
-import hot from './hot';
 import renderer from './renderer';
 
 const app = express();
 apiMiddleware(app);
 
 if (process.env.NODE_ENV === 'hot') {
+  const hot = require('./hot');
   hot(app);
 } else {
   const stats = require('../../dist/compilation-stats.json');
