@@ -92,15 +92,15 @@ This is less likely to use, but somehow handy when you want to seperate your app
 
 To add a new entry, do following:
 1. add a new entry to `webpack.browser.js`.
-2. add a new file in `/src/routes`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js) as reference, define your routes for the new entry here.
-3. add a new file in `/src/entries`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/main.js) for example, simply replace `Routes` to the one you defined in previous step.
-4. define a new reducer for the entry in `/src/reducers`.
+2. add a new file in `/src/routes`, take [/src/routes/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js) as reference, define your routes for the new entry here.
+4. (Optional) define a new reducer for the entry in `/src/reducers` if needed.
+3. add a new file in `/src/entries`, take [/src/entries/main.js](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/entries/main.js) for example, replace `Routes` to the one you defined in step 2 and/or replace reducer to the one defined in previous step.
 4. in `/src/server/entryAndRoute.js`, modify `entryRouteInfos`, `entryReducerMap` and `entryRouteComponentMap` variables.
 5. if still don't get it, check how `anotherEntry` is added from steps above.
 
 Multiple entry gives a huge benefit to bundle size, but you **will lose SPA between different entries** (which means you can't \<Link \/> to each other). 
 
-Make sure you know why seperating to different entries, visit `http://localhost:3333/another-entry` to see it's in life.
+Make sure you know the reason to necessarily seperate app into different entries, visit `http://localhost:3333/another-entry` to see it's in life.
 
 ### Hot reload
 In this boilerplate, we build our own server app, which means we have to implement hot reload by ourself. 
@@ -113,11 +113,11 @@ In order to do this, we use 4 libraries listed below:
 then here is the tricky part, the 4th one makes server side hot reload work:
 
 4. [webpack-hot-server-middleware](https://github.com/60frames/webpack-hot-server-middleware) - this middleware takes both server and client webpack compiler, 
-and **register built server bundle as middleware**. Then if any rebuild occurs, replace that middleware with the new one.
+and **register built server bundle as middleware**. Then if any rebuild (either server or client) occurs, replace that middleware with the new one.
 
 webpack-hot-server-middleware has a very important convention - **server bundle needs to be a function returns a middleware function** (see `/src/server/renderer.js`),
-so in `webpack.server.js`, you can see dev and prod build has different entry (renderer.js and index.js), and in 
-`/src/server/index.js`, you will see how server runs on different environment.
+so in `webpack.server.js`, you can see hot build has different entry (renderer.js, others are index.js), and in 
+`/src/server/index.js`, you will see how server runs on hot environments different to others.
 
 On the other hand, webpack-hot-server-middleware only watch changes on `/src/server/renderer.js` and its children, so hot reload doesn't work outside that scope, e.g `/src/server/api.js`,
 you have to rerun `yarn start` to see it take place.
