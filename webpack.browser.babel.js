@@ -48,6 +48,14 @@ export default function browserConfig(env) {
     }),
   );
 
+  // set available stats
+  // https://webpack.js.org/configuration/stats/
+  config.stats = {
+    all: false,
+    assets: true,
+    publicPath: true,
+  };
+
   // modify config for hot env
   if (env === 'hot') {
     const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
