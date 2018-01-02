@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'hot') {
   hot(app);
 } else {
   const renderer = require('./renderer').default;
-  const stats = require('../../dist/compilation-stats.json');
+  const stats = require('../../compilation-stats.json');
   // Serve static files
   app.use('/assets', express.static('dist/assets'));
   app.use(renderer({ clientStats: stats }));
