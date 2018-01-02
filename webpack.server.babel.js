@@ -1,11 +1,11 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
-const webpack = require('webpack');
-const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
-const baseConfig = require('./webpack.base').default;
+import webpack from 'webpack';
+import path from 'path';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import nodeExternals from 'webpack-node-externals';
+import baseConfig from './webpack.base';
 
-module.exports = function serverConfig(env) {
+export default function serverConfig(env) {
   const config = baseConfig('server', env);
 
   config.name = 'server';
@@ -48,4 +48,4 @@ module.exports = function serverConfig(env) {
   }
 
   return config;
-};
+}

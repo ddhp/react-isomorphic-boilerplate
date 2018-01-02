@@ -1,12 +1,12 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
-const webpack = require('webpack');
-const path = require('path');
-const Visualizer = require('webpack-visualizer-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const baseConfig = require('./webpack.base').default;
+import webpack from 'webpack';
+import path from 'path';
+import Visualizer from 'webpack-visualizer-plugin';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import baseConfig, { findTargetRule } from './webpack.base';
 
 // env can be e.g 'prod', 'dev', 'hot'
-module.exports = function browserConfig(env) {
+export default function browserConfig(env) {
   const config = baseConfig('browser', env);
 
   config.name = 'browser';
@@ -66,8 +66,8 @@ module.exports = function browserConfig(env) {
 
   if (env === 'prod') {
     // apply remove debug loader
-    const jsRule = baseConfig.findTargetRule(config.module.rules, /\.js$/);
-    jsRule.use.push({
+    const jsRule = findTargetRule(config.module.rules, /\.js$/);
+    jsRule.use.splice(1, 0, {
       loader: 'remove-debug-loader',
       options: {
         // methodName: ['myLog'],
@@ -91,4 +91,4 @@ module.exports = function browserConfig(env) {
   }
 
   return config;
-};
+}

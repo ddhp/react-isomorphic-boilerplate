@@ -15,10 +15,10 @@ require('asset-require-hook')({
   extensions: ['jpg', 'png', 'ico', 'svg', 'woff', 'etf'],
 });
 
-const browserConfig = require('../../webpack.browser')('hot');
+const browserConfig = require('../../../webpack.browser.babel').default('hot');
 
 browserConfig.name = 'client';
-const serverConfig = require('../../webpack.server')('hot');
+const serverConfig = require('../../../webpack.server.babel').default('hot');
 
 // const browserCompiler = webpack(browserConfig);
 // const serverCompiler = webpack(serverConfig);
