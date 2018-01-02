@@ -7,7 +7,7 @@ const debug = require('debug');
 // so better name your namespace to this structure
 // YOUR_APP:YOUR_CURRENT_DEBUG_MODULE
 export default function stdout(namespace) {
-  let log = debug(`${namespace}:log`);
+  const log = debug(`${namespace}:log`);
   /* eslint-disable no-console */
   log.log = console.log.bind(console);
   /* eslint-enable no-console */

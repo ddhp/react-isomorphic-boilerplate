@@ -1,5 +1,4 @@
 import React from 'react';
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { isFunction as _isFunction } from 'lodash';
@@ -9,32 +8,35 @@ import Footer from '../containers/Footer';
 import AnotherEntry from '../containers/AnotherEntry';
 import FourOFour from '../containers/404';
 
-export const getRoutes = () => {
-  return {
-    entry: 'another-entry',
-    routes: [
-      {
-        path: '/another-entry',
-        key: 'anotherEntry',
-        component: AnotherEntry
-      }, {
-        key: '404',
-        component: FourOFour
-      }
-    ]
-  };
-};
+export const getRoutes = () => ({
+  entry: 'another-entry',
+  routes: [
+    {
+      path: '/another-entry',
+      key: 'anotherEntry',
+      component: AnotherEntry,
+    }, {
+      key: '404',
+      component: FourOFour,
+    },
+  ],
+});
 
-export class AnotherOneRoute extends Component {
+export class AnotherOneRoute extends React.Component {
   static propTypes = {
-    location: PropTypes.object
+    location: PropTypes.object,
   }
 
   render() {
     const { location } = this.props;
     const routesInfo = getRoutes();
     const currentRoute = getMatchedRoute(location.pathname, routesInfo);
-    const redirect = currentRoute.redirect ? _isFunction(currentRoute.redirect) ? currentRoute.redirect() : currentRoute.redirect : false;
+
+    let { redirect } = currentRoute;
+
+    if (currentRoute.redirect && _isFunction(currentRoute.redirect)) {
+      redirect = currentRoute.redirect();
+    }
 
     return (
       <div>
@@ -46,7 +48,7 @@ export class AnotherOneRoute extends Component {
         <h1 style={{
           fontFamily: 'Spectral SC, serif',
           margin: '2rem',
-          textAlign: 'center'
+          textAlign: 'center',
         }}><a href="/">Rib.</a></h1>
         {renderRoutes(routesInfo.routes, redirect)}
         <Footer />

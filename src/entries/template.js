@@ -15,6 +15,7 @@ import configureStore from '../configureStore';
  *
  */
 export default function mount(Routes, rootReducer) {
+  /* eslint no-underscore-dangle: 0 */
   // Grab the state from a global variable injected into the server-generated HTML
   const reduxState = window.__REDUX_STATE__;
 
@@ -30,6 +31,6 @@ export default function mount(Routes, rootReducer) {
         <Routes />
       </Router>
     </Provider>,
-    document.getElementById('app-mount-point')
+    document.getElementById('app-mount-point'),
   );
 }

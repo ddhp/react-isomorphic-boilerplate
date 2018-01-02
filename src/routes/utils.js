@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Redirect, Switch } from 'react-router';
-import { matchPath } from 'react-router';
+import { Route, Redirect, Switch, matchPath } from 'react-router';
 
 /**
  * find the first matching route
@@ -21,6 +20,7 @@ export function getMatchedRoute(path, routesInfo, isIgnore404) {
       matched = r;
       return true;
     }
+    return false;
   });
 
   return matched;
@@ -41,13 +41,11 @@ export function renderRoutes(routes, redirect) {
         const { component: Component, key, ...rest } = route;
 
         return (
-          <Route key={key} {...rest} render={props => {
-            return (
-              <div>
-                <Component {...props} />
-              </div>
-            );
-          }} />
+          <Route key={key} {...rest} render={props => (
+            <div>
+              <Component {...props} />
+            </div>
+          )} />
         );
       })}
     </Switch>

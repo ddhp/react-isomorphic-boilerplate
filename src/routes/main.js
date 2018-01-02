@@ -1,18 +1,17 @@
 import React from 'react';
-import { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { get as _get, isFunction as _isFunction } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import { getMatchedRoute, renderRoutes } from './utils';
-import Nav from '../containers/Nav';
-import Home from '../containers/Home';
-import About from '../containers/About';
-import Demo from '../containers/Demo';
-import Footer from '../containers/Footer';
-import FourOFour from '../containers/404';
-import { fetchPosts } from '../actions';
+import NavComponent from '../containers/Nav';
+import HomeComponent from '../containers/Home';
+import AboutComponent from '../containers/About';
+import DemoComponent from '../containers/Demo';
+import FooterComponent from '../containers/Footer';
+import FourOFourComponent from '../containers/404';
+import action from '../actions';
 
 /**
  * put 404 route to the last
@@ -26,55 +25,56 @@ import { fetchPosts } from '../actions';
  * @property {string} routesInfo.routes[].key - unique key for Route to use
  * @property {boolean} routesInfo.routes[].exact - is exact match
  * @property {boolean} routesInfo.routes[].strict - is strict match
- * @property {function} routesInfo.routes[].loadData - related action(s) to loadData, possibly given react router match and req query
+ * @property {function} routesInfo.routes[].loadData -
+ * related action(s) to loadData, possibly given react router match and req query
  * @property {(function|boolean|string)} routesInfo.routes[].redirect - redirect logic
  *
  */
-export const getRoutes = () => {
-  return {
-    entry: 'main',
-    routes: [
-      {
-        path: '/',
-        key: 'home',
-        exact: true,
-        component: Home,
-        loadData: (/*match, query*/) => {
-          // return last action,
-          // it would be a promise if it's an aync request
-          return fetchPosts();
-        },
-        redirect: () => {
-          return false;
-        }
-      }, {
-        path: '/about',
-        key: 'about',
-        component: About,
-        redirect: false
-      }, {
-        path: '/demo',
-        key: 'demo',
-        component: Demo
-      }, {
-        key: '404',
-        component: FourOFour
-      }
-    ]
-  };
-};
+export const getRoutes = () => ({
+  entry: 'main',
+  routes: [
+    {
+      path: '/',
+      key: 'home',
+      exact: true,
+      component: HomeComponent,
+      loadData: (/* match, query */) =>
+      // return last action,
+      // it would be a promise if it's an aync request
+        action.fetchPosts(),
+      redirect: () => false,
+    }, {
+      path: '/about',
+      key: 'about',
+      component: AboutComponent,
+      redirect: false,
+    }, {
+      path: '/demo',
+      key: 'demo',
+      component: DemoComponent,
+    }, {
+      key: '404',
+      component: FourOFourComponent,
+    },
+  ],
+});
 
-export class MainRoute extends Component {
+export class MainRoute extends React.Component {
   static propTypes = {
     me: PropTypes.object,
-    location: PropTypes.object
+    location: PropTypes.object,
   }
 
   render() {
-    const { location/*, me*/ } = this.props;
+    const { location/* , me */ } = this.props;
     const routesInfo = getRoutes();
     const currentRoute = getMatchedRoute(location.pathname, routesInfo);
-    const redirect = currentRoute.redirect ? _isFunction(currentRoute.redirect) ? currentRoute.redirect() : currentRoute.redirect : false;
+
+    let { redirect } = currentRoute;
+
+    if (currentRoute.redirect && _isFunction(currentRoute.redirect)) {
+      redirect = currentRoute.redirect();
+    }
 
     return (
       <div>
@@ -83,9 +83,9 @@ export class MainRoute extends Component {
           <meta name="description" content="react isomorphic boilerplate by ddhp" />
           <meta name="og:title" content="title set in entry-main" />
         </Helmet>
-        <Nav />
+        <NavComponent />
         {renderRoutes(routesInfo.routes, redirect)}
-        <Footer />
+        <FooterComponent />
       </div>
     );
   }
@@ -93,7 +93,7 @@ export class MainRoute extends Component {
 
 function mapStateToProps(state) {
   return {
-    me: _get(state, 'entities.me', {})
+    me: _get(state, 'entities.me', {}),
   };
 }
 

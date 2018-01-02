@@ -1,13 +1,11 @@
 let mockResponse;
 const mocksuperagent = {
-  post: () => { return mocksuperagent; },
-  send: () => { return mocksuperagent; },
-  then: (cb) => {
-    return cb(mockResponse);
-  },
+  post: () => mocksuperagent,
+  send: () => mocksuperagent,
+  then: cb => cb(mockResponse),
   setMockResponse: (m) => {
     mockResponse = m;
-  }
+  },
 };
 
 export default mocksuperagent;

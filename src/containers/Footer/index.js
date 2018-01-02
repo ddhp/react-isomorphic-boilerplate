@@ -1,8 +1,8 @@
+/* eslint class-methods-use-this: 0 */
 import React from 'react';
-import { Component } from 'react';
 import './style.scss';
 
-export default class Footer extends Component {
+export default class Footer extends React.Component {
   render() {
     return (
       <div className="footer">

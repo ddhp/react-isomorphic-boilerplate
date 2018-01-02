@@ -1,19 +1,22 @@
+/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
 
 import cssModulesRequireHook from 'css-modules-require-hook';
+
 cssModulesRequireHook({
   extensions: ['.css', '.scss'],
-  generateScopedName: '[path][name]-[local]'
+  generateScopedName: '[path][name]-[local]',
 });
 
 require('asset-require-hook')({
-  extensions: ['jpg', 'png', 'ico', 'svg', 'woff', 'etf']
+  extensions: ['jpg', 'png', 'ico', 'svg', 'woff', 'etf'],
 });
 
-let browserConfig = require('../../webpack.browser')('hot');
+const browserConfig = require('../../webpack.browser')('hot');
+
 browserConfig.name = 'client';
 const serverConfig = require('../../webpack.server')('hot');
 
@@ -30,6 +33,6 @@ export default function hot(app) {
   app.use(webpackHotMiddleware(hotServerCompiler.compilers.find(compiler => compiler.name === 'client')));
 
   app.use(webpackHotServerMiddleware(hotServerCompiler, {
-    chunkName: 'server'
+    chunkName: 'server',
   }));
 }

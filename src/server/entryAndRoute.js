@@ -4,10 +4,8 @@
  *
  */
 import { getMatchedRoute } from '../routes/utils';
-import MainRoute from '../routes/main';
-import AnotherEntryRoute from '../routes/anotherEntry';
-import { getRoutes as getMainRoutes } from '../routes/main';
-import { getRoutes as getAnotherEntryRoutes } from '../routes/anotherEntry';
+import MainRouteComponent, { getRoutes as getMainRoutes } from '../routes/main';
+import AnotherEntryRouteComponent, { getRoutes as getAnotherEntryRoutes } from '../routes/anotherEntry';
 import mainReducer from '../reducers/main';
 import anotherEntryReducer from '../reducers/anotherEntry';
 
@@ -16,20 +14,20 @@ import anotherEntryReducer from '../reducers/anotherEntry';
 export const entryRouteInfos = [
   getMainRoutes(),
   // other entry
-  getAnotherEntryRoutes()
+  getAnotherEntryRoutes(),
 ];
 
 // telling which Route Component for which entry name
 export const entryRouteComponentMap = {
-  main: MainRoute,
+  main: MainRouteComponent,
   // other component map
-  'another-entry': AnotherEntryRoute
+  'another-entry': AnotherEntryRouteComponent,
 };
 
 // set up reducer for entry
 export const entryReducerMap = {
   main: mainReducer,
-  'another-entry': anotherEntryReducer
+  'another-entry': anotherEntryReducer,
 };
 
 /**
@@ -54,7 +52,7 @@ export function getEntryAndRoute(path) {
       result = {
         entry: routeInfo.entry,
         routes: routeInfo.routes,
-        route: matched
+        route: matched,
       };
       hasMatched = true;
     }

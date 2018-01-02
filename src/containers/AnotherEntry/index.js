@@ -1,9 +1,9 @@
+/* eslint class-methods-use-this: 0 */
 import React from 'react';
-import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './style.scss';
 
-export default class AnotherEntry extends Component {
+export default class AnotherEntry extends React.Component {
   static propTypes = {}
 
   render() {

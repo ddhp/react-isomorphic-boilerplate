@@ -1,21 +1,20 @@
 import React from 'react';
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { get as _get } from 'lodash';
-import { dummyAction } from '../../actions';
-import FormPost from './FormPost';
-import Postlist from './Postlist';
+import action from '../../actions';
+import FormPostComponent from './FormPost';
+import PostlistComponent from './Postlist';
 import stdout from '../../stdout';
-const debug = stdout('container/Home');
-
 import './style.scss';
 
-export class Home extends Component {
+const debug = stdout('container/Home');
+
+export class Home extends React.Component {
   static propTypes = {
     dummyAction: PropTypes.func,
-    posts: PropTypes.array
+    posts: PropTypes.array,
   }
 
   componentDidMount() {
@@ -34,12 +33,10 @@ export class Home extends Component {
           <meta name="og:title" content="home page" />
         </Helmet>
 
-        <FormPost />
+        <FormPostComponent />
 
         <ul className="list--posts">
-          {posts.map((p) => {
-            return <Postlist post={p} key={p.id} />;
-          })}
+          {posts.map(p => <PostlistComponent post={p} key={p.id} />)}
         </ul>
       </div>
     );
@@ -47,24 +44,20 @@ export class Home extends Component {
 }
 
 export function mapStateToProps(state) {
-  const postEntity = _get(state, 'entities.post'),
-        postIds = _get(state, 'pages.home.posts');
-  let posts = postIds.map((id) => {
-    return postEntity[id] || {};
-  });
+  const postEntity = _get(state, 'entities.post');
+  const postIds = _get(state, 'pages.home.posts');
+  let posts = postIds.map(id => postEntity[id] || {});
   posts = posts.slice(0, 20);
   debug(posts);
 
   return {
-    posts
+    posts,
   };
 }
 
 export function mapDispatchToProps(dispatch) {
   return {
-    dummyAction: () => {
-      return dispatch(dummyAction());
-    }
+    dummyAction: () => dispatch(action.dummyAction()),
   };
 }
 

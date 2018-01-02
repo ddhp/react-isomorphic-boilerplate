@@ -1,72 +1,69 @@
 import path from 'path';
-const debug = require('../stdout').default('server:layout');
-
 import favicon from '../assets/images/favicon.ico';
 import touchicon from '../assets/images/icon.png';
 
-function genJSTag(path) {
-  return path ? `<script src=${path} type="text/javascript" charSet="utf-8"></script>` : '';
+const debug = require('../stdout').default('server:layout');
+
+function genJSTag(p) {
+  return p ? `<script src=${p} type="text/javascript" charSet="utf-8"></script>` : '';
 }
 
-function genCSSTag(path) {
-  return path ? `<link href=${path} rel="stylesheet" />` : '';
+function genCSSTag(p) {
+  return p ? `<link href=${p} rel="stylesheet" />` : '';
 }
 
-function genTag(path, type) {
+function genTag(targetPath, type) {
   let method = () => {};
-  if (type === 'CSS') method = genCSSTag;  
-  if (type === 'JS') method = genJSTag;  
-  if (!Array.isArray(path)) {
-    path = [path];
+  let targetPaths = targetPath;
+  if (type === 'CSS') { method = genCSSTag; }
+  if (type === 'JS') { method = genJSTag; }
+  if (!Array.isArray(targetPaths)) {
+    targetPaths = [targetPaths];
   }
-  const res = path.reduce((accu, p) => {
-    return `${accu}\n${method(p)}`;
-  }, '');
-  debug(path, type, res);
+  const res = targetPaths.reduce((accu, p) => `${accu}\n${method(p)}`, '');
   return res;
 }
 
 function getAssetInfo(asset, publicPath) {
-  let js, css;
-  debug(asset);
+  let js;
+  let css;
   if (Array.isArray(asset)) {
     js = [];
     css = [];
     asset.forEach((a) => {
-      if (/\.js$/.test(a)) js.push(path.join(publicPath, a));
-      if (/\.css/.test(a)) css.push(path.join(publicPath, a));
+      if (/\.js$/.test(a)) { js.push(path.join(publicPath, a)); }
+      if (/\.css/.test(a)) { css.push(path.join(publicPath, a)); }
     });
   } else {
     js = path.join(publicPath, asset);
   }
-  return {js, css};
+  return { js, css };
 }
 
 function parseStats(clientStats, currentEntry) {
-  const assetsByChunkName = clientStats.assetsByChunkName;
-  const publicPath = clientStats.publicPath;
-  debug(clientStats);
-  debug(currentEntry);
-  debug(assetsByChunkName);
-  debug('public path', publicPath);
+  const { assetsByChunkName, publicPath } = clientStats;
   const currentEntryAsset = assetsByChunkName[currentEntry] || '';
   const mainfestAsset = assetsByChunkName.manifest || '';
   const vendorAsset = assetsByChunkName.vendor || '';
   return {
     main: getAssetInfo(currentEntryAsset, publicPath),
     manifest: getAssetInfo(mainfestAsset, publicPath),
-    vendor: getAssetInfo(vendorAsset, publicPath)
+    vendor: getAssetInfo(vendorAsset, publicPath),
   };
 }
 
 function renderFullPage(content, reduxState, head, currentEntry, clientStats) {
-  const { manifest: manifestAssets, main: targetAssets, vendor: vendorAssets } = parseStats(clientStats, currentEntry);
+  const {
+    manifest: manifestAssets,
+    main: targetAssets,
+    vendor: vendorAssets,
+  } = parseStats(clientStats, currentEntry);
   debug('manifestAssets', manifestAssets);
   debug('targetAssets', targetAssets);
   debug('vendorAssets', vendorAssets);
   // const manifestAssets = assetsJSON.manifest || {};
   // const targetAssets = assetsJSON[currentEntry] || {};
-  // const vendorAssets = assetsJSON.vendor || {}; 
+  // const vendorAssets = assetsJSON.vendor || {};
   const manifestJS = genTag(manifestAssets.js, 'JS');
   const targetJS = genTag(targetAssets.js, 'JS');
   const targetCSS = genTag(targetAssets.css, 'CSS');
