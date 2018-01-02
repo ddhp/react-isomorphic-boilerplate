@@ -1,17 +1,13 @@
 import express from 'express';
-import stdout from '../stdout';
-import apiMiddleware from './api';
-import renderer from './renderer';
-import stats from '../../compilation-stats.json'; // eslint-disable-line
+import stdout from '../../stdout';
+import apiMiddleware from '../api';
+import hotMiddleware from './middleware';
 
 const debug = stdout('server:index');
 
 const app = express();
 apiMiddleware(app);
-
-// Serve static files
-app.use('/assets', express.static('dist/assets'));
-app.use(renderer({ clientStats: stats }));
+hotMiddleware(app);
 
 // import app from './app';
 const port = process.env.PORT || 3333;

@@ -1,3 +1,4 @@
+/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
 /**
  * define the most common webpack configs
  * shared between browser/server
@@ -7,21 +8,17 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-module.exports = exports = function(platform, env) {
-  if (!platform) {
-    platform = 'browser';
-  }
-
+function baseConfig(platform = 'browser', env) {
   const extractCSS = new ExtractTextPlugin({
     filename: env !== 'hot' ? '[name].[contenthash].css' : '[name].css',
     allChunks: true,
-    disable: env === 'hot' && platform === 'browser'
+    disable: env === 'hot' && platform === 'browser',
   });
 
   const extractSCSS = new ExtractTextPlugin({
     filename: env !== 'hot' ? '[name].[contenthash].css' : '[name].css',
     allChunks: true,
-    disable: env === 'hot' && platform === 'browser'
+    disable: env === 'hot' && platform === 'browser',
   });
 
   return {
@@ -29,7 +26,7 @@ module.exports = exports = function(platform, env) {
 
     plugins: [
       extractCSS,
-      extractSCSS
+      extractSCSS,
     ],
 
     module: {
@@ -37,51 +34,57 @@ module.exports = exports = function(platform, env) {
         {
           test: /\.js$/,
           exclude: [/node_modules/],
-          use: [{
-            loader: 'babel-loader'
-          }, {
-            loader: 'eslint-loader'
-          }]
+          use: [
+            {
+              loader: 'babel-loader',
+            },
+            {
+              loader: 'eslint-loader',
+            },
+          ],
         },
         {
           test: /\.css$/,
-          use: extractCSS.extract({fallback: 'style-loader', use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: env !== 'prod'
-              }
-            }
-          ]})
-        }, 
+          use: extractCSS.extract({
+            fallback: 'style-loader',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: env !== 'prod',
+                },
+              },
+            ],
+          }),
+        },
         {
           test: /\.scss$/,
           use: extractSCSS.extract({
             fallback: 'style-loader',
             use: [
-              { 
-                loader: 'css-loader', 
+              {
+                loader: 'css-loader',
                 options: {
-                  sourceMap: env !== 'prod'
-                }
+                  sourceMap: env !== 'prod',
+                },
               },
               {
-                loader: 'postcss-loader', 
+                loader: 'postcss-loader',
                 options: {
                   sourceMap: env !== 'prod',
                   plugins: [
-                    autoprefixer()
-                  ]
-                }
+                    autoprefixer(),
+                  ],
+                },
               },
               {
                 loader: 'sass-loader',
                 options: {
-                  sourceMap: env !== 'prod'
-                }
-              }
-            ]
-          })
+                  sourceMap: env !== 'prod',
+                },
+              },
+            ],
+          }),
         },
         {
           test: /\.(woff|woff2|eot|ttf)$/,
@@ -90,9 +93,9 @@ module.exports = exports = function(platform, env) {
             options: {
               name: env !== 'hot' ? '[name]-[hash].[ext]' : '[name].[ext]',
               outputPath: env !== 'hot' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
-              limit: 8192 // 8kB
-            }
-          }]
+              limit: 8192, // 8kB
+            },
+          }],
         },
         {
           test: /\.(gif|jpg|png|svg)$/,
@@ -101,9 +104,9 @@ module.exports = exports = function(platform, env) {
             options: {
               name: env !== 'hot' ? '[name]-[hash].[ext]' : '[name].[ext]',
               outputPath: env !== 'hot' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
-              limit: 8192 // 8kB
-            }
-          }]
+              limit: 8192, // 8kB
+            },
+          }],
         },
         {
           // ico is lower than limit of url-loader, so we explictly use file-loader
@@ -113,20 +116,23 @@ module.exports = exports = function(platform, env) {
             options: {
               name: env !== 'hot' ? '[name]-[hash].[ext]' : '[name].[ext]',
               outputPath: env !== 'hot' ? '../assets/' : './', // no tailing with '/' to avoid hot reload issue
-            }
-          }]
-        }
-      ]
-    }
+            },
+          }],
+        },
+      ],
+    },
   };
-};
+}
 
-exports.findTargetRule = function findTargetRule(rules, targetTest) {
+export function findTargetRule(rules, targetTest) {
   let targetRule = {};
   rules.map((r) => {
     if (r.test.toString() === targetTest.toString()) {
       targetRule = r;
     }
+    return false;
   });
   return targetRule;
-};
+}
+
+export default baseConfig;

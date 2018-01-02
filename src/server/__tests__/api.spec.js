@@ -11,16 +11,16 @@ const initState = {
         id: 1,
         upvote: 0,
         downvote: 0,
-        createdAt: 0
+        createdAt: 0,
       },
       2: {
         id: 2,
         upvote: 1,
         downvote: 0,
-        createdAt: 1
+        createdAt: 1,
       },
-    }
-  }
+    },
+  },
 };
 
 const dispatchSpy = sinon.spy();
@@ -29,19 +29,18 @@ const mockConfigureStore = require('../../configureStore');
 mockConfigureStore.setDispatchSpy(dispatchSpy);
 const api = require('../api');
 
-test('get /post', t => {
-  const postcb = api.postcb;
+test('get /post', (t) => {
   const sendSpy = sinon.spy();
   const res = {
-    send: sendSpy
+    send: sendSpy,
   };
   mockConfigureStore.setMockState(initState);
-  postcb(null, res);
+  api.postcb(null, res);
   t.true(sendSpy.calledWith({
     result: [2, 1],
     entities: {
-      posts: initState.entities.post
-    }
+      posts: initState.entities.post,
+    },
   }));
   sendSpy.reset();
 
@@ -50,40 +49,39 @@ test('get /post', t => {
       id: 1,
       upvote: 0,
       downvote: 0,
-      createdAt: 1
+      createdAt: 1,
     },
     2: {
       id: 2,
       upvote: 0,
       downvote: 0,
-      createdAt: 2
-    }
+      createdAt: 2,
+    },
   };
   mockConfigureStore.setMockState({
     entities: {
-      post: forCreatedAt
-    }
+      post: forCreatedAt,
+    },
   });
-  postcb(null, res);
+  api.postcb(null, res);
   t.true(sendSpy.calledWith({
     result: [2, 1],
     entities: {
-      posts: forCreatedAt
-    }
+      posts: forCreatedAt,
+    },
   }));
 });
 
-test('post /post/vote', t => {
-  const postvotecb = api.postvotecb;
+test('post /post/vote', (t) => {
   const sendSpy = sinon.spy();
   const req = {
     body: {
       id: 1,
-      isUp: true
-    }
+      isUp: true,
+    },
   };
   const res = {
-    send: sendSpy
+    send: sendSpy,
   };
   const expectResponse = {
     result: 1,
@@ -93,16 +91,16 @@ test('post /post/vote', t => {
           id: 1,
           upvote: 1,
           downvote: 0,
-          createdAt: 0
-        }
-      }
-    }
+          createdAt: 0,
+        },
+      },
+    },
   };
   mockConfigureStore.setMockState(initState);
-  postvotecb(req, res);
+  api.postvotecb(req, res);
   t.true(sendSpy.calledWith(expectResponse));
   t.true(dispatchSpy.calledWith({
     type: 'VOTE',
-    payload: expectResponse
+    payload: expectResponse,
   }));
 });

@@ -1,16 +1,14 @@
 import React from 'react';
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { vote } from '../../../actions';
-
+import action from '../../../actions';
 import './style.scss';
 
-export class Postlist extends Component {
+export class Postlist extends React.Component {
   static propTypes = {
     post: PropTypes.object,
-    vote: PropTypes.func
+    vote: PropTypes.func,
   }
 
   constructor(props) {
@@ -24,26 +22,24 @@ export class Postlist extends Component {
     const { post, vote } = this.props;
     vote({
       id: post.id,
-      isUp: true
+      isUp: true,
     });
   }
 
   onDownvote() {
     const { post, vote } = this.props;
     vote({
-      id: post.id
+      id: post.id,
     });
   }
 
   render() {
-    const { post: p } = this.props,
-          { downvote, upvote } = p;
+    const { post: p } = this.props;
+    const { downvote, upvote } = p;
     return (
       <li className="postlist">
         <div className="text">
-          {p.text.split('\n').map((p, i) => {
-            return <p key={i}>{p}</p>;
-          })}
+          {p.text.split('\n').map((paragraph, i) => <p key={i}>{paragraph}</p>)}
         </div>
         <div>
           <span className="arthur">{p.arthur} </span>
@@ -58,9 +54,7 @@ export class Postlist extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    vote: (voteInfo) => {
-      return dispatch(vote(voteInfo));
-    }
+    vote: voteInfo => dispatch(action.vote(voteInfo)),
   };
 }
 

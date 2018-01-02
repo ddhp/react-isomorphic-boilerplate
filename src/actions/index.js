@@ -1,83 +1,74 @@
 // import { get as _get } from 'lodash';
-import stdout from '../stdout';
-const debug = stdout('action');
 import request from 'superagent';
+import stdout from '../stdout';
 
-export const ACCUMULATE_COUNT = 'ACCUMULATE_COUNT';
-export function accumulateCount() {
-  return (dispatch/*, getState*/) => {
-    dispatch({
-      type: ACCUMULATE_COUNT,
+const debug = stdout('action');
+
+function accumulateCount() {
+  return dispatch => dispatch({
+    type: 'ACCUMULATE_COUNT',
+  });
+}
+
+function dummyAction() {
+  return {
+    type: 'DUMMY_ACTION',
+  };
+}
+
+function updateMe(me) {
+  return {
+    type: 'UPDATE_ME',
+    payload: me,
+  };
+}
+
+function fetchPosts() {
+  return dispatch => request
+    .get('http://localhost:3333/api/post')
+    .then(res => dispatch({
+      type: 'FETCH_POSTS',
+      payload: JSON.parse(res.text),
+    }), (err) => {
+      debug(err);
+      return err;
     });
-  };
 }
 
-export const DUMMY_ACTION = 'DUMMY_ACTION';
-export function dummyAction() {
-  return {
-    type: DUMMY_ACTION
-  };
-}
-
-export const UPDATE_ME = 'UPDATE_ME';
-export function updateMe(me) {
-  return {
-    type: UPDATE_ME,
-    payload: me
-  };
-}
-
-export const FETCH_POSTS = 'FETCH_POSTS';
-export function fetchPosts() {
-  return function (dispatch) {
-    return request
-      .get('http://localhost:3333/api/post')
-      .then((res) => {
-        dispatch({
-          type: FETCH_POSTS,
-          payload: JSON.parse(res.text)
-        });
-      }, (err) => {
-        debug(err);
-        return err;
+function addPost(post) {
+  return dispatch => request
+    .post('/api/post')
+    .send(post)
+    .then((res) => {
+      debug(res.text);
+      return dispatch({
+        type: 'ADD_POST',
+        payload: JSON.parse(res.text),
       });
-  };
+    }, (err) => {
+      debug(err);
+      return err;
+    });
 }
 
-export const ADD_POST = 'ADD_POST';
-export function addPost(post) {
-  return function (dispatch) {
-    return request
-      .post('/api/post')
-      .send(post)
-      .then((res) => {
-        debug(res.text);
-        dispatch({
-          type: ADD_POST,
-          payload: JSON.parse(res.text)
-        });
-      }, (err) => {
-        debug(err);
-        return err;
-      });
-  };
+function vote(info) {
+  return dispatch => request
+    .post('/api/post/vote')
+    .send(info)
+    .then(res => dispatch({
+      type: 'VOTE',
+      payload: JSON.parse(res.text),
+    }), (err) => {
+      debug(err);
+      return err;
+    });
 }
 
-export const VOTE = 'VOTE';
-export function vote(info) {
-  return function (dispatch) {
-    return request
-      .post('/api/post/vote')
-      .send(info)
-      .then((res) => {
-        dispatch({
-          type: VOTE,
-          payload: JSON.parse(res.text)
-        });
-      }, (err) => {
-        debug(err);
-        return err;
-      });
-  };
-}
-
+export default {
+  accumulateCount,
+  dummyAction,
+  updateMe,
+  fetchPosts,
+  addPost,
+  vote,
+};

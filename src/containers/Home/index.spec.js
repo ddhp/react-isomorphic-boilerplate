@@ -7,60 +7,60 @@ import { Home, mapStateToProps, mapDispatchToProps } from './';
 const mockPost = {
   1: {
     id: 1,
-    text: 'content of 1'
+    text: 'content of 1',
   },
   2: {
     id: 2,
-    text: 'content of 2'
-  }
+    text: 'content of 2',
+  },
 };
 
-let props = {
+const props = {
   count: 0,
   me: {
     name: 'test-name',
-    sex: 'test-sex'
+    sex: 'test-sex',
   },
   dummyAction: () => {},
   addPost: () => {},
   posts: [
     {
       id: 1,
-      text: 'content of 1'
+      text: 'content of 1',
     },
     {
       id: 2,
-      text: 'content of 2'
-    }
-  ]
+      text: 'content of 2',
+    },
+  ],
 };
 
-test('componentDidMount calls dummyAction', t => {
+test('componentDidMount calls dummyAction', (t) => {
   const dummyActionSpy = sinon.spy(props, 'dummyAction');
   shallow(<Home {...props} />);
   t.true(dummyActionSpy.calledOnce);
 });
 
-test('renders correctly', t => {
+test('renders correctly', (t) => {
   const wrapper = shallow(<Home {...props} />);
   t.true(wrapper.hasClass('page--home'));
 });
 
-test('mapStateToProps', t => {
+test('mapStateToProps', (t) => {
   const mappedProps = mapStateToProps({
     entities: {
-      post: mockPost
+      post: mockPost,
     },
     pages: {
       home: {
-        posts: [1]
-      }
-    }
+        posts: [1],
+      },
+    },
   });
   t.deepEqual(mappedProps.posts, [mockPost['1']]);
 });
 
-test('mapDispatchToProps', t => {
+test('mapDispatchToProps', (t) => {
   const dispatchSpy = sinon.spy();
   const dispatchers = mapDispatchToProps(dispatchSpy);
   dispatchers.dummyAction();

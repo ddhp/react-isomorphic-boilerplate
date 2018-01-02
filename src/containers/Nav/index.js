@@ -1,14 +1,13 @@
 import React from 'react';
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {  get as _get } from 'lodash';
+import { get as _get } from 'lodash';
 import { Link } from 'react-router-dom';
 import './style.scss';
 
-export class Nav extends Component {
+export class Nav extends React.Component {
   static propTypes = {
-    name: PropTypes.string
+    name: PropTypes.string,
   }
 
   render() {
@@ -28,11 +27,11 @@ export class Nav extends Component {
 }
 
 function mapStateToProps(state) {
-  const entities = _get(state, 'entities'),
-        name = _get(entities, 'me.name');
+  const entities = _get(state, 'entities');
+  const name = _get(entities, 'me.name');
 
   return {
-    name
+    name,
   };
 }
 

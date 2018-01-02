@@ -2,20 +2,20 @@ import test from 'ava';
 
 import reducer from './post';
 
-test('FETCH_POSTS', t => {
+test('FETCH_POSTS', (t) => {
   const initState = {};
   const expectState = {
     1: {
-      id: 1
-    }
+      id: 1,
+    },
   };
-  let action = {
+  const action = {
     type: 'FETCH_POSTS',
     payload: {
       entities: {
-        posts: expectState
-      }
-    }
+        posts: expectState,
+      },
+    },
   };
   t.deepEqual(reducer(initState, action), expectState);
 
@@ -24,22 +24,22 @@ test('FETCH_POSTS', t => {
   t.deepEqual(reducer(initState, action), initState);
 });
 
-test('ADD_POST', t => {
+test('ADD_POST', (t) => {
   const initState = {};
   const expectState = {
     1: {
       id: 1,
-      text: 'test-text'
-    }
+      text: 'test-text',
+    },
   };
   const action = {
     type: 'ADD_POST',
     payload: {
       result: 1,
       entities: {
-        posts: expectState
-      }
-    }
+        posts: expectState,
+      },
+    },
   };
   t.deepEqual(reducer(initState, action), expectState);
 
@@ -51,11 +51,11 @@ test('ADD_POST', t => {
       entities: {
         posts: {
           2: {
-            id: 2
-          }
-        }
-      }
-    }
+            id: 2,
+          },
+        },
+      },
+    },
   };
   t.is(reducer(initState, wrongAction), initState);
 });

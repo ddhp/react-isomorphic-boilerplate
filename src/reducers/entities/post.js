@@ -1,6 +1,7 @@
 import update from 'immutability-helper';
 import { get as _get, isEqual as _isEqual } from 'lodash';
 import stdout from '../../stdout';
+
 const debug = stdout('reducer:post');
 
 /**
@@ -16,7 +17,7 @@ const debug = stdout('reducer:post');
 const initialState = {};
 
 export default function postReducer(state = initialState, action) {
-  const payload = action.payload;
+  const { payload } = action;
   switch (action.type) {
     case 'FETCH_POSTS': {
       const postEntities = _get(payload, 'entities.posts', {});
@@ -24,11 +25,10 @@ export default function postReducer(state = initialState, action) {
       // don't update if there are the same
       if (!_isEqual(postEntities, state)) {
         return update(state, {
-          $merge: payload.entities.posts
+          $merge: payload.entities.posts,
         });
-      } else {
-        return state;
       }
+      return state;
     }
 
     case 'ADD_POST': {
@@ -38,12 +38,11 @@ export default function postReducer(state = initialState, action) {
       if (response) {
         return update(state, {
           $merge: {
-            [payload.result]: response
-          }
+            [payload.result]: response,
+          },
         });
-      } else {
-        return state;
       }
+      return state;
     }
 
     case 'VOTE': {
@@ -54,13 +53,12 @@ export default function postReducer(state = initialState, action) {
           [payload.result]: {
             $merge: {
               upvote: response.upvote,
-              downvote: response.downvote
-            }
-          }
+              downvote: response.downvote,
+            },
+          },
         });
-      } else {
-        return state;
       }
+      return state;
     }
 
     default:

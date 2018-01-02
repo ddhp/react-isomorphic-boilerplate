@@ -4,5 +4,5 @@ import pagesReducer from './pages';
 
 export default combineReducers({
   entities: entitiesReducer,
-  pages: pagesReducer
+  pages: pagesReducer,
 });

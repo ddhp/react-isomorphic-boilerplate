@@ -1,14 +1,10 @@
 let mockState;
 let dispatchSpy = () => {};
 
-const configureStore = () => {
-  return {
-    getState: () => {
-      return mockState;
-    },
-    dispatch: dispatchSpy
-  };
-};
+const configureStore = () => ({
+  getState: () => mockState,
+  dispatch: dispatchSpy,
+});
 
 export const setMockState = (s) => {
   mockState = s;
