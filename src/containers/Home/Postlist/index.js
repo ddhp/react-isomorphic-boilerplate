@@ -7,8 +7,13 @@ import './style.scss';
 
 export class Postlist extends React.Component {
   static propTypes = {
-    post: PropTypes.object,
+    post: PropTypes.shape,
     vote: PropTypes.func,
+  }
+
+  static defaultProps = {
+    post: {},
+    vote: () => {},
   }
 
   constructor(props) {

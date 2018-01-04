@@ -14,7 +14,12 @@ const debug = stdout('container/Home');
 export class Home extends React.Component {
   static propTypes = {
     dummyAction: PropTypes.func,
-    posts: PropTypes.array,
+    posts: PropTypes.shape,
+  }
+
+  static defaultProps = {
+    dummyAction: () => {},
+    posts: [],
   }
 
   componentDidMount() {
