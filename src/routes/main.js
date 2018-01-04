@@ -84,7 +84,7 @@ export const MainRoute = ({ location }) => {
 };
 
 MainRoute.propTypes = {
-  location: PropTypes.shape,
+  location: PropTypes.objectOf(PropTypes.string),
 };
 
 MainRoute.defaultProps = {

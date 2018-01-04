@@ -14,7 +14,7 @@ const debug = stdout('container/Home');
 export class Home extends React.Component {
   static propTypes = {
     dummyAction: PropTypes.func,
-    posts: PropTypes.shape,
+    posts: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {

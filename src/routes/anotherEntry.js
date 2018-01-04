@@ -53,7 +53,7 @@ export const AnotherOneRoute = ({ location }) => {
 };
 
 AnotherOneRoute.propTypes = {
-  location: PropTypes.shape,
+  location: PropTypes.objectOf(PropTypes.string),
 };
 
 AnotherOneRoute.defaultProps = {

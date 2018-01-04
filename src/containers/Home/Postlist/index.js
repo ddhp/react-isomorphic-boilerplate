@@ -7,7 +7,7 @@ import './style.scss';
 
 export class Postlist extends React.Component {
   static propTypes = {
-    post: PropTypes.shape,
+    post: PropTypes.objectOf(PropTypes.string),
     vote: PropTypes.func,
   }
 
