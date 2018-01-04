@@ -49,7 +49,9 @@ export class AnotherOneRoute extends React.Component {
           fontFamily: 'Spectral SC, serif',
           margin: '2rem',
           textAlign: 'center',
-        }}><a href="/">Rib.</a></h1>
+        }}
+        ><a href="/">Rib.</a>
+        </h1>
         {renderRoutes(routesInfo.routes, redirect)}
         <Footer />
       </div>

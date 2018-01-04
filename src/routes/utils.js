@@ -41,11 +41,15 @@ export function renderRoutes(routes, redirect) {
         const { component: Component, key, ...rest } = route;
 
         return (
-          <Route key={key} {...rest} render={props => (
-            <div>
-              <Component {...props} />
-            </div>
-          )} />
+          <Route
+            key={key}
+            {...rest}
+            render={props => (
+              <div>
+                <Component {...props} />
+              </div>
+            )}
+          />
         );
       })}
     </Switch>
