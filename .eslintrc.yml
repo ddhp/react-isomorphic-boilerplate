@@ -53,3 +53,6 @@ rules:
   jsx-a11y/anchor-is-valid:
     - error
     - specialLink: ["to"]
+
+  react/no-array-index-key:
+    - 0
