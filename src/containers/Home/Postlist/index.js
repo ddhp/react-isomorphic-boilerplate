@@ -5,15 +5,23 @@ import moment from 'moment';
 import action from '../../../actions';
 import './style.scss';
 
+const postItemShape = {
+  arthur: PropTypes.string,
+  createdAt: PropTypes.number,
+  downvote: PropTypes.number,
+  id: PropTypes.number,
+  text: PropTypes.string,
+  upvote: PropTypes.number,
+};
+
 export class Postlist extends React.Component {
   static propTypes = {
-    post: PropTypes.objectOf(PropTypes.string),
-    vote: PropTypes.func,
+    post: PropTypes.objectOf(PropTypes.shape(postItemShape)),
+    vote: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     post: {},
-    vote: () => {},
   }
 
   constructor(props) {
