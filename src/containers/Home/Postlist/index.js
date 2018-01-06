@@ -44,6 +44,7 @@ export class Postlist extends React.Component {
     return (
       <li className="postlist">
         <div className="text">
+          {/* eslint-disable react/no-array-index-key */}
           {p.text.split('\n').map((paragraph, i) => <p key={i}>{paragraph}</p>)}
         </div>
         <div>
