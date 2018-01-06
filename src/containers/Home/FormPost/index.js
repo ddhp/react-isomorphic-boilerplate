@@ -9,12 +9,11 @@ import './style.scss';
 
 export class FormPost extends React.Component {
   static propTypes = {
-    addPost: PropTypes.func,
+    addPost: PropTypes.func.isRequired,
     name: PropTypes.string,
   }
 
   static defaultProps = {
-    addPost: () => {},
     name: '',
   }
 
