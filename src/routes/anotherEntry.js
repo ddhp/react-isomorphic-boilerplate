@@ -22,39 +22,42 @@ export const getRoutes = () => ({
   ],
 });
 
-export class AnotherOneRoute extends React.Component {
-  static propTypes = {
-    location: PropTypes.object,
+export const AnotherOneRoute = ({ location }) => {
+  const routesInfo = getRoutes();
+  const currentRoute = getMatchedRoute(location.pathname, routesInfo);
+
+  let { redirect } = currentRoute;
+
+  if (currentRoute.redirect && _isFunction(currentRoute.redirect)) {
+    redirect = currentRoute.redirect();
   }
 
-  render() {
-    const { location } = this.props;
-    const routesInfo = getRoutes();
-    const currentRoute = getMatchedRoute(location.pathname, routesInfo);
+  return (
+    <div>
+      <Helmet titleTemplate="%s - by ddhp">
+        <title>Another One Route</title>
+        <meta name="description" content="react isomorphic boilerplate by ddhp" />
+        <meta name="og:title" content="Another One Route" />
+      </Helmet>
+      <h1 style={{
+        fontFamily: 'Spectral SC, serif',
+        margin: '2rem',
+        textAlign: 'center',
+      }}
+      ><a href="/">Rib.</a>
+      </h1>
+      {renderRoutes(routesInfo.routes, redirect)}
+      <Footer />
+    </div>
+  );
+};
 
-    let { redirect } = currentRoute;
+AnotherOneRoute.propTypes = {
+  location: PropTypes.objectOf(PropTypes.string),
+};
 
-    if (currentRoute.redirect && _isFunction(currentRoute.redirect)) {
-      redirect = currentRoute.redirect();
-    }
-
-    return (
-      <div>
-        <Helmet titleTemplate="%s - by ddhp">
-          <title>Another One Route</title>
-          <meta name="description" content="react isomorphic boilerplate by ddhp" />
-          <meta name="og:title" content="Another One Route" />
-        </Helmet>
-        <h1 style={{
-          fontFamily: 'Spectral SC, serif',
-          margin: '2rem',
-          textAlign: 'center',
-        }}><a href="/">Rib.</a></h1>
-        {renderRoutes(routesInfo.routes, redirect)}
-        <Footer />
-      </div>
-    );
-  }
-}
+AnotherOneRoute.defaultProps = {
+  location: {},
+};
 
 export default withRouter(AnotherOneRoute);

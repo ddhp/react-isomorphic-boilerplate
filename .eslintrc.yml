@@ -2,7 +2,7 @@ env:
   node: true
   browser: true
   es6: true
-extends: ['eslint:recommended', 'plugin:react/recommended', 'airbnb-base']
+extends: ['eslint:recommended', 'plugin:react/recommended', 'airbnb']
 parser: 'babel-eslint'
 parserOptions:
   ecmaFeatures:
@@ -45,3 +45,11 @@ rules:
   # these avoid React is defined but not used error, and is set in plugin:react/recommended
   # react/jsx-uses-react: 2
   # react/react-in-jsx-scope: 2
+
+  react/jsx-filename-extension:
+    - 1
+    - extensions: [".js", ".jsx"]
+
+  jsx-a11y/anchor-is-valid:
+    - error
+    - specialLink: ["to"]

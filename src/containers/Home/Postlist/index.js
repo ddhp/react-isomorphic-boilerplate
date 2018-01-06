@@ -5,10 +5,23 @@ import moment from 'moment';
 import action from '../../../actions';
 import './style.scss';
 
+const postItemShape = {
+  arthur: PropTypes.string,
+  createdAt: PropTypes.number,
+  downvote: PropTypes.number,
+  id: PropTypes.number,
+  text: PropTypes.string,
+  upvote: PropTypes.number,
+};
+
 export class Postlist extends React.Component {
   static propTypes = {
-    post: PropTypes.object,
-    vote: PropTypes.func,
+    post: PropTypes.objectOf(PropTypes.shape(postItemShape)),
+    vote: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    post: {},
   }
 
   constructor(props) {
@@ -39,6 +52,7 @@ export class Postlist extends React.Component {
     return (
       <li className="postlist">
         <div className="text">
+          {/* eslint-disable react/no-array-index-key */}
           {p.text.split('\n').map((paragraph, i) => <p key={i}>{paragraph}</p>)}
         </div>
         <div>

@@ -59,37 +59,37 @@ export const getRoutes = () => ({
   ],
 });
 
-export class MainRoute extends React.Component {
-  static propTypes = {
-    me: PropTypes.object,
-    location: PropTypes.object,
+export const MainRoute = ({ location }) => {
+  const routesInfo = getRoutes();
+  const currentRoute = getMatchedRoute(location.pathname, routesInfo);
+
+  let { redirect } = currentRoute;
+
+  if (currentRoute.redirect && _isFunction(currentRoute.redirect)) {
+    redirect = currentRoute.redirect();
   }
 
-  render() {
-    const { location/* , me */ } = this.props;
-    const routesInfo = getRoutes();
-    const currentRoute = getMatchedRoute(location.pathname, routesInfo);
+  return (
+    <div>
+      <Helmet titleTemplate="%s - by ddhp">
+        <title>title set in entry-main</title>
+        <meta name="description" content="react isomorphic boilerplate by ddhp" />
+        <meta name="og:title" content="title set in entry-main" />
+      </Helmet>
+      <NavComponent />
+      {renderRoutes(routesInfo.routes, redirect)}
+      <FooterComponent />
+    </div>
+  );
+};
 
-    let { redirect } = currentRoute;
+MainRoute.propTypes = {
+  location: PropTypes.objectOf(PropTypes.string),
+};
 
-    if (currentRoute.redirect && _isFunction(currentRoute.redirect)) {
-      redirect = currentRoute.redirect();
-    }
-
-    return (
-      <div>
-        <Helmet titleTemplate="%s - by ddhp">
-          <title>title set in entry-main</title>
-          <meta name="description" content="react isomorphic boilerplate by ddhp" />
-          <meta name="og:title" content="title set in entry-main" />
-        </Helmet>
-        <NavComponent />
-        {renderRoutes(routesInfo.routes, redirect)}
-        <FooterComponent />
-      </div>
-    );
-  }
-}
+MainRoute.defaultProps = {
+  location: {},
+};
 
 function mapStateToProps(state) {
   return {
