@@ -1,66 +1,101 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import { get as _get } from 'lodash';
+import classNames from 'classnames';
 import action from '../../../actions';
+
 import './style.scss';
 
-export class Postlist extends React.Component {
+export class FormPost extends React.Component {
   static propTypes = {
-    post: PropTypes.shape,
-    vote: PropTypes.func,
+    addPost: PropTypes.func,
+    name: PropTypes.string,
   }
 
   static defaultProps = {
-    post: {},
-    vote: () => {},
+    addPost: () => {},
+    name: '',
   }
+
+  static validateShowError = text => text.length < 256
+
+  static validate = text => text.length > 0 && text.length < 256
 
   constructor(props) {
     super(props);
+    this.state = {
+      postText: '',
+      isShowInvalid: false,
+    };
 
-    this.onUpvote = this.onUpvote.bind(this);
-    this.onDownvote = this.onDownvote.bind(this);
+    this.onPostTextChanged = this.onPostTextChanged.bind(this);
+    this.onPostSubmit = this.onPostSubmit.bind(this);
   }
 
-  onUpvote() {
-    const { post, vote } = this.props;
-    vote({
-      id: post.id,
-      isUp: true,
+  onPostTextChanged(e) {
+    const postText = e.target.value;
+    const isShowInvalid = !FormPost.validateShowError(postText);
+    this.setState({
+      postText,
+      isShowInvalid,
     });
   }
 
-  onDownvote() {
-    const { post, vote } = this.props;
-    vote({
-      id: post.id,
-    });
+  onPostSubmit(e) {
+    e.preventDefault();
+    const { postText } = this.state;
+    const { name, addPost } = this.props;
+    const payload = {
+      text: postText,
+      arthur: name,
+    };
+    if (FormPost.validate(postText)) {
+      addPost(payload)
+        .then(() => {
+          this.setState({
+            postText: '',
+          });
+        });
+    }
   }
 
   render() {
-    const { post: p } = this.props;
-    const { downvote, upvote } = p;
+    const { isShowInvalid } = this.state;
+
     return (
-      <li className="postlist">
-        <div className="text">
-          {p.text.split('\n').map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+      <form className="form--post" onSubmit={this.onPostSubmit}>
+        <p className="form-group title">Anything to say?</p>
+        <div className="form-row">
+          <textarea
+            className={classNames('input--post-text', {
+              'is-error': isShowInvalid,
+            })}
+            value={this.state.postText}
+            onChange={this.onPostTextChanged}
+          />
+          <div className="btn-wrapper">
+            <button className="btn--post-submit" type="submit">Submit</button>
+          </div>
         </div>
-        <div>
-          <span className="arthur">{p.arthur} </span>
-          <span className="createdAt">{moment().from(p.createdAt)}</span>
-          <button onClick={this.onUpvote}> +{upvote} </button>
-          <button onClick={this.onDownvote}> -{downvote} </button>
-        </div>
-      </li>
+      </form>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
+  const entities = _get(state, 'entities');
+  const name = _get(entities, 'me.name');
+
   return {
-    vote: voteInfo => dispatch(action.vote(voteInfo)),
+    name,
   };
 }
 
-export default connect(null, mapDispatchToProps)(Postlist);
+function mapDispatchToProps(dispatch) {
+  return {
+    addPost: post => dispatch(action.addPost(post)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormPost);
