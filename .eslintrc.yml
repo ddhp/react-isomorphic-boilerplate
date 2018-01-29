@@ -11,6 +11,12 @@ rules:
       - '.js'
       - '.jsx'
 
+  # eslint-airbnb enable this by default disabled rule
+  # turn this off here for convenience
+  # remove this setting if you want strict proptype documentation
+  react/forbid-prop-types:
+    - off
+
   # TODO: can be removed after airbnb publish there new version
   jsx-a11y/anchor-is-valid:
     - error
