@@ -9,7 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
 function baseConfig(platform = 'browser', env) {
-  const baseConfig = {
+  const config = {
     context: path.resolve(__dirname),
 
     plugins: [],
@@ -74,7 +74,7 @@ function baseConfig(platform = 'browser', env) {
   // server config with css-loader/locals
   // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/48#issuecomment-375288454
   if (platform === 'server') {
-    baseConfig.module.rules.push(
+    config.module.rules.push(
       {
         test: /\.css$/,
         use: [
@@ -125,31 +125,29 @@ function baseConfig(platform = 'browser', env) {
       // only use minicssextractplugin in prod build
       cssUseLoaders.unshift(MiniCssExtractPlugin.loader);
       scssUseLoaders.unshift(MiniCssExtractPlugin.loader);
-      baseConfig.plugins.push(
-        new MiniCssExtractPlugin({
-          // Options similar to the same options in webpackOptions.output
-          // both options are optional
-          filename: "[name].[contenthash].css",
-          chunkFilename: "[id].css"
-        }),
-      );
+      config.plugins.push(new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: '[name].[contenthash].css',
+        chunkFilename: '[id].css',
+      }));
     } else {
       cssUseLoaders.unshift('style-loader');
       scssUseLoaders.unshift('style-loader');
     }
-    baseConfig.module.rules.push(
+    config.module.rules.push(
       {
         test: /\.css$/,
         use: cssUseLoaders,
       },
       {
         test: /\.scss$/,
-        use: scssUseLoaders
+        use: scssUseLoaders,
       },
     );
   }
 
-  return baseConfig;
+  return config;
 }
 
 export function findTargetRule(rules, targetTest) {
