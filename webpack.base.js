@@ -14,6 +14,12 @@ function baseConfig(platform = 'browser', env) {
 
     plugins: [],
 
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
+
     module: {
       rules: [
         {
