@@ -2,7 +2,6 @@
 import webpack from 'webpack';
 import path from 'path';
 import Visualizer from 'webpack-visualizer-plugin';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import baseConfig, { findTargetRule } from './webpack.base';
 
 // env can be e.g 'prod', 'dev', 'hot'
@@ -86,12 +85,9 @@ export default function browserConfig(env) {
       },
     });
 
-    config.plugins.push(
-      new UglifyJsPlugin(),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': '"production"',
-      }),
-    );
+    config.plugins.push(new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+    }));
   } else {
     config.plugins.push(new Visualizer({
       filename: '../stats-browser.html',

@@ -43,6 +43,7 @@
     "mock-require": "^3.0.1",
     "node-sass": "^4.6.1",
     "nyc": "^11.3.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.0",
     "postcss-loader": "^2.0.8",
     "remove-debug-loader": "^0.2.2",
     "reset.css": "^2.0.2",
