@@ -5,29 +5,13 @@
  *
  */
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 function baseConfig(platform = 'browser', env) {
-  const extractCSS = new ExtractTextPlugin({
-    filename: env !== 'hot' ? '[name].[contenthash].css' : '[name].css',
-    allChunks: true,
-    disable: env === 'hot' && platform === 'browser',
-  });
-
-  const extractSCSS = new ExtractTextPlugin({
-    filename: env !== 'hot' ? '[name].[contenthash].css' : '[name].css',
-    allChunks: true,
-    disable: env === 'hot' && platform === 'browser',
-  });
-
-  return {
+  const baseConfig = {
     context: path.resolve(__dirname),
 
-    plugins: [
-      extractCSS,
-      extractSCSS,
-    ],
+    plugins: [],
 
     module: {
       rules: [
@@ -42,49 +26,6 @@ function baseConfig(platform = 'browser', env) {
               loader: 'eslint-loader',
             },
           ],
-        },
-        {
-          test: /\.css$/,
-          use: extractCSS.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: env !== 'prod',
-                },
-              },
-            ],
-          }),
-        },
-        {
-          test: /\.scss$/,
-          use: extractSCSS.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: env !== 'prod',
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: env !== 'prod',
-                  plugins: [
-                    autoprefixer(),
-                  ],
-                },
-              },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: env !== 'prod',
-                },
-              },
-            ],
-          }),
         },
         {
           test: /\.(woff|woff2|eot|ttf)$/,
@@ -122,6 +63,69 @@ function baseConfig(platform = 'browser', env) {
       ],
     },
   };
+
+  // server config with css-loader/locals
+  // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/48#issuecomment-375288454
+  if (platform === 'server') {
+    baseConfig.module.rules.push(
+      {
+        test: /\.css$/,
+        use: [
+          'css-loader/locals',
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'css-loader/locals',
+        ],
+      },
+    );
+  } else {
+    baseConfig.module.rules.push(
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: env !== 'prod',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: env !== 'prod',
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: env !== 'prod',
+              plugins: [
+                autoprefixer(),
+              ],
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: env !== 'prod',
+            },
+          },
+        ],
+      },
+    );
+  }
+
+  return baseConfig;
 }
 
 export function findTargetRule(rules, targetTest) {

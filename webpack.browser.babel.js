@@ -2,6 +2,7 @@
 import webpack from 'webpack';
 import path from 'path';
 import Visualizer from 'webpack-visualizer-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import baseConfig, { findTargetRule } from './webpack.base';
 
@@ -10,6 +11,9 @@ export default function browserConfig(env) {
   const config = baseConfig('browser', env);
 
   config.name = 'browser';
+
+  // mode since webpack v4
+  config.mode = env === 'prod' ? 'production' : 'development';
 
   const entry = {
     main: path.resolve(__dirname, 'src/entries/main'),
@@ -24,29 +28,29 @@ export default function browserConfig(env) {
     filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js',
   };
 
-  config.plugins.push(
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js',
-      minChunks(module, count) {
-        // This prevents stylesheet resources with the .css or .scss extension
-        // from being moved from their original chunk to the vendor chunk
-        if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
-          return false;
-        }
-        // check if module used enough time
-        // if there are more than 1 entries it has to be used by more than one time
-        const enoughCount = Object.keys(config.entry).length === 1 ? true : count > 1;
-        // only put module from node_modules
-        return module.context && module.context.indexOf('node_modules') !== -1 && enoughCount;
-      },
-    }),
-    // seperate manifest is a must
-    // or every time vendor chunk hash would change
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-    }),
-  );
+  // config.plugins.push(
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: 'vendor',
+  //     filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js',
+  //     minChunks(module, count) {
+  //       // This prevents stylesheet resources with the .css or .scss extension
+  //       // from being moved from their original chunk to the vendor chunk
+  //       if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
+  //         return false;
+  //       }
+  //       // check if module used enough time
+  //       // if there are more than 1 entries it has to be used by more than one time
+  //       const enoughCount = Object.keys(config.entry).length === 1 ? true : count > 1;
+  //       // only put module from node_modules
+  //       return module.context && module.context.indexOf('node_modules') !== -1 && enoughCount;
+  //     },
+  //   }),
+  //   // seperate manifest is a must
+  //   // or every time vendor chunk hash would change
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: 'manifest',
+  //   }),
+  // );
 
   // set available stats
   // https://webpack.js.org/configuration/stats/

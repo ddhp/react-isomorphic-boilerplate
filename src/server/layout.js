@@ -13,6 +13,9 @@ function genCSSTag(p) {
 }
 
 function genTag(targetPath, type) {
+  if (!targetPath) {
+    return '';
+  }
   let method = () => {};
   let targetPaths = targetPath;
   if (type === 'CSS') { method = genCSSTag; }
@@ -35,7 +38,7 @@ function getAssetInfo(asset, publicPath) {
       if (/\.css/.test(a)) { css.push(path.join(publicPath, a)); }
     });
   } else {
-    js = path.join(publicPath, asset);
+    js = asset ? path.join(publicPath, asset) : '';
   }
   return { js, css };
 }

@@ -10,6 +10,9 @@ export default function serverConfig(env) {
 
   config.name = 'server';
 
+  // mode since webpack v4
+  config.mode = env === 'prod' ? 'production' : 'development';
+
   config.output = {
     path: path.join(__dirname, '/dist/server'),
     publicPath: env === 'hot' ? '/' : '/assets/',
