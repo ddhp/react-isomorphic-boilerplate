@@ -2,7 +2,6 @@
 import webpack from 'webpack';
 import path from 'path';
 import Visualizer from 'webpack-visualizer-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import baseConfig, { findTargetRule } from './webpack.base';
 
@@ -88,7 +87,7 @@ export default function browserConfig(env) {
     });
 
     config.plugins.push(
-      new UglifyJsPlugin(),
+      // new UglifyJsPlugin(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': '"production"',
       }),

@@ -5,6 +5,7 @@
  *
  */
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
 function baseConfig(platform = 'browser', env) {
@@ -82,45 +83,62 @@ function baseConfig(platform = 'browser', env) {
       },
     );
   } else {
+    const cssUseLoaders = [
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: env !== 'prod',
+        },
+      },
+    ];
+    const scssUseLoaders = [
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: env !== 'prod',
+        },
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: env !== 'prod',
+          plugins: [
+            autoprefixer(),
+          ],
+        },
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          sourceMap: env !== 'prod',
+        },
+      },
+    ];
+
+    if (env === 'prod') {
+      // only use minicssextractplugin in prod build
+      cssUseLoaders.unshift(MiniCssExtractPlugin.loader);
+      scssUseLoaders.unshift(MiniCssExtractPlugin.loader);
+      baseConfig.plugins.push(
+        new MiniCssExtractPlugin({
+          // Options similar to the same options in webpackOptions.output
+          // both options are optional
+          filename: "[name].[contenthash].css",
+          chunkFilename: "[id].css"
+        }),
+      );
+    } else {
+      cssUseLoaders.unshift('style-loader');
+      scssUseLoaders.unshift('style-loader');
+    }
     baseConfig.module.rules.push(
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: env !== 'prod',
-            },
-          },
-        ],
+        use: cssUseLoaders,
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: env !== 'prod',
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: env !== 'prod',
-              plugins: [
-                autoprefixer(),
-              ],
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: env !== 'prod',
-            },
-          },
-        ],
+        use: scssUseLoaders
       },
     );
   }
