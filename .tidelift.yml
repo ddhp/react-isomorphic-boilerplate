@@ -1,0 +1,12 @@
+ci:
+  platform:
+    NPM:
+      nomnom:
+        tests:
+          unmaintained: skip
+      argv:
+        tests:
+          unlicensed: skip
+      chrome-trace-event:
+        tests:
+          unlicensed: skip
