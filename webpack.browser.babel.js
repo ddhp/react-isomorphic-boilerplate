@@ -1,8 +1,9 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
 import webpack from 'webpack';
 import path from 'path';
-import Visualizer from 'webpack-visualizer-plugin';
 import baseConfig, { findTargetRule } from './webpack.base';
+
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // env can be e.g 'prod', 'dev', 'hot'
 export default function browserConfig(env) {
@@ -89,8 +90,10 @@ export default function browserConfig(env) {
       'process.env.NODE_ENV': '"production"',
     }));
   } else {
-    config.plugins.push(new Visualizer({
-      filename: '../stats-browser.html',
+    config.plugins.push(new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      filename: '../report.html',
+      openAnalyzer: false,
     }));
 
     // enable source map
