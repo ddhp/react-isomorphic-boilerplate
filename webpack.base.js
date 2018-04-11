@@ -131,7 +131,6 @@ function baseConfig(platform = 'browser', env) {
         // Options similar to the same options in webpackOptions.output
         // both options are optional
         filename: '[name].[contenthash].css',
-        chunkFilename: '[id].css',
       }));
       // needs to manually minify when css is extracted
       // https://github.com/webpack-contrib/mini-css-extract-plugin#minimizing-for-production
