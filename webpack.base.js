@@ -5,29 +5,22 @@
  *
  */
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 function baseConfig(platform = 'browser', env) {
-  const extractCSS = new ExtractTextPlugin({
-    filename: env !== 'hot' ? '[name].[contenthash].css' : '[name].css',
-    allChunks: true,
-    disable: env === 'hot' && platform === 'browser',
-  });
-
-  const extractSCSS = new ExtractTextPlugin({
-    filename: env !== 'hot' ? '[name].[contenthash].css' : '[name].css',
-    allChunks: true,
-    disable: env === 'hot' && platform === 'browser',
-  });
-
-  return {
+  const config = {
     context: path.resolve(__dirname),
 
-    plugins: [
-      extractCSS,
-      extractSCSS,
-    ],
+    plugins: [],
+
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
 
     module: {
       rules: [
@@ -42,49 +35,6 @@ function baseConfig(platform = 'browser', env) {
               loader: 'eslint-loader',
             },
           ],
-        },
-        {
-          test: /\.css$/,
-          use: extractCSS.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: env !== 'prod',
-                },
-              },
-            ],
-          }),
-        },
-        {
-          test: /\.scss$/,
-          use: extractSCSS.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  sourceMap: env !== 'prod',
-                },
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: env !== 'prod',
-                  plugins: [
-                    autoprefixer(),
-                  ],
-                },
-              },
-              {
-                loader: 'sass-loader',
-                options: {
-                  sourceMap: env !== 'prod',
-                },
-              },
-            ],
-          }),
         },
         {
           test: /\.(woff|woff2|eot|ttf)$/,
@@ -122,6 +72,92 @@ function baseConfig(platform = 'browser', env) {
       ],
     },
   };
+
+  // server config with css-loader/locals
+  // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/48#issuecomment-375288454
+  if (platform === 'server') {
+    config.module.rules.push(
+      {
+        test: /\.css$/,
+        use: [
+          'css-loader/locals',
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'css-loader/locals',
+        ],
+      },
+    );
+  } else {
+    const cssUseLoaders = [
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: env !== 'prod',
+        },
+      },
+    ];
+    const scssUseLoaders = [
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: env !== 'prod',
+        },
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: env !== 'prod',
+          plugins: [
+            autoprefixer(),
+          ],
+        },
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          sourceMap: env !== 'prod',
+        },
+      },
+    ];
+
+    if (env === 'prod') {
+      // only use minicssextractplugin in prod build
+      cssUseLoaders.unshift(MiniCssExtractPlugin.loader);
+      scssUseLoaders.unshift(MiniCssExtractPlugin.loader);
+      config.plugins.push(new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: '[name].[contenthash].css',
+      }));
+      // needs to manually minify when css is extracted
+      // https://github.com/webpack-contrib/mini-css-extract-plugin#minimizing-for-production
+      config.optimization.minimizer = [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+        }),
+        new OptimizeCSSAssetsPlugin({}),
+      ];
+    } else {
+      cssUseLoaders.unshift('style-loader');
+      scssUseLoaders.unshift('style-loader');
+    }
+    config.module.rules.push(
+      {
+        test: /\.css$/,
+        use: cssUseLoaders,
+      },
+      {
+        test: /\.scss$/,
+        use: scssUseLoaders,
+      },
+    );
+  }
+
+  return config;
 }
 
 export function findTargetRule(rules, targetTest) {

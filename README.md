@@ -14,6 +14,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 - fully testable - shows how to test react containers / redux actions and reducers / also your server app.
 - easy to start.
 - production ready.
+- webpack v4 support
 
 ## Concept
 ### Getting Started
@@ -35,9 +36,10 @@ then visit `localhost:3333` to see result.
 
 All development code are built with [source map](http://blog.teamtreehouse.com/introduction-source-maps).
 
-Since styles are hotload with `yarn start`, so you might see [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content). You can do a dev build to see how it would actually work:
+Since styles are hotload with `yarn start`, so you would see [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content). 
+You can do a prod build to see how it would actually work:
 ```
-yarn build:browser:dev && yarn build:server:dev
+yarn build:browser:prod && yarn build:server:prod
 node dist/server/index.js
 ```
 
@@ -62,7 +64,7 @@ On the other hand, node server **only** serves static files in `/dist/assets` wh
 - Import `global.scss` in your entry component, or define your own styles for specific entry then import them.
 - `style.scss` in containers folder only set styles for react component in the folder of same level, and starts with most root class name of that component. (see [src/containers/Home/style.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Home/style.scss))
 
-[extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract style sheet from built code into target dist folder.
+[mini-css-extract-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract style sheet from built code into target dist folder since webpack v4.
 
 ### SEO
 - Define `loadData` method in your route to prefetch data needed for SEO. ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/routes/main.js))
