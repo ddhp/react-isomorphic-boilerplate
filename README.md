@@ -43,6 +43,12 @@ yarn build:browser:prod && yarn build:server:prod
 node dist/server/index.js
 ```
 
+### Eslint
+Some rules are disabled in `hot` mode(the mode when you run `yarn start`),
+check `webpack.base.js:16`.
+`yarn build:browser:dev/prod` would save output to a json file, so you would only see subtle error message on terminal,
+in this case you have to check generated `compilation-stats.json`'s `errors` for reasons.
+
 ### Log
 Import `stdout.js` and define namespace ([example](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/server/pages.js)), then turn on debug message depends on platform:
 - browser: allow debug log by type `localStorage.debug = '*'` in console.

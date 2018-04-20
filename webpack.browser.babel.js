@@ -51,12 +51,11 @@ export default function browserConfig(env) {
   //   }),
   // );
 
-  // set available stats
+  // disable some stats
   // https://webpack.js.org/configuration/stats/
   config.stats = {
-    all: false,
-    assets: true,
-    publicPath: true,
+    chunks: false,
+    modules: false,
   };
 
   // modify config for hot env

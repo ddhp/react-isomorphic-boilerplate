@@ -5,9 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "DEBUG=*,-nodemon*,-express*,-send,-babel*,-eslint*,-css-modules* NODE_ENV=hot babel-node --inspect src/server/hot/index.js",
-    "build:browser:dev": "webpack --env=dev --config=webpack.browser.babel.js --progress --profile --colors --json > compilation-stats.json",
+    "build:browser:dev": "webpack --env=dev --config=webpack.browser.babel.js --profile --progress --json > compilation-stats.json",
     "build:server:dev": "webpack --env=dev --config=webpack.server.babel.js --progress --profile --colors",
-    "build:browser:prod": "webpack --env=prod --display-error-details --config=webpack.browser.babel.js --progress --profile --colors --json > compilation-stats.json",
+    "build:browser:prod": "webpack --env=prod --config=webpack.browser.babel.js --progress --json > compilation-stats.json",
     "build:server:prod": "webpack --env=prod --config=webpack.server.babel.js --progress --profile --colors",
     "eslint": "eslint ./",
     "test": "npm run eslint && cross-env NODE_ENV=test nyc ava --verbose",
