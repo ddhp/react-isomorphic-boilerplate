@@ -44,8 +44,8 @@ node dist/server/index.js
 ```
 
 ### Eslint
-Some rules are disabled in `hot` mode(the mode when you run `yarn start`),
-check `webpack.base.js:16`.
+Some rules are disabled when you run `yarn start`, see [#26](https://github.com/ddhp/react-isomorphic-boilerplate/issues/26).
+
 `yarn build:browser:dev/prod` would save output to a json file, so you would only see subtle error message on terminal,
 in this case you have to check generated `compilation-stats.json`'s `errors` for reasons.
 
