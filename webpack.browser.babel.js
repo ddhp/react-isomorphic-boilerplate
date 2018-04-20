@@ -94,6 +94,7 @@ export default function browserConfig(env) {
       analyzerMode: 'static',
       filename: '../report.html',
       openAnalyzer: false,
+      logLevel: 'silent',
     }));
 
     // enable source map
