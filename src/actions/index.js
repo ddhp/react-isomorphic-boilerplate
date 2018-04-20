@@ -24,15 +24,19 @@ function updateMe(me) {
 }
 
 function fetchPosts() {
-  return dispatch => request
-    .get('http://localhost:3333/api/post')
-    .then(res => dispatch({
-      type: 'FETCH_POSTS',
-      payload: JSON.parse(res.text),
-    }), (err) => {
+  return async (dispatch) => {
+    try {
+      const res = await request.get('http://localhost:3333/api/post');
+      debug(res);
+      return dispatch({
+        type: 'FETCH_POSTS',
+        payload: JSON.parse(res.text),
+      });
+    } catch (err) {
       debug(err);
       return err;
-    });
+    }
+  };
 }
 
 function addPost(post) {
