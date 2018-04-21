@@ -11,6 +11,18 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 function baseConfig(platform = 'browser', env) {
+  // if env is 'hot'
+  // disable some eslint rules
+  let eslintLoaderExtraRules = {};
+  if (env === 'hot') {
+    eslintLoaderExtraRules = {
+      'no-console': 'off',
+      'no-debugger': 'off',
+      'react/prefer-stateless-function': 'off',
+      'arrow-body-style': 'off',
+    };
+  }
+
   const config = {
     context: path.resolve(__dirname),
 
@@ -33,6 +45,9 @@ function baseConfig(platform = 'browser', env) {
             },
             {
               loader: 'eslint-loader',
+              options: {
+                rules: eslintLoaderExtraRules,
+              },
             },
           ],
         },
