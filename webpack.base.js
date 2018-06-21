@@ -111,7 +111,7 @@ function baseConfig(platform = 'browser', env) {
         loader: 'css-loader',
         options: {
           sourceMap: env !== 'prod',
-          localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
+          localIdentName: '[local]___[hash:base64:5]',
           modules: true,
         },
       },
@@ -121,7 +121,7 @@ function baseConfig(platform = 'browser', env) {
         loader: 'css-loader',
         options: {
           sourceMap: env !== 'prod',
-          localIdentName: '[path]___[name]__[local]___[hash:base64:5]',
+          localIdentName: '[local]___[hash:base64:5]',
           modules: true,
           importLoaders: 2,
         },
@@ -130,9 +130,7 @@ function baseConfig(platform = 'browser', env) {
         loader: 'postcss-loader',
         options: {
           sourceMap: env !== 'prod',
-          plugins: [
-            autoprefixer(),
-          ],
+          // move other setting to postcss.config.js
         },
       },
       {

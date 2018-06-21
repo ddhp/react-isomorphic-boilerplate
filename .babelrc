@@ -10,11 +10,13 @@
     "react-hot-loader/babel",
     ["react-css-modules", {
       "filetypes": {
+        // set this to activate scss support
         ".scss": {
           "syntax": "postcss-scss",
-          "plugins": ["postcss-nested"]
-        }
-      }
+        },
+      },
+      "webpackHotModuleReloading": true,
+      "generateScopedName": "[local]___[hash:base64:5]",
     }]
   ]
 }
