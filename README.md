@@ -14,7 +14,8 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 - fully testable - shows how to test react containers / redux actions and reducers / also your server app.
 - easy to start.
 - production ready.
-- webpack v4 support
+- webpack v4 support.
+- manage your style in [CSS Modules](https://github.com/css-modules/css-modules) way.
 
 ## Concept
 ### Getting Started
@@ -68,7 +69,7 @@ On the other hand, node server **only** serves static files in `/dist/assets` wh
 ### Style
 - [reset.css](https://www.npmjs.com/package/reset-css) resets default style and is imported in [global.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/client/global.scss).
 - Import `global.scss` in your entry component, or define your own styles for specific entry then import them.
-- `style.scss` in containers folder only set styles for react component in the folder of same level, and starts with most root class name of that component. (see [src/containers/Home/style.scss](https://github.com/ddhp/react-isomorphic-boilerplate/blob/master/src/containers/Home/style.scss))
+- Introduced [CSS Modules](https://github.com/css-modules/css-modules), compiled with JSX support by [babel-plugin-react-css-modules](https://github.com/gajus/babel-plugin-react-css-modules) during build phase.
 
 [mini-css-extract-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) would extract style sheet from built code into target dist folder since webpack v4.
 
