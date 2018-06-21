@@ -5,5 +5,16 @@
       "plugins": ["istanbul"]
     }
   },
-  "plugins": ["transform-runtime", "react-hot-loader/babel"]
+  "plugins": [
+    "transform-runtime",
+    "react-hot-loader/babel",
+    ["react-css-modules", {
+      "filetypes": {
+        ".scss": {
+          "syntax": "postcss-scss",
+          "plugins": ["postcss-nested"]
+        }
+      }
+    }]
+  ]
 }
