@@ -7,7 +7,7 @@ import action from '../../actions';
 import FormPostComponent from './FormPost';
 import PostlistComponent from './Postlist';
 import stdout from '../../stdout';
-import style from './style.scss';
+import style from './style.scss'; // eslint-disable-line no-unused-vars
 
 const debug = stdout('container/Home');
 
@@ -28,7 +28,6 @@ export class Home extends React.Component {
   render() {
     debug('render method');
     const { posts } = this.props;
-    console.log(style);
 
     return (
       <div styleName="style.page--home">
