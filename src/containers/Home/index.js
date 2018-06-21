@@ -7,7 +7,7 @@ import action from '../../actions';
 import FormPostComponent from './FormPost';
 import PostlistComponent from './Postlist';
 import stdout from '../../stdout';
-import './style.scss';
+import style from './style.scss';
 
 const debug = stdout('container/Home');
 
@@ -28,9 +28,10 @@ export class Home extends React.Component {
   render() {
     debug('render method');
     const { posts } = this.props;
+    console.log(style);
 
     return (
-      <div className="page--home">
+      <div styleName="style.page--home">
         <Helmet>
           <title>Home</title>
           <meta name="description" content="home page shows posts" />
@@ -39,7 +40,7 @@ export class Home extends React.Component {
 
         <FormPostComponent />
 
-        <ul className="list--posts">
+        <ul styleName="style.list--posts">
           {posts.map(p => <PostlistComponent post={p} key={p.id} />)}
         </ul>
       </div>

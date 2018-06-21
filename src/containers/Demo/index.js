@@ -7,14 +7,14 @@ const debug = stdout('container/Demo');
 debug(logoImg);
 
 const Demo = () => (
-  <div className="page--demo">
-    <h1 className="demo--font">
+  <div styleName="page--demo">
+    <h1 styleName="demo--font">
       Title in Spectral SC
       A red flair silhouetted the jagged edge of a wing
     </h1>
 
-    <div className="demo--bg" />
-    <img className="demo--img-src" alt="" src={logoImg} />
+    <div styleName="demo--bg" />
+    <img styleName="demo--img-src" alt="" src={logoImg} />
   </div>
 );
 

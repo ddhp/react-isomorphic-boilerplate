@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './style.scss';
 
 const AnotherEntry = () => (
-  <div className="page--another-entry">
+  <div styleName="page--another-entry">
     <h2> this is another entry</h2>
     <p>
       <Link to="/">use {'<Link />'}</Link> to home would not work

@@ -50,14 +50,14 @@ export class Postlist extends React.Component {
     const { post: p } = this.props;
     const { downvote, upvote } = p;
     return (
-      <li className="postlist">
-        <div className="text">
+      <li styleName="postlist">
+        <div styleName="text">
           {/* eslint-disable react/no-array-index-key */}
           {p.text.split('\n').map((paragraph, i) => <p key={i}>{paragraph}</p>)}
         </div>
         <div>
-          <span className="arthur">{p.arthur} </span>
-          <span className="createdAt">{moment().from(p.createdAt)}</span>
+          <span styleName="arthur">{p.arthur} </span>
+          <span styleName="createdAt">{moment().from(p.createdAt)}</span>
           <button onClick={this.onUpvote}> +{upvote} </button>
           <button onClick={this.onDownvote}> -{downvote} </button>
         </div>
