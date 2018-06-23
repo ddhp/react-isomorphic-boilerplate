@@ -14,6 +14,7 @@ const debug = stdout('container/Home');
 export class Home extends React.Component {
   static propTypes = {
     dummyAction: PropTypes.func.isRequired,
+    fetchPosts: PropTypes.func.isRequired,
     posts: PropTypes.arrayOf(PropTypes.number),
   }
 
@@ -22,6 +23,9 @@ export class Home extends React.Component {
   }
 
   componentDidMount() {
+    // componentDidMount hook only triggers on browser side
+    // do browser specific behavior here
+    this.props.fetchPosts();
     this.props.dummyAction();
   }
 
@@ -62,6 +66,7 @@ export function mapStateToProps(state) {
 export function mapDispatchToProps(dispatch) {
   return {
     dummyAction: () => dispatch(action.dummyAction()),
+    fetchPosts: () => dispatch(action.fetchPosts()),
   };
 }
 
