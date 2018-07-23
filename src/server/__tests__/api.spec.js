@@ -42,7 +42,7 @@ test('get /post', (t) => {
       posts: initState.entities.post,
     },
   }));
-  sendSpy.reset();
+  sendSpy.resetHistory();
 
   const forCreatedAt = {
     1: {
