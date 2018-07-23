@@ -8,7 +8,6 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 
 function baseConfig(platform = 'browser', env) {
   // if env is 'hot'
@@ -111,6 +110,8 @@ function baseConfig(platform = 'browser', env) {
         loader: 'css-loader',
         options: {
           sourceMap: env !== 'prod',
+          localIdentName: '[local]___[hash:base64:5]',
+          modules: true,
         },
       },
     ];
@@ -119,15 +120,16 @@ function baseConfig(platform = 'browser', env) {
         loader: 'css-loader',
         options: {
           sourceMap: env !== 'prod',
+          localIdentName: '[local]___[hash:base64:5]',
+          modules: true,
+          importLoaders: 2,
         },
       },
       {
         loader: 'postcss-loader',
         options: {
           sourceMap: env !== 'prod',
-          plugins: [
-            autoprefixer(),
-          ],
+          // move other setting to postcss.config.js
         },
       },
       {

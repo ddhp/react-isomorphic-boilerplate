@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 import './style.scss';
 
 const Nav = ({ name }) => (
-  <nav>
+  <nav styleName="navi">
     <Link to="/">Rib.</Link>
     <Link to="/about">About</Link>
     <Link to="/demo">Demo</Link>
     <a href="another-entry">Another</a>
 
-    <div className="user-info">
+    <div styleName="user-info">
       your are {name}
     </div>
   </nav>

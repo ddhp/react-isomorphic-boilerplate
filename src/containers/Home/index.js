@@ -7,7 +7,7 @@ import action from '../../actions';
 import FormPostComponent from './FormPost';
 import PostlistComponent from './Postlist';
 import stdout from '../../stdout';
-import './style.scss';
+import style from './style.scss'; // eslint-disable-line no-unused-vars
 
 const debug = stdout('container/Home');
 
@@ -34,7 +34,7 @@ export class Home extends React.Component {
     const { posts } = this.props;
 
     return (
-      <div className="page--home">
+      <div styleName="style.page--home">
         <Helmet>
           <title>Home</title>
           <meta name="description" content="home page shows posts" />
@@ -43,7 +43,7 @@ export class Home extends React.Component {
 
         <FormPostComponent />
 
-        <ul className="list--posts">
+        <ul styleName="style.list--posts">
           {posts.map(p => <PostlistComponent post={p} key={p.id} />)}
         </ul>
       </div>

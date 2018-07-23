@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Home, mapStateToProps, mapDispatchToProps } from './';
+import style from './style.scss';
 
 const mockPost = {
   1: {
@@ -44,7 +45,7 @@ test('componentDidMount calls dummyAction', (t) => {
 
 test('renders correctly', (t) => {
   const wrapper = shallow(<Home {...props} />);
-  t.true(wrapper.hasClass('page--home'));
+  t.true(wrapper.hasClass(style['page--home']));
 });
 
 test('mapStateToProps', (t) => {

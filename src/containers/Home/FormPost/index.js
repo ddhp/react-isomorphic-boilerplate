@@ -63,18 +63,18 @@ export class FormPost extends React.Component {
     const { isShowInvalid } = this.state;
 
     return (
-      <form className="form--post" onSubmit={this.onPostSubmit}>
-        <p className="form-group title">Anything to say?</p>
-        <div className="form-row">
+      <form styleName="form--post" onSubmit={this.onPostSubmit}>
+        <p styleName="form-group title">Anything to say?</p>
+        <div styleName="form-row">
           <textarea
-            className={classNames('input--post-text', {
+            styleName={classNames('input--post-text', {
               'is-error': isShowInvalid,
             })}
             value={this.state.postText}
             onChange={this.onPostTextChanged}
           />
-          <div className="btn-wrapper">
-            <button className="btn--post-submit" type="submit">Submit</button>
+          <div styleName="btn-wrapper">
+            <button styleName="btn--post-submit" type="submit">Submit</button>
           </div>
         </div>
       </form>

@@ -5,5 +5,19 @@
       "plugins": ["istanbul"]
     }
   },
-  "plugins": ["transform-runtime", "react-hot-loader/babel"]
+  "plugins": [
+    "transform-runtime",
+    "react-hot-loader/babel",
+    ["react-css-modules", {
+      "filetypes": {
+        // set this to activate scss support
+        ".scss": {
+          "syntax": "postcss-scss",
+        },
+      },
+      "webpackHotModuleReloading": true,
+      "generateScopedName": "[local]___[hash:base64:5]",
+      "handleMissingStyleName": "warn",
+    }]
+  ]
 }
