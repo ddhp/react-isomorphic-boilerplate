@@ -23,10 +23,11 @@ export class Home extends React.Component {
   }
 
   componentDidMount() {
+    const { fetchPosts, dummyAction } = this.props;
     // componentDidMount hook only triggers on browser side
     // do browser specific behavior here
-    this.props.fetchPosts();
-    this.props.dummyAction();
+    fetchPosts();
+    dummyAction();
   }
 
   render() {
@@ -36,7 +37,9 @@ export class Home extends React.Component {
     return (
       <div styleName="style.page--home">
         <Helmet>
-          <title>Home</title>
+          <title>
+            Home
+          </title>
           <meta name="description" content="home page shows posts" />
           <meta name="og:title" content="home page" />
         </Helmet>

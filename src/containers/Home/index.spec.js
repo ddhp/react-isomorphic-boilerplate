@@ -2,7 +2,7 @@ import test from 'ava';
 import sinon from 'sinon';
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Home, mapStateToProps, mapDispatchToProps } from './';
+import { Home, mapStateToProps, mapDispatchToProps } from '.';
 import style from './style.scss';
 
 const mockPost = {

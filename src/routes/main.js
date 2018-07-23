@@ -38,15 +38,18 @@ export const getRoutes = () => ({
       key: 'home',
       exact: true,
       component: HomeComponent,
+      /* eslint-disable */
       // loadData would only be executed on server side
       // for SEO purpose.
       // set your browser side initial state
       // on each container's `componentDidMount`
       // life cycle hook.
-      loadData: (/* match, query */) =>
-      // return last action,
-      // it would be a promise if it's an aync request
-        action.fetchPosts(),
+      loadData: (/* match, query */) => {
+        // return last action,
+        // it would be a promise if it's an aync request
+        return action.fetchPosts();
+      },
+      /* eslint-enable */
       redirect: () => false,
     }, {
       path: '/about',
@@ -77,7 +80,9 @@ export const MainRoute = ({ location }) => {
   return (
     <div>
       <Helmet titleTemplate="%s - by ddhp">
-        <title>title set in entry-main</title>
+        <title>
+          title set in entry-main
+        </title>
         <meta name="description" content="react isomorphic boilerplate by ddhp" />
         <meta name="og:title" content="title set in entry-main" />
       </Helmet>

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route, Redirect, Switch, matchPath } from 'react-router';
+import {
+  Route, Redirect, Switch, matchPath,
+} from 'react-router';
 
 /**
  * find the first matching route

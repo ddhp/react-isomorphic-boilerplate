@@ -7,13 +7,23 @@ import './style.scss';
 
 const Nav = ({ name }) => (
   <nav styleName="navi">
-    <Link to="/">Rib.</Link>
-    <Link to="/about">About</Link>
-    <Link to="/demo">Demo</Link>
-    <a href="another-entry">Another</a>
+    <Link to="/">
+      Rib.
+    </Link>
+    <Link to="/about">
+      About
+    </Link>
+    <Link to="/demo">
+      Demo
+    </Link>
+    <a href="another-entry">
+      Another
+    </a>
 
     <div styleName="user-info">
-      your are {name}
+      your are
+      {' '}
+      {name}
     </div>
   </nav>
 );

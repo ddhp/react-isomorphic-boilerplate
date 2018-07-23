@@ -35,7 +35,9 @@ export const AnotherOneRoute = ({ location }) => {
   return (
     <div>
       <Helmet titleTemplate="%s - by ddhp">
-        <title>Another One Route</title>
+        <title>
+          Another One Route
+        </title>
         <meta name="description" content="react isomorphic boilerplate by ddhp" />
         <meta name="og:title" content="Another One Route" />
       </Helmet>
@@ -44,7 +46,10 @@ export const AnotherOneRoute = ({ location }) => {
         margin: '2rem',
         textAlign: 'center',
       }}
-      ><a href="/">Rib.</a>
+      >
+        <a href="/">
+          Rib.
+        </a>
       </h1>
       {renderRoutes(routesInfo.routes, redirect)}
       <Footer />

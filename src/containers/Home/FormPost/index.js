@@ -8,6 +8,10 @@ import action from '../../../actions';
 import './style.scss';
 
 export class FormPost extends React.Component {
+  static validateShowError = text => text.length < 256
+
+  static validate = text => text.length > 0 && text.length < 256
+
   static propTypes = {
     addPost: PropTypes.func.isRequired,
     name: PropTypes.string,
@@ -16,10 +20,6 @@ export class FormPost extends React.Component {
   static defaultProps = {
     name: '',
   }
-
-  static validateShowError = text => text.length < 256
-
-  static validate = text => text.length > 0 && text.length < 256
 
   constructor(props) {
     super(props);
@@ -60,21 +60,25 @@ export class FormPost extends React.Component {
   }
 
   render() {
-    const { isShowInvalid } = this.state;
+    const { isShowInvalid, postText } = this.state;
 
     return (
       <form styleName="form--post" onSubmit={this.onPostSubmit}>
-        <p styleName="form-group title">Anything to say?</p>
+        <p styleName="form-group title">
+Anything to say?
+        </p>
         <div styleName="form-row">
           <textarea
             styleName={classNames('input--post-text', {
               'is-error': isShowInvalid,
             })}
-            value={this.state.postText}
+            value={postText}
             onChange={this.onPostTextChanged}
           />
           <div styleName="btn-wrapper">
-            <button styleName="btn--post-submit" type="submit">Submit</button>
+            <button styleName="btn--post-submit" type="submit">
+Submit
+            </button>
           </div>
         </div>
       </form>

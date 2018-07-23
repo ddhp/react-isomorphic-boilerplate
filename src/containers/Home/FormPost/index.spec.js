@@ -2,7 +2,7 @@ import test from 'ava';
 import sinon from 'sinon';
 import React from 'react';
 import { shallow } from 'enzyme';
-import { FormPost } from './';
+import { FormPost } from '.';
 // import CSS module className map
 import style from './style.scss';
 
