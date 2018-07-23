@@ -23,6 +23,7 @@ const props = {
   },
   dummyAction: () => {},
   addPost: () => {},
+  fetchPosts: () => {},
   posts: [
     {
       id: 1,

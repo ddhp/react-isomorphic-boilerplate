@@ -38,6 +38,11 @@ export const getRoutes = () => ({
       key: 'home',
       exact: true,
       component: HomeComponent,
+      // loadData would only be executed on server side
+      // for SEO purpose.
+      // set your browser side initial state
+      // on each container's `componentDidMount`
+      // life cycle hook.
       loadData: (/* match, query */) =>
       // return last action,
       // it would be a promise if it's an aync request
