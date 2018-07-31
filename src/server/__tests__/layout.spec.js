@@ -26,8 +26,12 @@ const head = {
 
 const mockClientStats = {
   publicPath: '/',
-  assetsByChunkName: {
-    main: ['main.js', 'main.css'],
+  entrypoints: {
+    main: {
+      assets: [
+        '', '',
+      ],
+    },
   },
 };
 
