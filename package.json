@@ -10,7 +10,7 @@
     "start": "DEBUG=*,-nodemon*,-express*,-send,-babel*,-eslint*,-css-modules* NODE_ENV=hot npx babel-node --inspect src/server/hot/index.js",
     "build:browser:dev": "node webpack-browser-runner dev",
     "build:server:dev": "webpack --env=dev --config=webpack.server.babel.js --progress --profile --colors",
-    "build:browser:prod": "webpack --env=prod --config=webpack.browser.babel.js --progress --json > compilation-stats.json",
+    "build:browser:prod": "node webpack-browser-runner prod",
     "build:server:prod": "webpack --env=prod --config=webpack.server.babel.js --progress --profile --colors",
     "eslint": "eslint ./",
     "test": "npm run eslint && cross-env NODE_ENV=test nyc ava --verbose",
