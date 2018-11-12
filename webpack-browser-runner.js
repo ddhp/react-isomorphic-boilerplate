@@ -13,14 +13,14 @@ const ROOT_PROJECT_PATH = path.resolve(__dirname, './');
 const DEST_PATH = path.resolve(ROOT_PROJECT_PATH, 'dist');
 const configInstance = config(ENV);
 configInstance.plugins.push(
-  new ProgressPlugin((percentage, msg, current, active, modulepath) => {
+  new ProgressPlugin((percentage, msg, currentOri, activeOri, modulepathOri) => {
     if (process.stdout.isTTY && percentage < 1) {
       process.stdout.cursorTo(0);
-      modulepath = modulepath
-        ? ` …${modulepath.substr(modulepath.length - 30)}`
+      const modulepath = modulepathOri
+        ? ` …${modulepathOri.substr(modulepathOri.length - 30)}`
         : '';
-      current = current ? ` ${current}` : '';
-      active = active ? ` ${active}` : '';
+      const current = currentOri ? ` ${currentOri}` : '';
+      const active = activeOri ? ` ${activeOri}` : '';
       process.stdout.write(
         `${(percentage * 100).toFixed(0)}% ${msg}${current}${active}${modulepath}`,
       );
