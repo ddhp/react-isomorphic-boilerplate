@@ -19,7 +19,16 @@ export default function serverConfig(env) {
   };
 
   config.target = 'node';
-  config.externals = [nodeExternals()]; // in order to ignore all modules in node_modules folder
+  config.externals = [
+    // use commonjs lodash on server side
+    function(context, request, callback) {
+      if (/^lodash/.test(request)){
+        return callback(null, 'commonjs lodash');
+      }
+      callback();
+    },
+    nodeExternals(), // in order to ignore modules from node_modules folder
+  ];
 
   if (env === 'hot') {
     config.entry = {

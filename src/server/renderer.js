@@ -3,7 +3,7 @@ import ReactServer from 'react-dom/server';
 import { StaticRouter as Router, matchPath } from 'react-router';
 import { Provider } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { /* get as _get, */ isFunction as _isFunction } from 'lodash';
+import { /* get as _get, */ isFunction as _isFunction } from 'lodash-es';
 import renderFullPage from './layout';
 import configureStore from '../configureStore';
 import { entryRouteComponentMap, getEntryAndRoute, entryReducerMap } from './entryAndRoute';

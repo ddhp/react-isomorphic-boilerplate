@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { get as _get, isEqual as _isEqual } from 'lodash';
+import { get as _get, isEqual as _isEqual } from 'lodash-es';
 import stdout from '../../stdout';
 
 const debug = stdout('reducer:post');

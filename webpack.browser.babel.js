@@ -89,16 +89,16 @@ export default function browserConfig(env) {
       'process.env.NODE_ENV': '"production"',
     }));
   } else {
-    config.plugins.push(new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: '../report.html',
-      openAnalyzer: false,
-      logLevel: 'silent',
-    }));
-
     // enable source map
     config.devtool = 'cheap-module-eval-source-map';
   }
+
+  config.plugins.push(new BundleAnalyzerPlugin({
+    analyzerMode: 'static',
+    reportFilename: '../report.html',
+    openAnalyzer: false,
+    logLevel: 'silent',
+  }));
 
   return config;
 }

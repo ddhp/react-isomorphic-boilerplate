@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { get as _get } from 'lodash';
+import { get as _get } from 'lodash-es';
 import action from '../../actions';
 import FormPostComponent from './FormPost';
 import PostlistComponent from './Postlist';

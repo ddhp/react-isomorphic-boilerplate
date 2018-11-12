@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { get as _get, isFunction as _isFunction } from 'lodash';
+import { get as _get, isFunction as _isFunction } from 'lodash-es';
 import { withRouter } from 'react-router-dom';
 import { getMatchedRoute, renderRoutes } from './utils';
 import NavComponent from '../containers/Nav';
