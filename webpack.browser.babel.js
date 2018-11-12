@@ -91,7 +91,7 @@ export default function browserConfig(env) {
   } else {
     config.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',
-      filename: '../report.html',
+      reportFilename: '../report.html',
       openAnalyzer: false,
       logLevel: 'silent',
     }));

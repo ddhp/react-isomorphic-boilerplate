@@ -37,7 +37,7 @@ function cb(err, stats) {
     throw err;
   }
 
-  mkdirp(path.resolve(DEST_PATH));
+  mkdirp(path.resolve(DEST_PATH, 'server'));
   fs.writeFileSync(
     path.resolve(DEST_PATH, 'server', 'compilation-stats.json'),
     JSON.stringify(
