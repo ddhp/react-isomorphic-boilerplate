@@ -28,7 +28,7 @@
     "@babel/register": "^7.0.0",
     "asset-require-hook": "^1.2.0",
     "autoprefixer": "^9.3.1",
-    "ava": "^0.25.0",
+    "ava": "^1.0.0-rc.2",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-istanbul": "^4.1.5",
@@ -122,16 +122,15 @@
       "!test/helpers/**/*"
     ],
     "require": [
-      "babel-register",
+      "@babel/register",
       "ignore-styles",
       "css-modules-require-hook/preset",
       "./src/enzymeSetup.js"
-    ],
-    "babel": "inherit"
+    ]
   },
   "nyc": {
     "require": [
-      "babel-register"
+      "@babel/register"
     ],
     "sourceMap": false,
     "instrument": false
