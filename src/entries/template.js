@@ -1,7 +1,7 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, browserHistory } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from '../configureStore';
 
 /**
@@ -27,7 +27,7 @@ export default function mount(Routes, rootReducer) {
 
   hydrate(
     <Provider store={store}>
-      <Router history={browserHistory}>
+      <Router>
         <Routes />
       </Router>
     </Provider>,
