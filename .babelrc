@@ -1,23 +1,31 @@
 {
-  "presets": ["react", "env", "stage-2"],
+  "presets": [
+    "@babel/react",
+    "@babel/preset-env"
+  ],
   "env": {
     "test": {
-      "plugins": ["istanbul"]
+      "plugins": [
+        "istanbul"
+      ]
     }
   },
   "plugins": [
-    "transform-runtime",
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
     "react-hot-loader/babel",
-    ["react-css-modules", {
-      "filetypes": {
-        // set this to activate scss support
-        ".scss": {
-          "syntax": "postcss-scss",
+    [
+      "react-css-modules",
+      {
+        "filetypes": {
+          ".scss": {
+            "syntax": "postcss-scss"
+          }
         },
-      },
-      "webpackHotModuleReloading": true,
-      "generateScopedName": "[local]___[hash:base64:5]",
-      "handleMissingStyleName": "warn",
-    }]
+        "webpackHotModuleReloading": true,
+        "generateScopedName": "[local]___[hash:base64:5]",
+        "handleMissingStyleName": "warn"
+      }
+    ]
   ]
 }

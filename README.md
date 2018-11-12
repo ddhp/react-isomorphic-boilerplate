@@ -20,9 +20,6 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 ## Concept
 ### Getting Started
 ```
-# we need babel-node to execute es6 server scripts
-npm install -g babel-cli
-
 # install dependencies
 yarn
 
