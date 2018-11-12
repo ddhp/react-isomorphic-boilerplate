@@ -24,6 +24,10 @@ function baseConfig(platform = 'browser', env) {
 
   const config = {
     context: path.resolve(__dirname),
+    resolve: {
+      // resolve to dist/server for compilation-stats.json
+      modules: [path.resolve(__dirname, 'dist/server'), 'node_modules'],
+    },
 
     plugins: [],
 

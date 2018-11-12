@@ -2,7 +2,7 @@ import express from 'express';
 import stdout from '../stdout';
 import apiMiddleware from './api';
 import renderer from './renderer';
-import stats from '../../compilation-stats.json'; // eslint-disable-line
+import stats from 'compilation-stats.json'; // eslint-disable-line
 
 const debug = stdout('server:index');
 
