@@ -24,6 +24,10 @@ function baseConfig(platform = 'browser', env) {
 
   const config = {
     context: path.resolve(__dirname),
+    resolve: {
+      // resolve to dist/server for compilation-stats.json
+      modules: [path.resolve(__dirname, 'dist/server'), 'node_modules'],
+    },
 
     plugins: [],
 
@@ -37,10 +41,14 @@ function baseConfig(platform = 'browser', env) {
       rules: [
         {
           test: /\.js$/,
-          exclude: [/node_modules/],
+          include: [
+            path.resolve(__dirname, 'src'),
+            path.resolve(__dirname, 'node_modules/superagent'),
+          ],
           use: [
             {
               loader: 'babel-loader',
+              options: {},
             },
             {
               loader: 'eslint-loader',

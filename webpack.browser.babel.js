@@ -77,6 +77,16 @@ export default function browserConfig(env) {
   if (env === 'prod') {
     // apply remove debug loader
     const jsRule = findTargetRule(config.module.rules, /\.js$/);
+
+    // we set preset config here is b/c
+    // only transform to cjs module on browser
+    // now only because of superagent
+    jsRule.use[0].options.presets = [
+      ['@babel/preset-env', {
+        modules: 'commonjs',
+      }],
+    ];
+
     jsRule.use.splice(1, 0, {
       loader: 'remove-debug-loader',
       options: {
@@ -89,16 +99,16 @@ export default function browserConfig(env) {
       'process.env.NODE_ENV': '"production"',
     }));
   } else {
-    config.plugins.push(new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      filename: '../report.html',
-      openAnalyzer: false,
-      logLevel: 'silent',
-    }));
-
     // enable source map
     config.devtool = 'cheap-module-eval-source-map';
   }
+
+  config.plugins.push(new BundleAnalyzerPlugin({
+    analyzerMode: 'static',
+    reportFilename: '../report.html',
+    openAnalyzer: false,
+    logLevel: 'silent',
+  }));
 
   return config;
 }
