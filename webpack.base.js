@@ -19,6 +19,9 @@ function baseConfig(platform = 'browser', env) {
       'no-debugger': 'off',
       'react/prefer-stateless-function': 'off',
       'arrow-body-style': 'off',
+      'no-unused-vars': 'off',
+      'react/default-props-match-prop-types': 'warn',
+      'react/prop-types': 'warn',
     };
   }
 

@@ -15,7 +15,7 @@ export class Home extends React.Component {
   static propTypes = {
     dummyAction: PropTypes.func.isRequired,
     fetchPosts: PropTypes.func.isRequired,
-    posts: PropTypes.arrayOf(PropTypes.number),
+    posts: PropTypes.arrayOf(PropTypes.object),
   }
 
   static defaultProps = {

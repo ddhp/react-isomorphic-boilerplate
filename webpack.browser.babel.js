@@ -27,30 +27,6 @@ export default function browserConfig(env) {
     filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js',
   };
 
-  // config.plugins.push(
-  //   new webpack.optimize.CommonsChunkPlugin({
-  //     name: 'vendor',
-  //     filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js',
-  //     minChunks(module, count) {
-  //       // This prevents stylesheet resources with the .css or .scss extension
-  //       // from being moved from their original chunk to the vendor chunk
-  //       if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
-  //         return false;
-  //       }
-  //       // check if module used enough time
-  //       // if there are more than 1 entries it has to be used by more than one time
-  //       const enoughCount = Object.keys(config.entry).length === 1 ? true : count > 1;
-  //       // only put module from node_modules
-  //       return module.context && module.context.indexOf('node_modules') !== -1 && enoughCount;
-  //     },
-  //   }),
-  //   // seperate manifest is a must
-  //   // or every time vendor chunk hash would change
-  //   new webpack.optimize.CommonsChunkPlugin({
-  //     name: 'manifest',
-  //   }),
-  // );
-
   // disable some stats
   // https://webpack.js.org/configuration/stats/
   config.stats = {
