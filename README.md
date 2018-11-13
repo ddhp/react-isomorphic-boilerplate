@@ -16,6 +16,8 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 - production ready.
 - webpack v4 support.
 - manage your style in [CSS Modules](https://github.com/css-modules/css-modules) way.
+- babel v7
+- optimize bundle size by utilizing [tree shaking](https://webpack.js.org/guides/tree-shaking/)(getting rid of moment.js is on the way (#35))
 
 ## Concept
 ### Getting Started
