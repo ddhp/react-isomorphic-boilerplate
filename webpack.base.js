@@ -41,10 +41,14 @@ function baseConfig(platform = 'browser', env) {
       rules: [
         {
           test: /\.js$/,
-          exclude: [/node_modules/],
+          include: [
+            path.resolve(__dirname, 'src'),
+            path.resolve(__dirname, 'node_modules/superagent'),
+          ],
           use: [
             {
               loader: 'babel-loader',
+              options: {},
             },
             {
               loader: 'eslint-loader',

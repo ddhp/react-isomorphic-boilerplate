@@ -77,6 +77,16 @@ export default function browserConfig(env) {
   if (env === 'prod') {
     // apply remove debug loader
     const jsRule = findTargetRule(config.module.rules, /\.js$/);
+
+    // we set preset config here is b/c
+    // only transform to cjs module on browser
+    // now only because of superagent
+    jsRule.use[0].options.presets = [
+      ['@babel/preset-env', {
+        modules: 'commonjs',
+      }],
+    ];
+
     jsRule.use.splice(1, 0, {
       loader: 'remove-debug-loader',
       options: {
