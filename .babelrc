@@ -13,6 +13,12 @@
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
+    ["transform-imports", {
+      "lodash": {
+        "transform": "lodash/${member}",
+        "preventFullImport": true
+      }
+    }],
     "react-hot-loader/babel",
     [
       "react-css-modules",
