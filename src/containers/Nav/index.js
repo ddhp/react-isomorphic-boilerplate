@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { get as _get } from 'lodash-es';
+import { get as _get } from 'lodash';
 import { Link } from 'react-router-dom';
 import './style.scss';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { isFunction as _isFunction } from 'lodash-es';
+import { isFunction as _isFunction } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import { getMatchedRoute, renderRoutes } from './utils';
 import Footer from '../containers/Footer';
