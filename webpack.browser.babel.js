@@ -1,7 +1,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
 import webpack from 'webpack';
 import path from 'path';
-import baseConfig, { findTargetRule } from './webpack.base';
+import baseConfig, { eslintLoaderExtraRules } from './webpack.base';
 
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
@@ -34,6 +34,56 @@ export default function browserConfig(env) {
     modules: false,
   };
 
+  // set rule for src js files
+  // might not be [0]
+  // depends on how you setup in webpack.base.js
+  const srcJsRule = {
+    test: /\.js$/,
+    include: [
+      path.resolve(__dirname, 'src'),
+    ],
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          plugins: [],
+        },
+      },
+      {
+        loader: 'eslint-loader',
+        options: {
+          // if env is 'hot'
+          // disable some eslint rules
+          rules: env === 'hot' ? eslintLoaderExtraRules : {},
+        },
+      },
+    ],
+  };
+  config.module.rules.push(srcJsRule);
+
+  // rules for node modules not supproting es5
+  // to transform them into cjs module
+  // this conflicts with tree shaking
+  // so set here seperately
+  config.module.rules.push({
+    test: /\.js$/,
+    include: [
+      path.resolve(__dirname, 'node_modules/superagent'),
+    ],
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            ['@babel/preset-env', {
+              modules: 'commonjs',
+            }],
+          ],
+        },
+      },
+    ],
+  });
+
   // modify config for hot env
   if (env === 'hot') {
     const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
@@ -46,24 +96,29 @@ export default function browserConfig(env) {
     config.entry = devEntry;
 
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+    srcJsRule.use[0].options.plugins.push('react-hot-loader/babel');
   } else {
     config.entry = entry;
   }
 
   if (env === 'prod') {
+    // rule for tree shaking
+    config.module.rules.push({
+      test: /\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules/date-fns'),
+        path.resolve(__dirname, 'node_modules/lodash'),
+      ],
+      use: [
+        {
+          loader: 'babel-loader',
+        },
+      ],
+    });
+
     // apply remove debug loader
-    const jsRule = findTargetRule(config.module.rules, /\.js$/);
-
-    // we set preset config here is b/c
-    // only transform to cjs module on browser
-    // now only because of superagent
-    jsRule.use[0].options.presets = [
-      ['@babel/preset-env', {
-        modules: 'commonjs',
-      }],
-    ];
-
-    jsRule.use.splice(1, 0, {
+    srcJsRule.use.splice(1, 0, {
       loader: 'remove-debug-loader',
       options: {
         // methodName: ['myLog'],

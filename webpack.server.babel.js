@@ -2,7 +2,7 @@
 import webpack from 'webpack';
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
-import baseConfig from './webpack.base';
+import baseConfig, { eslintLoaderExtraRules } from './webpack.base';
 
 export default function serverConfig(env) {
   const config = baseConfig('server', env);
@@ -20,6 +20,31 @@ export default function serverConfig(env) {
 
   config.target = 'node';
   config.externals = [nodeExternals()]; // in order to ignore all modules in node_modules folder
+
+  config.module.rules.push(
+    {
+      test: /\.js$/,
+      include: [
+        path.resolve(__dirname, 'src'),
+      ],
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            plugins: [],
+          },
+        },
+        {
+          loader: 'eslint-loader',
+          options: {
+            // if env is 'hot'
+            // disable some eslint rules
+            rules: env === 'hot' ? eslintLoaderExtraRules : {},
+          },
+        },
+      ],
+    },
+  );
 
   if (env === 'hot') {
     config.entry = {
