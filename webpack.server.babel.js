@@ -21,11 +21,11 @@ export default function serverConfig(env) {
   config.target = 'node';
   config.externals = [
     // use commonjs lodash on server side
-    function(context, request, callback) {
-      if (/^lodash/.test(request)){
+    (context, request, callback) => {
+      if (/^lodash/.test(request)) {
         return callback(null, 'commonjs lodash');
       }
-      callback();
+      return callback();
     },
     nodeExternals(), // in order to ignore modules from node_modules folder
   ];
