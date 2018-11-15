@@ -17,7 +17,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 - webpack v4 support.
 - manage your style in [CSS Modules](https://github.com/css-modules/css-modules) way.
 - babel v7
-- optimize bundle size by implementing [tree shaking](https://webpack.js.org/guides/tree-shaking/) (getting rid of moment.js is on the way [#35](https://github.com/ddhp/react-isomorphic-boilerplate/issues/35))
+- optimize bundle size by implementing [tree shaking](https://webpack.js.org/guides/tree-shaking/)
 
 ## Concept
 ### Getting Started
