@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { distanceInWords } from 'date-fns';
-import action from '../../../actions';
+import { vote as voteAction } from '../../../actions';
 import './style.scss';
 
 const postItemShape = {
@@ -91,7 +91,7 @@ export class Postlist extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    vote: voteInfo => dispatch(action.vote(voteInfo)),
+    vote: voteInfo => dispatch(voteAction(voteInfo)),
   };
 }
 

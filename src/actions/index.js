@@ -4,26 +4,26 @@ import stdout from '../stdout';
 
 const debug = stdout('action');
 
-function accumulateCount() {
+export function accumulateCount() {
   return dispatch => dispatch({
     type: 'ACCUMULATE_COUNT',
   });
 }
 
-function dummyAction() {
+export function dummy() {
   return {
     type: 'DUMMY_ACTION',
   };
 }
 
-function updateMe(me) {
+export function updateMe(me) {
   return {
     type: 'UPDATE_ME',
     payload: me,
   };
 }
 
-function fetchPosts() {
+export function fetchPosts() {
   return async (dispatch) => {
     try {
       const res = await request.get('http://localhost:3333/api/post');
@@ -39,7 +39,7 @@ function fetchPosts() {
   };
 }
 
-function addPost(post) {
+export function addPost(post) {
   return dispatch => request
     .post('/api/post')
     .send(post)
@@ -55,7 +55,7 @@ function addPost(post) {
     });
 }
 
-function vote(info) {
+export function vote(info) {
   return dispatch => request
     .post('/api/post/vote')
     .send(info)
@@ -67,12 +67,3 @@ function vote(info) {
       return err;
     });
 }
-
-export default {
-  accumulateCount,
-  dummyAction,
-  updateMe,
-  fetchPosts,
-  addPost,
-  vote,
-};

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { get as _get } from 'lodash';
-import action from '../../actions';
+import { dummy as dummyAct, fetchPosts as fetchPostsAction } from '../../actions';
 import FormPostComponent from './FormPost';
 import PostlistComponent from './Postlist';
 import stdout from '../../stdout';
@@ -68,8 +68,8 @@ export function mapStateToProps(state) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    dummyAction: () => dispatch(action.dummyAction()),
-    fetchPosts: () => dispatch(action.fetchPosts()),
+    dummyAction: () => dispatch(dummyAct()),
+    fetchPosts: () => dispatch(fetchPostsAction()),
   };
 }
 

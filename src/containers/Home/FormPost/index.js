@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get as _get } from 'lodash';
 import classNames from 'classnames';
-import action from '../../../actions';
+import { addPost as addPostAction } from '../../../actions';
 
 import './style.scss';
 
@@ -97,7 +97,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addPost: post => dispatch(action.addPost(post)),
+    addPost: post => dispatch(addPostAction(post)),
   };
 }
 
