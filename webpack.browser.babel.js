@@ -35,12 +35,15 @@ export default function browserConfig(env) {
   };
 
   // set rule for src js files
-  // might not be [0]
-  // depends on how you setup in webpack.base.js
+  // also b/c ugilfyjs3 only supports es5
+  // so we need to specify node modules which
+  // doesn't support it
+  // and let them go through babel
   const srcJsRule = {
     test: /\.js$/,
     include: [
       path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules/superagent'),
     ],
     use: [
       {
@@ -60,29 +63,6 @@ export default function browserConfig(env) {
     ],
   };
   config.module.rules.push(srcJsRule);
-
-  // rules for node modules not supproting es5
-  // to transform them into cjs module
-  // this conflicts with tree shaking
-  // so set here seperately
-  config.module.rules.push({
-    test: /\.js$/,
-    include: [
-      path.resolve(__dirname, 'node_modules/superagent'),
-    ],
-    use: [
-      {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['@babel/preset-env', {
-              modules: 'commonjs',
-            }],
-          ],
-        },
-      },
-    ],
-  });
 
   // modify config for hot env
   if (env === 'hot') {
