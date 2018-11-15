@@ -13,7 +13,6 @@ module.exports = function babelConfig(api) {
       },
     },
     plugins: [
-      '@babel/plugin-transform-runtime',
       '@babel/plugin-proposal-class-properties',
       // TODO: better put this in webpack.browser.config
       // but I don't know why it doesn't work
@@ -42,10 +41,5 @@ module.exports = function babelConfig(api) {
         },
       ],
     ],
-    // transform-runtime adds import to bundle files
-    // and uglify3 compiles code into commonjs modules
-    // so set this to avoid error
-    // https://github.com/webpack/webpack/issues/4039
-    sourceType: 'unambiguous',
   };
 };

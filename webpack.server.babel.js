@@ -31,7 +31,9 @@ export default function serverConfig(env) {
         {
           loader: 'babel-loader',
           options: {
-            plugins: [],
+            plugins: [
+              '@babel/plugin-transform-runtime', // async/await
+            ],
           },
         },
         {

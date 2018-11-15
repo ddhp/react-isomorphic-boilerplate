@@ -35,21 +35,18 @@ export default function browserConfig(env) {
   };
 
   // set rule for src js files
-  // also b/c ugilfyjs3 only supports es5
-  // so we need to specify node modules which
-  // doesn't support it
-  // and let them go through babel
   const srcJsRule = {
     test: /\.js$/,
     include: [
       path.resolve(__dirname, 'src'),
-      path.resolve(__dirname, 'node_modules/superagent'),
     ],
     use: [
       {
         loader: 'babel-loader',
         options: {
-          plugins: [],
+          plugins: [
+            '@babel/plugin-transform-runtime', // async/await
+          ],
         },
       },
       {
@@ -83,6 +80,25 @@ export default function browserConfig(env) {
   }
 
   if (env === 'prod') {
+    // b/c ugilfyjs3 only supports es5
+    // so we need to specify node modules which
+    // only supports es2015up
+    // i.e superagent
+    // let them being transpiled by babel to es5
+    // and make sure babel-plugin-transform-runtime
+    // does not take place
+    config.module.rules.push({
+      test: /\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules/superagent'),
+      ],
+      use: [
+        {
+          loader: 'babel-loader',
+        },
+      ],
+    });
+
     // rule for tree shaking
     config.module.rules.push({
       test: /\.js$/,
