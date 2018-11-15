@@ -11,7 +11,7 @@ import AboutComponent from '../containers/About';
 import DemoComponent from '../containers/Demo';
 import FooterComponent from '../containers/Footer';
 import FourOFourComponent from '../containers/404';
-import action from '../actions';
+import { fetchPosts as fetchPostsAction } from '../actions';
 
 /**
  * put 404 route to the last
@@ -47,7 +47,7 @@ export const getRoutes = () => ({
       loadData: (/* match, query */) => {
         // return last action,
         // it would be a promise if it's an aync request
-        return action.fetchPosts();
+        return fetchPostsAction();
       },
       /* eslint-enable */
       redirect: () => false,

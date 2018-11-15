@@ -57,5 +57,3 @@ export function renderRoutes(routes, redirect) {
     </Switch>
   );
 }
-
-export default module.exports;

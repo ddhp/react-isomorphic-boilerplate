@@ -9,19 +9,17 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-function baseConfig(platform = 'browser', env) {
-  // if env is 'hot'
-  // disable some eslint rules
-  let eslintLoaderExtraRules = {};
-  if (env === 'hot') {
-    eslintLoaderExtraRules = {
-      'no-console': 'off',
-      'no-debugger': 'off',
-      'react/prefer-stateless-function': 'off',
-      'arrow-body-style': 'off',
-    };
-  }
+export const eslintLoaderExtraRules = {
+  'no-console': 'off',
+  'no-debugger': 'off',
+  'react/prefer-stateless-function': 'off',
+  'arrow-body-style': 'off',
+  'no-unused-vars': 'off',
+  'react/default-props-match-prop-types': 'warn',
+  'react/prop-types': 'warn',
+};
 
+function baseConfig(platform = 'browser', env) {
   const config = {
     context: path.resolve(__dirname),
     resolve: {
@@ -39,25 +37,6 @@ function baseConfig(platform = 'browser', env) {
 
     module: {
       rules: [
-        {
-          test: /\.js$/,
-          include: [
-            path.resolve(__dirname, 'src'),
-            path.resolve(__dirname, 'node_modules/superagent'),
-          ],
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {},
-            },
-            {
-              loader: 'eslint-loader',
-              options: {
-                rules: eslintLoaderExtraRules,
-              },
-            },
-          ],
-        },
         {
           test: /\.(woff|woff2|eot|ttf)$/,
           use: [{
@@ -183,17 +162,6 @@ function baseConfig(platform = 'browser', env) {
   }
 
   return config;
-}
-
-export function findTargetRule(rules, targetTest) {
-  let targetRule = {};
-  rules.map((r) => {
-    if (r.test.toString() === targetTest.toString()) {
-      targetRule = r;
-    }
-    return false;
-  });
-  return targetRule;
 }
 
 export default baseConfig;

@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { get as _get } from 'lodash';
-import moment from 'moment';
+import { getTime } from 'date-fns';
 import { normalize } from 'normalizr';
 import update from 'immutability-helper';
 import configureStore from '../configureStore';
@@ -71,12 +71,12 @@ router.post('/post', bodyParser.json(), (req, res) => {
   const { text, arthur } = req.body;
   const postEntities = _get(store.getState(), 'entities.post', {});
   const allIds = Object.keys(postEntities);
-  let lastId = allIds[allIds.length - 1] || 0;
+  let lastId = parseInt(allIds[allIds.length - 1], 10) || 0;
   const response = {
     id: lastId += 1,
     text: text || '',
     arthur: arthur || 'anonymous',
-    createdAt: moment().valueOf(),
+    createdAt: getTime(new Date()),
     upvote: 0,
     downvote: 0,
   };

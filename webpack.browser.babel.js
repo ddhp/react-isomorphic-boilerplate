@@ -1,7 +1,7 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
 import webpack from 'webpack';
 import path from 'path';
-import baseConfig, { findTargetRule } from './webpack.base';
+import baseConfig, { eslintLoaderExtraRules } from './webpack.base';
 
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
@@ -27,36 +27,39 @@ export default function browserConfig(env) {
     filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js',
   };
 
-  // config.plugins.push(
-  //   new webpack.optimize.CommonsChunkPlugin({
-  //     name: 'vendor',
-  //     filename: env === 'hot' ? '[name].js' : '[name].[chunkhash].js',
-  //     minChunks(module, count) {
-  //       // This prevents stylesheet resources with the .css or .scss extension
-  //       // from being moved from their original chunk to the vendor chunk
-  //       if (module.resource && (/^.*\.(css|scss)$/).test(module.resource)) {
-  //         return false;
-  //       }
-  //       // check if module used enough time
-  //       // if there are more than 1 entries it has to be used by more than one time
-  //       const enoughCount = Object.keys(config.entry).length === 1 ? true : count > 1;
-  //       // only put module from node_modules
-  //       return module.context && module.context.indexOf('node_modules') !== -1 && enoughCount;
-  //     },
-  //   }),
-  //   // seperate manifest is a must
-  //   // or every time vendor chunk hash would change
-  //   new webpack.optimize.CommonsChunkPlugin({
-  //     name: 'manifest',
-  //   }),
-  // );
-
   // disable some stats
   // https://webpack.js.org/configuration/stats/
   config.stats = {
     chunks: false,
     modules: false,
   };
+
+  // set rule for src js files
+  const srcJsRule = {
+    test: /\.js$/,
+    include: [
+      path.resolve(__dirname, 'src'),
+    ],
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            '@babel/plugin-transform-runtime', // async/await
+          ],
+        },
+      },
+      {
+        loader: 'eslint-loader',
+        options: {
+          // if env is 'hot'
+          // disable some eslint rules
+          rules: env === 'hot' ? eslintLoaderExtraRules : {},
+        },
+      },
+    ],
+  };
+  config.module.rules.push(srcJsRule);
 
   // modify config for hot env
   if (env === 'hot') {
@@ -70,24 +73,48 @@ export default function browserConfig(env) {
     config.entry = devEntry;
 
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+    srcJsRule.use[0].options.plugins.push('react-hot-loader/babel');
   } else {
     config.entry = entry;
   }
 
   if (env === 'prod') {
+    // b/c ugilfyjs3 only supports es5
+    // so we need to specify node modules which
+    // only supports es2015up
+    // i.e superagent
+    // let them being transpiled by babel to es5
+    // and make sure babel-plugin-transform-runtime
+    // does not take place
+    config.module.rules.push({
+      test: /\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules/superagent'),
+      ],
+      use: [
+        {
+          loader: 'babel-loader',
+        },
+      ],
+    });
+
+    // rule for tree shaking
+    config.module.rules.push({
+      test: /\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules/date-fns'),
+        path.resolve(__dirname, 'node_modules/lodash'),
+      ],
+      use: [
+        {
+          loader: 'babel-loader',
+        },
+      ],
+    });
+
     // apply remove debug loader
-    const jsRule = findTargetRule(config.module.rules, /\.js$/);
-
-    // we set preset config here is b/c
-    // only transform to cjs module on browser
-    // now only because of superagent
-    jsRule.use[0].options.presets = [
-      ['@babel/preset-env', {
-        modules: 'commonjs',
-      }],
-    ];
-
-    jsRule.use.splice(1, 0, {
+    srcJsRule.use.splice(1, 0, {
       loader: 'remove-debug-loader',
       options: {
         // methodName: ['myLog'],

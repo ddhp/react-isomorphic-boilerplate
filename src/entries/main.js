@@ -3,4 +3,4 @@ import Routes from '../routes/main';
 import rootReducer from '../reducers/main';
 import './global.scss';
 
-mount(Routes, rootReducer);
+export default mount(Routes, rootReducer);

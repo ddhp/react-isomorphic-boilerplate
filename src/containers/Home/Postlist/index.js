@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
-import action from '../../../actions';
+import { distanceInWords } from 'date-fns';
+import { vote as voteAction } from '../../../actions';
 import './style.scss';
 
 const postItemShape = {
@@ -16,7 +16,7 @@ const postItemShape = {
 
 export class Postlist extends React.Component {
   static propTypes = {
-    post: PropTypes.objectOf(PropTypes.shape(postItemShape)),
+    post: PropTypes.shape(postItemShape),
     vote: PropTypes.func.isRequired,
   }
 
@@ -49,6 +49,9 @@ export class Postlist extends React.Component {
   render() {
     const { post: p } = this.props;
     const { downvote, upvote } = p;
+    const createDateWord = distanceInWords(new Date(), p.createdAt, {
+      includeSeconds: true,
+    });
     return (
       <li styleName="postlist">
         <div styleName="text">
@@ -65,7 +68,7 @@ export class Postlist extends React.Component {
             {' '}
           </span>
           <span styleName="createdAt">
-            {moment().from(p.createdAt)}
+            {createDateWord}
           </span>
           <button type="button" onClick={this.onUpvote}>
             {' '}
@@ -88,7 +91,7 @@ export class Postlist extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    vote: voteInfo => dispatch(action.vote(voteInfo)),
+    vote: voteInfo => dispatch(voteAction(voteInfo)),
   };
 }
 

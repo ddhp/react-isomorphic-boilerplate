@@ -7,7 +7,7 @@ mock('superagent', '../__mocks__/superagent');
 
 const mocksuperagent = require('superagent').default;
 
-const action = require('./').default;
+const action = require('./');
 
 test('addPost would dispatch ADD_POST with response of request', (t) => {
   mocksuperagent.setMockResponse({

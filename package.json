@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-boilerplate",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "main": "src/server/index.js",
   "license": "MIT",
   "engines": {
@@ -77,11 +77,11 @@
     "babel-plugin-react-css-modules": "^3.4.2",
     "body-parser": "^1.18.2",
     "classnames": "^2.2.5",
+    "date-fns": "^1.29.0",
     "debug": "^4.1.0",
     "express": "^4.16.2",
     "immutability-helper": "^2.7.1",
     "lodash": "^4.17.4",
-    "moment": "^2.19.2",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.0",
     "react": "^16.4.1",
@@ -135,10 +135,5 @@
     ],
     "sourceMap": false,
     "instrument": false
-  },
-  "sideEffects": [
-    "*.scss",
-    "src/entries/main.js",
-    "src/entries/anotherEntry.js"
-  ]
+  }
 }
