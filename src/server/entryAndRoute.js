@@ -65,5 +65,3 @@ export function getEntryAndRoute(path) {
   }
   return result;
 }
-
-export default module.exports;
