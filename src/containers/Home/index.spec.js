@@ -62,9 +62,9 @@ test('mapStateToProps', (t) => {
   t.deepEqual(mappedProps.posts, [mockPost['1']]);
 });
 
-test('mapDispatchToProps', (t) => {
+test('mapDispatchToProps', async (t) => {
   const dispatchSpy = sinon.spy();
   const dispatchers = mapDispatchToProps(dispatchSpy);
-  dispatchers.dummyAction();
+  await dispatchers.dummyAction();
   t.true(dispatchSpy.calledOnce);
 });
