@@ -1,5 +1,5 @@
 module.exports = function babelConfig(api) {
-  api.cache(false);
+  api.cache(true); // set to other value if we handle env variable here
   return {
     presets: [
       '@babel/react',
