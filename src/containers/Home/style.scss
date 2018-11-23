@@ -9,7 +9,7 @@
     margin-bottom: 1rem;
     border: 1px solid #eeeeee;
     display: flex;
-    width: 30%;
+    width: 70%;
     padding: 1rem;
   }
 
@@ -18,6 +18,11 @@
     background-color: #202860;
     color: white;
     padding: 0.1rem 0.2rem;
+    margin-right: 1rem;
+  }
+
+  .posts__dummy {
+    margin-left: 5rem;
     margin-right: 1rem;
   }
 }

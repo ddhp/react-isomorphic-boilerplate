@@ -7,6 +7,7 @@ const debug = stdout('reducer:home');
 const initialState = {
   count: 0,
   posts: [],
+  howManyDummies: 0,
 };
 
 export default function homeReducer(state = initialState, action) {
@@ -41,6 +42,14 @@ export default function homeReducer(state = initialState, action) {
         });
       }
       return state;
+    }
+
+    case 'DUMMY_ACTION': {
+      return update(state, {
+        howManyDummies: {
+          $set: state.howManyDummies + 1,
+        },
+      });
     }
 
     default:
