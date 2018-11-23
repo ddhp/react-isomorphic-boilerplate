@@ -11,9 +11,11 @@ export function accumulateCount() {
 }
 
 export function dummy() {
-  return {
-    type: 'DUMMY_ACTION',
-  };
+  return async dispatch => new Promise(() => setTimeout(() => {
+    dispatch({
+      type: 'DUMMY_ACTION',
+    });
+  }, 1000));
 }
 
 export function updateMe(me) {

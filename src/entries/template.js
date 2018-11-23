@@ -2,7 +2,14 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { hot, setConfig } from 'react-hot-loader';
 import configureStore from '../configureStore';
+
+setConfig({
+  ignoreSFC: true, // RHL will be __complitely__ disabled for SFC
+  // pureSFC: true,
+  // pureRender: true, // RHL will not change render method
+});
 
 /**
  * you can REUSE this template for different entries
@@ -25,12 +32,19 @@ export default function mount(Routes, rootReducer) {
   // Create Redux store with initial state
   const store = configureStore(reduxState, rootReducer);
 
+  function App() {
+    return (
+      <Provider store={store}>
+        <Router>
+          <Routes />
+        </Router>
+      </Provider>
+    );
+  }
+  const HotApp = hot(module)(App);
+
   hydrate(
-    <Provider store={store}>
-      <Router>
-        <Routes />
-      </Router>
-    </Provider>,
+    <HotApp />,
     document.getElementById('app-mount-point'),
   );
 }
