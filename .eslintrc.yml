@@ -4,6 +4,8 @@ env:
 extends: 
   - 'airbnb'
 parser: 'babel-eslint'
+plugins:
+  - 'react-hooks'
 rules:
   react/jsx-filename-extension:
     - error
@@ -24,3 +26,4 @@ rules:
         - 'Link'
       specialLink: 
         - 'to'
+  react-hooks/rules-of-hooks: 'error'

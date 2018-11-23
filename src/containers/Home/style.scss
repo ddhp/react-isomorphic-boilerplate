@@ -3,4 +3,21 @@
     width: 70%;
     margin: 0 auto;
   }
+  
+  .posts__total {
+    margin-left: 15%;
+    margin-bottom: 1rem;
+    border: 1px solid #eeeeee;
+    display: flex;
+    width: 30%;
+    padding: 1rem;
+  }
+
+  .posts__small {
+    font-size: 0.5rem;
+    background-color: #202860;
+    color: white;
+    padding: 0.1rem 0.2rem;
+    margin-right: 1rem;
+  }
 }
