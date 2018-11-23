@@ -1,14 +1,12 @@
 import React/* , { useEffect } */ from 'react';
 import { useRedux } from '../../hooks/useRedux';
-import { dummy as dummyAction } from '../../actions';
+import useDummy from '../../hooks/useDummy';
 
 import style from './style.scss'; // eslint-disable-line no-unused-vars
 
 export default function FormPostTotalCount() {
-  const [state, dispatch] = useRedux();
-  const triggerDummy = () => {
-    dispatch(dummyAction());
-  };
+  const [state] = useRedux();
+  const [dummyTimes, triggerDummy] = useDummy();
 
   return (
     <div styleName="style.posts__total">
@@ -21,7 +19,7 @@ export default function FormPostTotalCount() {
         &nbsp;Posts
       </div>
       <div styleName="style.posts__dummy">
-        {state.pages.home.howManyDummies}
+        {dummyTimes}
         &nbsp;times dummy
       </div>
       <button type="button" onClick={triggerDummy}>
