@@ -68,7 +68,7 @@ export default function browserConfig(env) {
     const devEntry = {};
     Object.keys(entry).forEach((key) => {
       devEntry[key] = [];
-      devEntry[key].push('react-hot-loader/patch', entry[key], hotMiddlewareScript);
+      devEntry[key].push(entry[key], hotMiddlewareScript);
     });
     config.entry = devEntry;
 
