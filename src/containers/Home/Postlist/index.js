@@ -52,6 +52,7 @@ export class Postlist extends React.Component {
     const createDateWord = distanceInWords(new Date(), p.createdAt, {
       includeSeconds: true,
     });
+    console.log('rendering Postlist');
     return (
       <li styleName="postlist">
         <div styleName="text">

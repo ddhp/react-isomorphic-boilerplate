@@ -7,6 +7,7 @@ import { dummy as dummyAct, fetchPosts as fetchPostsAction } from '../../actions
 import FormPostComponent from './FormPost';
 import FormPostTotalCount from './FormPostTotalCount';
 import PostlistComponent from './Postlist';
+import { LocaleExample } from './LocaleExample';
 import stdout from '../../stdout';
 import style from './style.scss'; // eslint-disable-line no-unused-vars
 
@@ -47,6 +48,7 @@ export class Home extends React.Component {
 
         <FormPostComponent />
         <FormPostTotalCount />
+        <LocaleExample />
 
         <ul styleName="style.list--posts">
           {posts.map(p => <PostlistComponent post={p} key={p.id} />)}

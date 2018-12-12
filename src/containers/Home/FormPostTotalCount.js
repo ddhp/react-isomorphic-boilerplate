@@ -7,6 +7,7 @@ import style from './style.scss'; // eslint-disable-line no-unused-vars
 export default function FormPostTotalCount() {
   const [state] = useRedux();
   const [dummyTimes, triggerDummy] = useDummy();
+  console.log('rendering FormPostTotalCount');
 
   return (
     <div styleName="style.posts__total">
