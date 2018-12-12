@@ -18,7 +18,7 @@ This boilerplate would help you build a react/redux/react-router isomorphic/univ
 - manage your style in [CSS Modules](https://github.com/css-modules/css-modules) way.
 - babel v7
 - optimize bundle size by implementing [tree shaking](https://webpack.js.org/guides/tree-shaking/)
-- react hooks!(I hate OO components)
+- react hooks!(I hate OO components) use with caution when involving redux, see [#40](https://github.com/ddhp/react-isomorphic-boilerplate/issues/40)
 
 ## Concept
 ### Getting Started
