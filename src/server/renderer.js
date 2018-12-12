@@ -8,9 +8,7 @@ import renderFullPage from './layout';
 import configureStore from '../configureStore';
 import { entryRouteComponentMap, getEntryAndRoute, entryReducerMap } from './entryAndRoute';
 
-import stdout from '../stdout';
-
-const debug = stdout('app-server');
+const debug = require('../stdout').default('app-server');
 
 function applyInitStore(req) {
   const entryRouteInfo = getEntryAndRoute(req.path);

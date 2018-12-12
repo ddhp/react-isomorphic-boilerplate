@@ -1,8 +1,7 @@
 import update from 'immutability-helper';
 import { get as _get } from 'lodash';
-import stdout from '../../stdout';
 
-const debug = stdout('reducer:home');
+const debug = require('../../stdout').default('reducers:home');
 
 const initialState = {
   count: 0,

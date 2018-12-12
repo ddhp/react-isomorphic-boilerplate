@@ -1,9 +1,8 @@
 // import { get as _get } from 'lodash';
 import request from 'superagent';
-import stdout from '../stdout';
 import { changeLocale } from './global';
 
-const debug = stdout('action');
+const debug = require('../stdout').default('action');
 
 export {
   changeLocale,

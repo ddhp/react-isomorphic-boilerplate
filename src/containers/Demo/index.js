@@ -1,9 +1,9 @@
 import React from 'react';
-import stdout from '../../stdout';
 import './style.scss';
 import logoImg from '../../assets/images/react-logo.png';
 
-const debug = stdout('container/Demo');
+const debug = require('../../stdout').default('containers/Demo');
+
 debug(logoImg);
 
 const Demo = () => (
