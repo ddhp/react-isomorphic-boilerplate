@@ -3,6 +3,8 @@ import { useGlobalContext } from '../../../hooks/useGlobalContext';
 import { BtnLocale } from '../../../components/BtnLocale';
 import style from './style.scss'; // eslint-disable-line no-unused-vars
 
+const debug = require('../../../stdout').default('containers/Home/LocaleExample');
+
 export function LocaleExample() {
   const [{ locale }] = useGlobalContext();
   const sampleTexts = [{
@@ -17,7 +19,7 @@ export function LocaleExample() {
   }];
   let targetText = sampleTexts.find(text => text.locale === locale) || {};
   targetText = targetText.text;
-  console.log('rendering LocaleExample');
+  debug('under rendering');
   return (
     <div styleName="style.main">
       <div styleName="style.child">
