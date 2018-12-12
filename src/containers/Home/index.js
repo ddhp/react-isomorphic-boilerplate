@@ -7,10 +7,10 @@ import { dummy as dummyAct, fetchPosts as fetchPostsAction } from '../../actions
 import FormPostComponent from './FormPost';
 import FormPostTotalCount from './FormPostTotalCount';
 import PostlistComponent from './Postlist';
-import stdout from '../../stdout';
+import { LocaleExample } from './LocaleExample';
 import style from './style.scss'; // eslint-disable-line no-unused-vars
 
-const debug = stdout('container/Home');
+const debug = require('../../stdout').default('containers/Home');
 
 export class Home extends React.Component {
   static propTypes = {
@@ -47,6 +47,7 @@ export class Home extends React.Component {
 
         <FormPostComponent />
         <FormPostTotalCount />
+        <LocaleExample />
 
         <ul styleName="style.list--posts">
           {posts.map(p => <PostlistComponent post={p} key={p.id} />)}

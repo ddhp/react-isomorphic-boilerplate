@@ -1,9 +1,8 @@
 import express from 'express';
-import stdout from '../../stdout';
 import apiMiddleware from '../api';
 import hotMiddleware from './middleware';
 
-const debug = stdout('server:index');
+const debug = require('../../stdout').default('server:index');
 
 const app = express();
 apiMiddleware(app);

@@ -5,6 +5,8 @@ import { distanceInWords } from 'date-fns';
 import { vote as voteAction } from '../../../actions';
 import './style.scss';
 
+const debug = require('../../../stdout').default('containers/Home/Postlist');
+
 const postItemShape = {
   arthur: PropTypes.string,
   createdAt: PropTypes.number,
@@ -52,6 +54,7 @@ export class Postlist extends React.Component {
     const createDateWord = distanceInWords(new Date(), p.createdAt, {
       includeSeconds: true,
     });
+    debug('under rendering');
     return (
       <li styleName="postlist">
         <div styleName="text">

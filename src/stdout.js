@@ -6,10 +6,12 @@ const debug = require('debug');
 // client side: localStorage.debug = '*' or 'namespace*'
 // so better name your namespace to this structure
 // YOUR_APP:YOUR_CURRENT_DEBUG_MODULE
-export default function stdout(namespace) {
+export function stdout(namespace) {
   const log = debug(`${namespace}:log`);
   /* eslint-disable no-console */
   log.log = console.log.bind(console);
   /* eslint-enable no-console */
   return log;
 }
+
+export default stdout;

@@ -1,8 +1,7 @@
 import update from 'immutability-helper';
 import { get as _get, isEqual as _isEqual } from 'lodash';
-import stdout from '../../stdout';
 
-const debug = stdout('reducer:post');
+const debug = require('../../stdout').default('reducer:post');
 
 /**
  * keys:

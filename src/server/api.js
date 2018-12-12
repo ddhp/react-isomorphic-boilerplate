@@ -7,9 +7,8 @@ import update from 'immutability-helper';
 import configureStore from '../configureStore';
 import rootReducer from '../reducers/main';
 import schemas from '../schemas';
-import stdout from '../stdout';
 
-const debug = stdout('server/api');
+const debug = require('../stdout').default('server/api');
 // store representing db
 const store = configureStore({}, rootReducer);
 const router = express.Router();
