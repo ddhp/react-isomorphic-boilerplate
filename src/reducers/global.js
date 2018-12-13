@@ -12,6 +12,7 @@ const initialState = {
     id: 'ja',
     name: '日本語',
   }],
+  screenSize: 'medium',
 };
 
 export const reducer = (state = initialState, action) => {
@@ -24,6 +25,15 @@ export const reducer = (state = initialState, action) => {
         },
       });
     }
+
+    case 'SET_SCREEN_SIZE': {
+      return update(state, {
+        screenSize: {
+          $set: payload,
+        },
+      });
+    }
+
     default: {
       return state;
     }
