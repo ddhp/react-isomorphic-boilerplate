@@ -5,7 +5,7 @@
  *
  */
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -139,7 +139,7 @@ function baseConfig(platform = 'browser', env) {
       // needs to manually minify when css is extracted
       // https://github.com/webpack-contrib/mini-css-extract-plugin#minimizing-for-production
       config.optimization.minimizer = [
-        new UglifyJsPlugin({
+        new TerserPlugin({
           cache: true,
           parallel: true,
         }),
