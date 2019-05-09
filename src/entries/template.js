@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { hot, setConfig } from 'react-hot-loader';
 import configureStore from '../configureStore';
+import { ResizeHandler } from '../components/ResizeHandler';
 
 setConfig({
   ignoreSFC: true, // RHL will be __complitely__ disabled for SFC
@@ -35,6 +36,7 @@ export default function mount(Routes, rootReducer) {
   function App() {
     return (
       <Provider store={store}>
+        <ResizeHandler />
         <Router>
           <Routes />
         </Router>

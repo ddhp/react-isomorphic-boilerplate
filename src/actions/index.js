@@ -1,11 +1,15 @@
 // import { get as _get } from 'lodash';
 import request from 'superagent';
-import { changeLocale } from './global';
+import {
+  changeLocale,
+  setScreenSize,
+} from './global';
 
 const debug = require('../stdout').default('action');
 
 export {
   changeLocale,
+  setScreenSize,
 };
 
 export function accumulateCount() {

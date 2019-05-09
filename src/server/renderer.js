@@ -10,34 +10,39 @@ import { entryRouteComponentMap, getEntryAndRoute, entryReducerMap } from './ent
 
 const debug = require('../stdout').default('app-server');
 
-function applyInitStore(req) {
+function applyRouteCheckResult(req) {
   const entryRouteInfo = getEntryAndRoute(req.path);
-  const currentEntry = entryRouteInfo.entry;
-  const rootReducer = entryReducerMap[currentEntry];
-  debug(rootReducer);
-  const store = configureStore({}, rootReducer);
-  req.reduxStore = store;
+  const {
+    route,
+  } = entryRouteInfo;
+  // resolve false if no route found
+  if (!route) {
+    return Promise.resolve(false);
+  }
   req.entryRouteInfo = entryRouteInfo;
-  // next();
+  return Promise.resolve(req);
 }
 
-function applyRouteCheckResult(req) {
+function applyStore(req) {
   const {
     path,
-    reduxStore: store,
     query,
     entryRouteInfo,
   } = req;
-  // // get whatever info you want from store
-  // let storeState = store.getState();
-  // let me = _get(storeState, 'entities.me', {});
-  const promises = [];
-
 
   const {
     route,
     entry: currentEntry,
   } = entryRouteInfo;
+  const rootReducer = entryReducerMap[currentEntry];
+  debug(rootReducer);
+  const store = configureStore({}, rootReducer);
+  req.reduxStore = store;
+
+  // get whatever info you want from store
+  // let storeState = store.getState();
+  // let me = _get(storeState, 'entities.me', {});
+  const promises = [];
   const match = matchPath(path, route);
   const { loadData } = route;
 
@@ -57,12 +62,6 @@ function applyRouteCheckResult(req) {
 
   // order: LOAD_DATA => SET_HEAD
   return Promise.all(promises);
-  // .then(() => {
-  //   next();
-  // })
-  // .catch((err) => {
-  //   debug(err);
-  // });
 }
 
 function responsePage(req, res, clientStats) {
@@ -95,10 +94,16 @@ function responsePage(req, res, clientStats) {
 }
 
 export default function renderer({ clientStats }) {
-  return (req, res) => {
-    applyInitStore(req);
-    applyRouteCheckResult(req).then(() => {
-      responsePage(req, res, clientStats);
-    });
+  return (req, res, next) => {
+    applyRouteCheckResult(req)
+      .then((isMatched) => {
+        if (isMatched) {
+          return applyStore(req);
+        }
+        return next();
+      })
+      .then(() => {
+        responsePage(req, res, clientStats);
+      });
   };
 }
