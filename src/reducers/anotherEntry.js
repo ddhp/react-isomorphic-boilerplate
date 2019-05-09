@@ -1,4 +1,6 @@
-const initState = {};
-export default function reducer(state = initState) {
-  return state;
-}
+import { combineReducers } from 'redux';
+import globalReducer from './global';
+
+export default combineReducers({
+  global: globalReducer,
+});

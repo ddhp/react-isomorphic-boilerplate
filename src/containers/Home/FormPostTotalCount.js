@@ -1,5 +1,5 @@
 import React/* , { useEffect } */ from 'react';
-import { useRedux } from '../../hooks/useRedux';
+import { useSelector } from 'react-redux';
 import useDummy from '../../hooks/useDummy';
 
 import style from './style.scss'; // eslint-disable-line no-unused-vars
@@ -7,7 +7,7 @@ import style from './style.scss'; // eslint-disable-line no-unused-vars
 const debug = require('../../stdout').default('containers/Home/FormPostTotalCount');
 
 export default function FormPostTotalCount() {
-  const [state] = useRedux();
+  const posts = useSelector(state => state.pages.home.posts);
   const [dummyTimes, triggerDummy] = useDummy();
   debug('under rendering');
 
@@ -18,7 +18,7 @@ export default function FormPostTotalCount() {
       </small>
       <div>
         Total&nbsp;
-        {state.pages.home.posts.length}
+        {posts.length}
         &nbsp;Posts
       </div>
       <div styleName="style.posts__dummy">
