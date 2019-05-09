@@ -80,15 +80,21 @@ function baseConfig(platform = 'browser', env) {
     config.module.rules.push(
       {
         test: /\.css$/,
-        use: [
-          'css-loader/locals',
-        ],
+        use: [{
+          loader: 'css-loader',
+          options: {
+            exportOnlyLocals: true,
+          },
+        }],
       },
       {
         test: /\.scss$/,
-        use: [
-          'css-loader/locals',
-        ],
+        use: [{
+          loader: 'css-loader',
+          options: {
+            exportOnlyLocals: true,
+          },
+        }],
       },
     );
   } else {
